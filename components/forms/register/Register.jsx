@@ -28,7 +28,7 @@ export default function Register() {
       confirmPassword: "",
     },
   });
-
+  console.log(formData[0]);
   const handleInputChange = (e, roleType, field) => {
     setFormData((prevData) => ({
       ...prevData,

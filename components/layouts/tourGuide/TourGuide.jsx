@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function TourGuide() {
@@ -6,8 +7,8 @@ function TourGuide() {
       <div className="text-4xl text-black font-bold mb-8">Tours</div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <a
-            href="#"
+          <Link
+            href="/tours/tour-details"
             className="block rounded-lg p-4 shadow-sm shadow-indigo-100"
           >
             <img
@@ -102,7 +103,7 @@ function TourGuide() {
                 </div>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
         <div>
           <a
