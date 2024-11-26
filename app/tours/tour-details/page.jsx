@@ -1,5 +1,5 @@
 import React from "react";
-import ProductDetails from "../../../components/ui/Product/ProductDetails";
+import ProductDetails from "../../components/ui/Product/ProductDetails";
 
 function page() {
   return (

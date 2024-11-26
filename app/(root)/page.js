@@ -1,15 +1,17 @@
-import Image from "next/image";
-import Banner from "../components/layouts/banner/banner";
-import LocalHomeRoom from "../components/layouts/localHomes/LocalHomeRoom";
-import HotelRoom from "../components/layouts/hotels/hotelRooms";
+// import Banner from "@/components/layouts/banner/banner";
 import TourGuide from "../components/layouts/tourGuide/TourGuide";
+import Banner from "../components/layouts/banner/Banner";
+import ContactUs from "../components/forms/contact-us";
 export default function Home() {
   return (
-    <div>
+    <div className="">
       <Banner />
       <TourGuide />
+
+      {/* 
       <LocalHomeRoom />
-      <HotelRoom />
+      <HotelRoom /> */}
+      <ContactUs />
     </div>
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
     /* <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">

@@ -1,10 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 function TourGuide() {
   return (
-    <div className="py-16 px-16">
-      <div className="text-4xl text-black font-bold mb-8">Tours</div>
+    <div id="home-tours" className="py-32 px-6 sm:px-16">
+      <div className="text-3xl sm:text-4xl text-black font-bold mb-8">
+        Choose Prefered Tours
+      </div>
+      <div className="w-full h-[150px] sm:w-full sm:h-[300px] relative px-9 mb-16">
+        <Image
+          src="/tours-home.jpg"
+          layout="fill"
+          objectFit="cover"
+          alt="Tours Home"
+          className="rounded-md"
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <Link

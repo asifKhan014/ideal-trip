@@ -1,9 +1,9 @@
 import React from "react";
-import Login from "../../../components/forms/login/Login";
+import Login from "../../components/forms/login/Login";
 
 function page() {
   return (
-    <div>
+    <div className="min-h-screen flex items-center justify-center">
       <Login />
     </div>
   );

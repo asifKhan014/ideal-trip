@@ -23,6 +23,7 @@ import {
 } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -40,28 +41,34 @@ export default function Navbar() {
             <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
               {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
               <a
-                href="#"
+                href="/"
                 className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
               >
-                Dashboard
+                Home
+              </a>
+              <a
+                href="#home-tours"
+                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              >
+                Tours
               </a>
               <a
                 href="#"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
               >
-                Team
+                Transportation
               </a>
               <a
                 href="#"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
               >
-                Projects
+                Accumodation
               </a>
               <a
-                href="#"
+                href="#contact-us"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
               >
-                Calendar
+                Contact Us
               </a>
             </div>
           </div>
@@ -103,18 +110,18 @@ export default function Navbar() {
             </DisclosureButton>
           </div>
           <div className="hidden lg:ml-4 lg:flex lg:items-center">
-            <button
+            {/* <button
               type="button"
               className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="h-6 w-6" />
-            </button>
+            </button> */}
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-4 flex-shrink-0">
-              <div>
+              <Link href={"/profile"}>
                 <MenuButton className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
@@ -124,18 +131,18 @@ export default function Navbar() {
                     className="h-8 w-8 rounded-full"
                   />
                 </MenuButton>
-              </div>
+              </Link>
               <MenuItems
                 transition
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    href="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Your Profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
                   <a
@@ -146,12 +153,12 @@ export default function Navbar() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    href="/login"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -167,28 +174,28 @@ export default function Navbar() {
             href="#"
             className="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
           >
-            Dashboard
+            Home
+          </DisclosureButton>
+          <DisclosureButton
+            as="a"
+            href="#home-tours"
+            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+          >
+            Tours
           </DisclosureButton>
           <DisclosureButton
             as="a"
             href="#"
             className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
           >
-            Team
+            Transportaion
           </DisclosureButton>
           <DisclosureButton
             as="a"
             href="#"
             className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
           >
-            Projects
-          </DisclosureButton>
-          <DisclosureButton
-            as="a"
-            href="#"
-            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-          >
-            Calendar
+            Accumodation
           </DisclosureButton>
         </div>
         <div className="border-t border-gray-200 pb-3 pt-4">
