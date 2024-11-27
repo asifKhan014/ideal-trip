@@ -5,35 +5,35 @@
 //   const [role, setRole] = useState("tourist"); // Default to Tourist
 //   const [formData, setFormData] = useState({
 //     tourist: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
-//       password: "",
-//       confirmPassword: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     transporter: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       vehicleDetails: "",
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     propertyOwner: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       propertyDetails: "",
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     hotelOwner: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       hotelDetails: "",
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //   });
 //   console.log(formData[0]);
@@ -111,8 +111,8 @@
 //                 </label>
 //                 <input
 //                   type="text"
-//                   value={formData.tourist.fullName}
-//                   onChange={(e) => handleInputChange(e, "tourist", "fullName")}
+//                   value={formData.tourist.FullName}
+//                   onChange={(e) => handleInputChange(e, "tourist", "FullName")}
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
 //               </div>
@@ -121,9 +121,9 @@
 //                   Email address
 //                 </label>
 //                 <input
-//                   type="email"
-//                   value={formData.tourist.email}
-//                   onChange={(e) => handleInputChange(e, "tourist", "email")}
+//                   type="Email"
+//                   value={formData.tourist.Email}
+//                   onChange={(e) => handleInputChange(e, "tourist", "Email")}
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
 //               </div>
@@ -133,9 +133,9 @@
 //                 </label>
 //                 <input
 //                   type="tel"
-//                   value={formData.tourist.phoneNumber}
+//                   value={formData.tourist.PhoneNumber}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "tourist", "phoneNumber")
+//                     handleInputChange(e, "tourist", "PhoneNumber")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -145,9 +145,9 @@
 //                   Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.tourist.password}
-//                   onChange={(e) => handleInputChange(e, "tourist", "password")}
+//                   type="Password"
+//                   value={formData.tourist.Password}
+//                   onChange={(e) => handleInputChange(e, "tourist", "Password")}
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
 //               </div>
@@ -156,10 +156,10 @@
 //                   Confirm Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.tourist.confirmPassword}
+//                   type="Password"
+//                   value={formData.tourist.ConfirmPassword}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "tourist", "confirmPassword")
+//                     handleInputChange(e, "tourist", "ConfirmPassword")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -182,9 +182,9 @@
 //                 </label>
 //                 <input
 //                   type="text"
-//                   value={formData.transporter.fullName}
+//                   value={formData.transporter.FullName}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "transporter", "fullName")
+//                     handleInputChange(e, "transporter", "FullName")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -194,9 +194,9 @@
 //                   Email address
 //                 </label>
 //                 <input
-//                   type="email"
-//                   value={formData.transporter.email}
-//                   onChange={(e) => handleInputChange(e, "transporter", "email")}
+//                   type="Email"
+//                   value={formData.transporter.Email}
+//                   onChange={(e) => handleInputChange(e, "transporter", "Email")}
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
 //               </div>
@@ -206,9 +206,9 @@
 //                 </label>
 //                 <input
 //                   type="tel"
-//                   value={formData.transporter.phoneNumber}
+//                   value={formData.transporter.PhoneNumber}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "transporter", "phoneNumber")
+//                     handleInputChange(e, "transporter", "PhoneNumber")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -231,10 +231,10 @@
 //                   Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.transporter.password}
+//                   type="Password"
+//                   value={formData.transporter.Password}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "transporter", "password")
+//                     handleInputChange(e, "transporter", "Password")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -244,10 +244,10 @@
 //                   Confirm Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.transporter.confirmPassword}
+//                   type="Password"
+//                   value={formData.transporter.ConfirmPassword}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "transporter", "confirmPassword")
+//                     handleInputChange(e, "transporter", "ConfirmPassword")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -270,9 +270,9 @@
 //                 </label>
 //                 <input
 //                   type="text"
-//                   value={formData.propertyOwner.fullName}
+//                   value={formData.propertyOwner.FullName}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "propertyOwner", "fullName")
+//                     handleInputChange(e, "propertyOwner", "FullName")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -282,10 +282,10 @@
 //                   Email address
 //                 </label>
 //                 <input
-//                   type="email"
-//                   value={formData.propertyOwner.email}
+//                   type="Email"
+//                   value={formData.propertyOwner.Email}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "propertyOwner", "email")
+//                     handleInputChange(e, "propertyOwner", "Email")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -296,9 +296,9 @@
 //                 </label>
 //                 <input
 //                   type="tel"
-//                   value={formData.propertyOwner.phoneNumber}
+//                   value={formData.propertyOwner.PhoneNumber}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "propertyOwner", "phoneNumber")
+//                     handleInputChange(e, "propertyOwner", "PhoneNumber")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -321,10 +321,10 @@
 //                   Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.propertyOwner.password}
+//                   type="Password"
+//                   value={formData.propertyOwner.Password}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "propertyOwner", "password")
+//                     handleInputChange(e, "propertyOwner", "Password")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -334,10 +334,10 @@
 //                   Confirm Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.propertyOwner.confirmPassword}
+//                   type="Password"
+//                   value={formData.propertyOwner.ConfirmPassword}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "propertyOwner", "confirmPassword")
+//                     handleInputChange(e, "propertyOwner", "ConfirmPassword")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -360,9 +360,9 @@
 //                 </label>
 //                 <input
 //                   type="text"
-//                   value={formData.hotelOwner.fullName}
+//                   value={formData.hotelOwner.FullName}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "hotelOwner", "fullName")
+//                     handleInputChange(e, "hotelOwner", "FullName")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -372,9 +372,9 @@
 //                   Email address
 //                 </label>
 //                 <input
-//                   type="email"
-//                   value={formData.hotelOwner.email}
-//                   onChange={(e) => handleInputChange(e, "hotelOwner", "email")}
+//                   type="Email"
+//                   value={formData.hotelOwner.Email}
+//                   onChange={(e) => handleInputChange(e, "hotelOwner", "Email")}
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
 //               </div>
@@ -384,9 +384,9 @@
 //                 </label>
 //                 <input
 //                   type="tel"
-//                   value={formData.hotelOwner.phoneNumber}
+//                   value={formData.hotelOwner.PhoneNumber}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "hotelOwner", "phoneNumber")
+//                     handleInputChange(e, "hotelOwner", "PhoneNumber")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -409,10 +409,10 @@
 //                   Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.hotelOwner.password}
+//                   type="Password"
+//                   value={formData.hotelOwner.Password}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "hotelOwner", "password")
+//                     handleInputChange(e, "hotelOwner", "Password")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -422,10 +422,10 @@
 //                   Confirm Password
 //                 </label>
 //                 <input
-//                   type="password"
-//                   value={formData.hotelOwner.confirmPassword}
+//                   type="Password"
+//                   value={formData.hotelOwner.ConfirmPassword}
 //                   onChange={(e) =>
-//                     handleInputChange(e, "hotelOwner", "confirmPassword")
+//                     handleInputChange(e, "hotelOwner", "ConfirmPassword")
 //                   }
 //                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 //                 />
@@ -451,41 +451,41 @@
 //   const [role, setRole] = useState("tourist"); // Default role
 //   const [formData, setFormData] = useState({
 //     tourist: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
-//       password: "",
-//       confirmPassword: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     transporter: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       vehicleDetails: "",
 //       vehicleRegistrationForm: null,
 //       driverLicense: null,
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     propertyOwner: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       propertyDetails: "",
 //       propertyOwnershipForm: null,
 //       imageGallery: null,
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     hotelOwner: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       hotelDetails: "",
 //       propertyOwnershipForm: null,
 //       imageGallery: null,
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //   });
 
@@ -555,9 +555,9 @@
 //                   id={field.toLowerCase().replace(/\s/g, "")}
 //                   type={
 //                     field.includes("Password")
-//                       ? "password"
+//                       ? "Password"
 //                       : field.includes("Email")
-//                       ? "email"
+//                       ? "Email"
 //                       : "text"
 //                   }
 //                   value={
@@ -699,41 +699,41 @@
 //   const [role, setRole] = useState("tourist"); // Default role
 //   const [formData, setFormData] = useState({
 //     tourist: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
-//       password: "",
-//       confirmPassword: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     transporter: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       vehicleDetails: "",
 //       vehicleRegistrationForm: null,
 //       driverLicense: null,
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     propertyOwner: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       propertyDetails: "",
 //       propertyOwnershipForm: null,
 //       imageGallery: null,
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //     hotelOwner: {
-//       fullName: "",
-//       email: "",
-//       phoneNumber: "",
+//       FullName: "",
+//       Email: "",
+//       PhoneNumber: "",
 //       hotelDetails: "",
 //       propertyOwnershipForm: null,
 //       imageGallery: null,
-//       password: "",
-//       confirmPassword: "",
+//       Password: "",
+//       ConfirmPassword: "",
 //     },
 //   });
 
@@ -758,18 +758,18 @@
 
 //     if (!value || value.trim() === "") {
 //       error = `${field} is required`;
-//     } else if (field === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-//       error = "Invalid email address";
-//     } else if (field === "phoneNumber" && !/^\d{10,15}$/.test(value)) {
+//     } else if (field === "Email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+//       error = "Invalid Email address";
+//     } else if (field === "PhoneNumber" && !/^\d{10,15}$/.test(value)) {
 //       error = "Invalid phone number";
 //     } else if (
-//       (field === "password" || field === "confirmPassword") &&
+//       (field === "Password" || field === "ConfirmPassword") &&
 //       value.length < 6
 //     ) {
 //       error = "Password must be at least 6 characters";
 //     } else if (
-//       field === "confirmPassword" &&
-//       value !== formData[roleType].password
+//       field === "ConfirmPassword" &&
+//       value !== formData[roleType].Password
 //     ) {
 //       error = "Passwords do not match";
 //     }
@@ -853,9 +853,9 @@
 //                     id={field}
 //                     type={
 //                       field.includes("Password")
-//                         ? "password"
-//                         : field === "email"
-//                         ? "email"
+//                         ? "Password"
+//                         : field === "Email"
+//                         ? "Email"
 //                         : "text"
 //                     }
 //                     value={formData[role][field]}
@@ -886,73 +886,74 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from 'axios';
 
 export default function Register() {
-  const [role, setRole] = useState("tourist");
+  const [role, setRole] = useState("Tourist");
 
   const initialValues = {
-    tourist: {
-      fullName: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
+    Tourist: {
+      FullName: "",
+      Email: "",
+      PhoneNumber: "",
+      Password: "",
+      ConfirmPassword: "",
     },
     transporter: {
-      fullName: "",
-      email: "",
-      phoneNumber: "",
+      FullName: "",
+      Email: "",
+      PhoneNumber: "",
       vehicleDetails: "",
       vehicleRegistrationForm: null,
       driverLicense: null,
-      password: "",
-      confirmPassword: "",
+      Password: "",
+      ConfirmPassword: "",
     },
     propertyOwner: {
-      fullName: "",
-      email: "",
-      phoneNumber: "",
+      FullName: "",
+      Email: "",
+      PhoneNumber: "",
       propertyDetails: "",
       propertyOwnershipForm: null,
       imageGallery: null,
-      password: "",
-      confirmPassword: "",
+      Password: "",
+      ConfirmPassword: "",
     },
     hotelOwner: {
-      fullName: "",
-      email: "",
-      phoneNumber: "",
+      FullName: "",
+      Email: "",
+      PhoneNumber: "",
       hotelDetails: "",
       propertyOwnershipForm: null,
       imageGallery: null,
-      password: "",
-      confirmPassword: "",
+      Password: "",
+      ConfirmPassword: "",
     },
   };
 
   // Validation schema for all roles
   const validationSchema = {
     tourist: Yup.object({
-      fullName: Yup.string().required("Full Name is required"),
-      email: Yup.string()
-        .email("Invalid email address")
+      FullName: Yup.string().required("Full Name is required"),
+      Email: Yup.string()
+        .email("Invalid Email address")
         .required("Email is required"),
-      phoneNumber: Yup.string()
+      PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
-      password: Yup.string()
+      Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
+      ConfirmPassword: Yup.string()
+        .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
     }),
     transporter: Yup.object({
-      fullName: Yup.string().required("Full Name is required"),
-      email: Yup.string()
-        .email("Invalid email address")
+      FullName: Yup.string().required("Full Name is required"),
+      Email: Yup.string()
+        .email("Invalid Email address")
         .required("Email is required"),
-      phoneNumber: Yup.string()
+      PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       vehicleDetails: Yup.string().required("Vehicle details are required"),
@@ -960,19 +961,19 @@ export default function Register() {
         "Vehicle Registration Form is required"
       ),
       driverLicense: Yup.mixed().required("Driver License is required"),
-      password: Yup.string()
+      Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
+      ConfirmPassword: Yup.string()
+        .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
     }),
     propertyOwner: Yup.object({
-      fullName: Yup.string().required("Full Name is required"),
-      email: Yup.string()
-        .email("Invalid email address")
+      FullName: Yup.string().required("Full Name is required"),
+      Email: Yup.string()
+        .email("Invalid Email address")
         .required("Email is required"),
-      phoneNumber: Yup.string()
+      PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       propertyDetails: Yup.string().required("Property details are required"),
@@ -980,19 +981,19 @@ export default function Register() {
         "Property Ownership Form is required"
       ),
       imageGallery: Yup.mixed().required("Image Gallery is required"),
-      password: Yup.string()
+      Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
+      ConfirmPassword: Yup.string()
+        .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
     }),
     hotelOwner: Yup.object({
-      fullName: Yup.string().required("Full Name is required"),
-      email: Yup.string()
-        .email("Invalid email address")
+      FullName: Yup.string().required("Full Name is required"),
+      Email: Yup.string()
+        .email("Invalid Email address")
         .required("Email is required"),
-      phoneNumber: Yup.string()
+      PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       hotelDetails: Yup.string().required("Hotel details are required"),
@@ -1000,20 +1001,46 @@ export default function Register() {
         "Property Ownership Form is required"
       ),
       imageGallery: Yup.mixed().required("Image Gallery is required"),
-      password: Yup.string()
+      Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
+      ConfirmPassword: Yup.string()
+        .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
     }),
   };
 
   // Handle form submission
-  const handleSubmit = (values) => {
-    console.log("Form submitted successfully:", values);
-    alert("Form submitted successfully");
-  };
+
+const handleSubmit = async (values) => { 
+  console.log(values);
+  if (role !== "Tourist") {
+    alert("Please select the correct role: Tourist");
+    return;
+  }
+
+  try {
+    // Make the POST request to register the tourist
+    const result = await axios.post(
+      "https://localhost:7216/api/UserAccount/register/tourist",
+      values, {
+        headers: {
+          "Content-Type": "application/json", // Change to multipart/form-data if sending files
+        },
+      }
+    );
+
+    // Log and display success message
+    console.log("Response:", result.data);
+    alert("Registration successful: " + result.data.message);
+  } catch (error) {
+    console.log(values);
+    // Handle errors gracefully
+    console.error("Error during registration:", error.response?.data || error.message);
+    alert("Registration failed: " + (error.response?.data?.message || "Unexpected error"));
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-6">
@@ -1078,9 +1105,9 @@ export default function Register() {
                         name={field}
                         type={
                           field.includes("Password")
-                            ? "password"
-                            : field === "email"
-                            ? "email"
+                            ? "Password"
+                            : field === "Email"
+                            ? "Email"
                             : "text"
                         }
                         className="mt-2 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-3"
