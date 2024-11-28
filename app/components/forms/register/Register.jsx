@@ -886,13 +886,13 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
+import axios from "axios";
 
 export default function Register() {
-  const [role, setRole] = useState("Tourist");
+  const [role, setRole] = useState("tourist");
 
   const initialValues = {
-    Tourist: {
+    tourist: {
       FullName: "",
       Email: "",
       PhoneNumber: "",
@@ -931,7 +931,6 @@ export default function Register() {
     },
   };
 
-  // Validation schema for all roles
   const validationSchema = {
     tourist: Yup.object({
       FullName: Yup.string().required("Full Name is required"),
@@ -1010,37 +1009,33 @@ export default function Register() {
     }),
   };
 
-  // Handle form submission
-
-const handleSubmit = async (values) => { 
-  console.log(values);
-  if (role !== "Tourist") {
-    alert("Please select the correct role: Tourist");
-    return;
-  }
-
-  try {
-    // Make the POST request to register the tourist
-    const result = await axios.post(
-      "https://localhost:7216/api/UserAccount/register/tourist",
-      values, {
-        headers: {
-          "Content-Type": "application/json", // Change to multipart/form-data if sending files
-        },
-      }
-    );
-
-    // Log and display success message
-    console.log("Response:", result.data);
-    alert("Registration successful: " + result.data.message);
-  } catch (error) {
+  const handleSubmit = async (values) => {
     console.log(values);
-    // Handle errors gracefully
-    console.error("Error during registration:", error.response?.data || error.message);
-    alert("Registration failed: " + (error.response?.data?.message || "Unexpected error"));
-  }
-};
 
+    try {
+      const result = await axios.post(
+        `https://localhost:7216/api/UserAccount/register/${role}`,
+        values,
+        {
+          headers: {
+            "Content-Type": "application/json", // Change to multipart/form-data if sending files
+          },
+        }
+      );
+
+      console.log("Response:", result.data);
+      alert("Registration successful: " + result.data.message);
+    } catch (error) {
+      console.error(
+        "Error during registration:",
+        error.response?.data || error.message
+      );
+      alert(
+        "Registration failed: " +
+          (error.response?.data?.message || "Unexpected error")
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-6">
@@ -1073,6 +1068,7 @@ const handleSubmit = async (values) => {
           </div>
 
           <Formik
+            key={role} // Reset Formik when the role changes
             initialValues={initialValues[role]}
             validationSchema={validationSchema[role]}
             onSubmit={handleSubmit}
@@ -1105,9 +1101,9 @@ const handleSubmit = async (values) => {
                         name={field}
                         type={
                           field.includes("Password")
-                            ? "Password"
+                            ? "password"
                             : field === "Email"
-                            ? "Email"
+                            ? "email"
                             : "text"
                         }
                         className="mt-2 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-3"
