@@ -896,6 +896,7 @@ export default function Register() {
       FullName: "",
       Email: "",
       PhoneNumber: "",
+      Address: "",  // Ensure Address is an empty string by default
       Password: "",
       ConfirmPassword: "",
     },
@@ -903,6 +904,7 @@ export default function Register() {
       FullName: "",
       Email: "",
       PhoneNumber: "",
+      Address: "", // Ensure Address is an empty string by default
       vehicleDetails: "",
       vehicleRegistrationForm: null,
       driverLicense: null,
@@ -913,6 +915,7 @@ export default function Register() {
       FullName: "",
       Email: "",
       PhoneNumber: "",
+      Address: "", // Ensure Address is an empty string by default
       propertyDetails: "",
       propertyOwnershipForm: null,
       imageGallery: null,
@@ -923,6 +926,7 @@ export default function Register() {
       FullName: "",
       Email: "",
       PhoneNumber: "",
+      Address: "", // Ensure Address is an empty string by default
       hotelDetails: "",
       propertyOwnershipForm: null,
       imageGallery: null,
@@ -940,6 +944,7 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
+      Address: Yup.string().required("Address is required"), // Added Address validation
       Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -955,6 +960,7 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
+      Address: Yup.string().required("Address is required"), // Added Address validation
       vehicleDetails: Yup.string().required("Vehicle details are required"),
       vehicleRegistrationForm: Yup.mixed().required(
         "Vehicle Registration Form is required"
@@ -975,6 +981,7 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
+      Address: Yup.string().required("Address is required"), // Added Address validation
       propertyDetails: Yup.string().required("Property details are required"),
       propertyOwnershipForm: Yup.mixed().required(
         "Property Ownership Form is required"
@@ -995,6 +1002,7 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
+      Address: Yup.string().required("Address is required"), // Added Address validation
       hotelDetails: Yup.string().required("Hotel details are required"),
       propertyOwnershipForm: Yup.mixed().required(
         "Property Ownership Form is required"
@@ -1010,32 +1018,37 @@ export default function Register() {
   };
 
   const handleSubmit = async (values) => {
-    console.log(values);
-
+    console.log(values); // Debug log to check the form values
+  
+    const formData = new FormData();
+  
+    // Append each field from values to FormData
+    Object.keys(values).forEach((key) => {
+      if (key === "vehicleRegistrationForm" || key === "driverLicense" || key === "profilePhoto") {
+        // Files need to be added directly as files
+        formData.append(key, values[key]);
+      } else {
+        formData.append(key, values[key]);
+      }
+    });
+  
     try {
       const result = await axios.post(
-        `https://localhost:7216/api/UserAccount/register/${role}`,
-        values,
+        `https://localhost:7216/api/UserAccount/register/${role}`, 
+        formData, 
         {
-          headers: {
-            "Content-Type": "application/json", // Change to multipart/form-data if sending files
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
-
+  
       console.log("Response:", result.data);
       alert("Registration successful: " + result.data.message);
     } catch (error) {
-      console.error(
-        "Error during registration:",
-        error.response?.data || error.message
-      );
-      alert(
-        "Registration failed: " +
-          (error.response?.data?.message || "Unexpected error")
-      );
+      console.error("Error during registration:", error.response?.data || error.message);
+      alert("Registration failed: " + (error.response?.data?.message || "Unexpected error"));
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-6">
@@ -1086,7 +1099,9 @@ export default function Register() {
                         .replace(/([A-Z])/g, " $1")
                         .replace(/^./, (str) => str.toUpperCase())}
                     </label>
-                    {field.includes("Form") || field === "imageGallery" ? (
+                    {field === "vehicleRegistrationForm" ||
+                    field === "driverLicense" ||
+                    field === "imageGallery" ? (
                       <input
                         id={field}
                         type="file"
