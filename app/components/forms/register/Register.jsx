@@ -896,7 +896,7 @@ export default function Register() {
       FullName: "",
       Email: "",
       PhoneNumber: "",
-      Address: "",  // Ensure Address is an empty string by default
+      Address: "",
       Password: "",
       ConfirmPassword: "",
     },
@@ -904,21 +904,21 @@ export default function Register() {
       FullName: "",
       Email: "",
       PhoneNumber: "",
-      Address: "", // Ensure Address is an empty string by default
+      Address: "",
       vehicleDetails: "",
-      vehicleRegistrationForm: null,
+      vehicleRegistrationDoc: null,
       driverLicense: null,
       Password: "",
       ConfirmPassword: "",
     },
-    propertyOwner: {
+    localhomeOwner: {
       FullName: "",
       Email: "",
       PhoneNumber: "",
-      Address: "", // Ensure Address is an empty string by default
+      Address: "",
       propertyDetails: "",
-      propertyOwnershipForm: null,
-      imageGallery: null,
+      propertyOwnershipDoc: null,
+      imageGalleryDoc: [],
       Password: "",
       ConfirmPassword: "",
     },
@@ -926,10 +926,19 @@ export default function Register() {
       FullName: "",
       Email: "",
       PhoneNumber: "",
-      Address: "", // Ensure Address is an empty string by default
+      Address: "",
       hotelDetails: "",
-      propertyOwnershipForm: null,
-      imageGallery: null,
+      propertyOwnershipDoc: null,
+      imageGalleryDoc: [],
+      Password: "",
+      ConfirmPassword: "",
+    },
+    tourGuide: {
+      FullName: "",
+      Email: "",
+      PhoneNumber: "",
+      Address: "",
+      idCard: null,
       Password: "",
       ConfirmPassword: "",
     },
@@ -944,7 +953,7 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
-      Address: Yup.string().required("Address is required"), // Added Address validation
+      Address: Yup.string().required("Address is required"),
       Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -960,9 +969,9 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
-      Address: Yup.string().required("Address is required"), // Added Address validation
+      Address: Yup.string().required("Address is required"),
       vehicleDetails: Yup.string().required("Vehicle details are required"),
-      vehicleRegistrationForm: Yup.mixed().required(
+      vehicleRegistrationDoc: Yup.mixed().required(
         "Vehicle Registration Form is required"
       ),
       driverLicense: Yup.mixed().required("Driver License is required"),
@@ -973,7 +982,7 @@ export default function Register() {
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
     }),
-    propertyOwner: Yup.object({
+    localhomeOwner: Yup.object({
       FullName: Yup.string().required("Full Name is required"),
       Email: Yup.string()
         .email("Invalid Email address")
@@ -981,12 +990,12 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
-      Address: Yup.string().required("Address is required"), // Added Address validation
+      Address: Yup.string().required("Address is required"),
       propertyDetails: Yup.string().required("Property details are required"),
-      propertyOwnershipForm: Yup.mixed().required(
+      propertyOwnershipDoc: Yup.mixed().required(
         "Property Ownership Form is required"
       ),
-      imageGallery: Yup.mixed().required("Image Gallery is required"),
+      imageGalleryDoc: Yup.mixed().required("Image Gallery is required"),
       Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -1002,12 +1011,29 @@ export default function Register() {
       PhoneNumber: Yup.string()
         .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
-      Address: Yup.string().required("Address is required"), // Added Address validation
+      Address: Yup.string().required("Address is required"),
       hotelDetails: Yup.string().required("Hotel details are required"),
-      propertyOwnershipForm: Yup.mixed().required(
+      propertyOwnershipDoc: Yup.mixed().required(
         "Property Ownership Form is required"
       ),
-      imageGallery: Yup.mixed().required("Image Gallery is required"),
+      imageGalleryDoc: Yup.mixed().required("Image Gallery is required"),
+      Password: Yup.string()
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
+      ConfirmPassword: Yup.string()
+        .oneOf([Yup.ref("Password"), null], "Passwords must match")
+        .required("Confirm Password is required"),
+    }),
+    tourGuide: Yup.object({
+      FullName: Yup.string().required("Full Name is required"),
+      Email: Yup.string()
+        .email("Invalid Email address")
+        .required("Email is required"),
+      PhoneNumber: Yup.string()
+        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
+        .required("Phone Number is required"),
+      Address: Yup.string().required("Address is required"),
+      idCard: Yup.mixed().required("ID Card is required"),
       Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -1018,37 +1044,38 @@ export default function Register() {
   };
 
   const handleSubmit = async (values) => {
-    console.log(values); // Debug log to check the form values
-  
     const formData = new FormData();
-  
-    // Append each field from values to FormData
-    Object.keys(values).forEach((key) => {
-      if (key === "vehicleRegistrationForm" || key === "driverLicense" || key === "profilePhoto") {
-        // Files need to be added directly as files
-        formData.append(key, values[key]);
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === "imageGalleryDoc") {
+        value?.forEach((file) => formData.append(key, file));
       } else {
-        formData.append(key, values[key]);
+        formData.append(key, value);
       }
     });
-  
     try {
-      const result = await axios.post(
-        `https://localhost:7216/api/UserAccount/register/${role}`, 
-        formData, 
+      const response = await axios.post(
+        `https://localhost:7216/api/auth/register/${role}`,
+        formData,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-  
-      console.log("Response:", result.data);
-      alert("Registration successful: " + result.data.message);
+      console.log("Success:", response.data); // Logs the success response
+      if(response.data.isSuccess)
+      {
+        console.log("Should redirect now");
+      }
     } catch (error) {
-      console.error("Error during registration:", error.response?.data || error.message);
-      alert("Registration failed: " + (error.response?.data?.message || "Unexpected error"));
+      // Handle error and access backend response
+      if (error.response) {
+        // Extract backend response message
+        const backendMessage = error.response.data;
+        console.error("Backend Error:", backendMessage);
+      }
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-6">
@@ -1060,28 +1087,27 @@ export default function Register() {
           </p>
         </div>
         <div className="p-6 sm:p-10 space-y-8">
-          <div>
-            <label
-              htmlFor="roleSelection"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Select Role
-            </label>
-            <select
-              id="roleSelection"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="mt-2 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3"
-            >
-              <option value="tourist">Tourist</option>
-              <option value="transporter">Transporter</option>
-              <option value="propertyOwner">Property Owner</option>
-              <option value="hotelOwner">Hotel Owner</option>
-            </select>
-          </div>
+          <label
+            htmlFor="roleSelection"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Select Role
+          </label>
+          <select
+            id="roleSelection"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+          >
+            <option value="tourist">Tourist</option>
+            <option value="transporter">Transporter</option>
+            <option value="localhomeOwner">Local Home Owner</option>
+            <option value="hotelOwner">Hotel Owner</option>
+            <option value="tourGuide">Tour Guide</option>
+          </select>
 
           <Formik
-            key={role} // Reset Formik when the role changes
+            key={role}
             initialValues={initialValues[role]}
             validationSchema={validationSchema[role]}
             onSubmit={handleSubmit}
@@ -1095,48 +1121,55 @@ export default function Register() {
                       htmlFor={field}
                       className="block text-sm font-medium text-gray-700"
                     >
-                      {field
-                        .replace(/([A-Z])/g, " $1")
-                        .replace(/^./, (str) => str.toUpperCase())}
+                      {field.replace(/([A-Z])/g, " $1").replace(/^./, (str) =>
+                        str.toUpperCase()
+                      )}
                     </label>
-                    {field === "vehicleRegistrationForm" ||
-                    field === "driverLicense" ||
-                    field === "imageGallery" ? (
-                      <input
-                        id={field}
-                        type="file"
-                        onChange={(e) =>
-                          setFieldValue(field, e.target.files[0])
-                        }
-                        className="mt-2 block w-full text-sm text-gray-600"
-                      />
+                    {["vehicleRegistrationDoc", "driverLicense", "propertyOwnershipDoc", "imageGalleryDoc", "idCard"].includes(field) ? (
+                      field === "imageGalleryDoc" ? (
+                        <input
+                          id={field}
+                          type="file"
+                          multiple
+                          onChange={(e) =>
+                            setFieldValue(field, Array.from(e.target.files))
+                          }
+                          className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                        />
+                      ) : (
+                        <input
+                          id={field}
+                          type="file"
+                          onChange={(e) =>
+                            setFieldValue(field, e.target.files[0])
+                          }
+                          className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                        />
+                      )
                     ) : (
                       <Field
                         id={field}
                         name={field}
                         type={
-                          field.includes("Password")
+                          field.toLowerCase().includes("password")
                             ? "password"
-                            : field === "Email"
-                            ? "email"
                             : "text"
                         }
-                        className="mt-2 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm px-4 py-3"
-                        placeholder={`Enter your ${field}`}
+                        className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
                       />
                     )}
                     <ErrorMessage
                       name={field}
-                      component="p"
-                      className="text-red-500 text-sm mt-1"
+                      component="div"
+                      className="text-sm text-red-600"
                     />
                   </div>
                 ))}
                 <button
                   type="submit"
-                  className="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-semibold rounded-lg shadow-lg hover:from-indigo-700 hover:to-blue-600 focus:ring-4 focus:ring-indigo-300 focus:outline-none transition duration-200"
+                  className="w-full py-3 px-6 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                 >
-                  Register as {role.charAt(0).toUpperCase() + role.slice(1)}
+                  Register
                 </button>
               </Form>
             )}
