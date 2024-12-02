@@ -887,6 +887,7 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Register() {
   const [role, setRole] = useState("tourist");
@@ -1063,8 +1064,7 @@ export default function Register() {
         }
       );
       console.log("Success:", response.data); // Logs the success response
-      if(response.data.isSuccess)
-      {
+      if (response.data.isSuccess) {
         console.log("Should redirect now");
       }
     } catch (error) {
@@ -1121,11 +1121,17 @@ export default function Register() {
                       htmlFor={field}
                       className="block text-sm font-medium text-gray-700"
                     >
-                      {field.replace(/([A-Z])/g, " $1").replace(/^./, (str) =>
-                        str.toUpperCase()
-                      )}
+                      {field
+                        .replace(/([A-Z])/g, " $1")
+                        .replace(/^./, (str) => str.toUpperCase())}
                     </label>
-                    {["vehicleRegistrationDoc", "driverLicense", "propertyOwnershipDoc", "imageGalleryDoc", "idCard"].includes(field) ? (
+                    {[
+                      "vehicleRegistrationDoc",
+                      "driverLicense",
+                      "propertyOwnershipDoc",
+                      "imageGalleryDoc",
+                      "idCard",
+                    ].includes(field) ? (
                       field === "imageGalleryDoc" ? (
                         <input
                           id={field}
@@ -1175,6 +1181,15 @@ export default function Register() {
             )}
           </Formik>
         </div>
+        <p className="mb-10 text-center text-sm text-gray-500">
+          Already have a account?
+          <Link
+            href="/login"
+            className="font-bold ml-2 leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

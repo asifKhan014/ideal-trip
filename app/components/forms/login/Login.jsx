@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import { useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Login() {
   // State to store form values
@@ -25,7 +26,7 @@ export default function Login() {
       // Handle success
       console.log("Login Success:", result.data);
       var token = result.data.messege;
-      localStorage.setItem('authToken',token);
+      localStorage.setItem("authToken", token);
 
       // redirect user to home page
     } catch (error) {
@@ -41,7 +42,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"
@@ -52,7 +53,6 @@ export default function Login() {
             Sign in to your account
           </h2>
         </div>
-
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           {/* Show error message if any */}
           {error && <div className="text-red-500 text-sm">{error}</div>}
@@ -89,7 +89,7 @@ export default function Login() {
                 </label>
                 <div className="text-sm">
                   <a
-                    href="#"
+                    href="/forgot-password"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
@@ -122,12 +122,12 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
-            <a
+            <Link
               href="/register"
               className="font-bold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               Join Now
-            </a>
+            </Link>
           </p>
         </div>
       </div>
