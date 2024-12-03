@@ -2,13 +2,14 @@
 import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import  {useRouter} from 'next/navigation'
+import { Router } from "next/dist/client/router";
 
 export default function Login() {
-  // State to store form values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const router = useRouter();
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent page reload
 
@@ -39,6 +40,10 @@ export default function Login() {
       }
     }
   };
+
+  const handleForgetPassword =()=>{
+   router.push('/forget-password');
+  }
 
   return (
     <>
@@ -91,6 +96,7 @@ export default function Login() {
                   <a
                     href="/forgot-password"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    onClick={handleForgetPassword}
                   >
                     Forgot password?
                   </a>
