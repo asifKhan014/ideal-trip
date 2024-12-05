@@ -11,7 +11,6 @@ function ForgotPassword() {
     event.preventDefault(); // Prevent default form submission behavior
   
     try {
-      console.log(emailAddress);
   
       // Send a POST request to the API with the email, setting the Content-Type to application/json
       const result = await axios.post(
@@ -27,6 +26,7 @@ function ForgotPassword() {
       );
   
       if (result.data.isSuccess) {
+        localStorage.setItem('email',emailAddress);
         router.push("/otp"); // Redirect to OTP page on success
       } else {
         console.error("Something went wrong:", result.data);

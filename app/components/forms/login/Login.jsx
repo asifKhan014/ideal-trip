@@ -42,7 +42,7 @@ export default function Login() {
   };
 
   const handleForgetPassword =()=>{
-   router.push('/forget-password');
+   router.push('/forgot-password');
   }
 
   return (
