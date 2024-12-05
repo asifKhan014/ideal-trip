@@ -27,7 +27,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50">
+    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50 py-4">
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
         <div className="flex h-16 justify-between">
           <div className="flex px-2 lg:px-0">
