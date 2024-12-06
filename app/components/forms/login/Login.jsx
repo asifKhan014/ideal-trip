@@ -2,21 +2,21 @@
 import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import  {useRouter} from 'next/navigation'
-import { Router } from "next/dist/client/router";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent page reload
+    event.preventDefault();
 
     try {
       const result = await axios.post(
-        "https://localhost:7216/api/auth/login", // Update with your backend login endpoint
-        { email, password }, // Send the email and password
+        "https://localhost:7216/api/auth/login",
+        { email, password },
         {
           headers: {
             "Content-Type": "application/json",
@@ -24,16 +24,14 @@ export default function Login() {
         }
       );
 
-      // Handle success
       console.log("Login Success:", result.data);
       var token = result.data.messege;
       localStorage.setItem("authToken", token);
-
-      // redirect user to home page
+      router.push("/");
     } catch (error) {
-      // Handle error
       if (error.response) {
-        setError(error.response.data?.Messege || "Unexpected error");
+        console.log(error.response.data)
+        setError(error.response.data.messege || "Unexpected error");
       } else {
         console.error("Error:", error.message);
         setError("Login failed: An unexpected error occurred.");
@@ -41,25 +39,25 @@ export default function Login() {
     }
   };
 
-  const handleForgetPassword =()=>{
-   router.push('/forgot-password');
-  }
+  const handleForgetPassword = () => {
+    router.push("/forgot-password");
+  };
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"
-            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-10 w-auto"
+            src="/travel.png"
+            className="mx-auto h-20 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
           </h2>
         </div>
+
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* Show error message if any */}
           {error && <div className="text-red-500 text-sm">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -79,7 +77,7 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 shadow-sm placeholder-gray-400 focus:border-black focus:outline-none focus:ring-2 focus:ring-black sm:text-sm"
                 />
               </div>
             </div>
@@ -111,7 +109,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 shadow-sm placeholder-gray-400 focus:border-black focus:outline-none focus:ring-2 focus:ring-black sm:text-sm"
                 />
               </div>
             </div>

@@ -33,9 +33,9 @@ export default function Navbar() {
           <div className="flex px-2 lg:px-0">
             <div className="flex flex-shrink-0 items-center">
               <img
-                alt="Your Company"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
+                alt="Ideal Trip"
+                src="/travel.png"
+                className="h-14 w-auto"
               />
             </div>
             <div className="hidden lg:ml-6 lg:flex lg:space-x-8">

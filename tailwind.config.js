@@ -10,6 +10,10 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        base: "#f5f5f5", // Update as per your UI
+        card: "#ffffff",
+        accent: "#006D75",
+        "on-filled": "#ffffff",
       },
       animation: {
         "spin-slow": "spin 10s linear infinite",
