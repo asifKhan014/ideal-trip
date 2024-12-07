@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import {
   Disclosure,
   DisclosureButton,
@@ -27,10 +13,10 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50 py-4">
+    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50 py-3">
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
         <div className="flex h-16 justify-between">
-          <div className="flex px-2 lg:px-0">
+          <div className="flex  px-2 lg:px-0">
             <div className="flex flex-shrink-0 items-center">
               <img
                 alt="Your Company"
@@ -38,7 +24,9 @@ export default function Navbar() {
                 className="h-8 w-auto"
               />
             </div>
-            <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="hidden  lg:ml-6 lg:flex lg:space-x-8">
               {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
               <a
                 href="/"
@@ -72,28 +60,7 @@ export default function Navbar() {
               </a>
             </div>
           </div>
-          <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-            <div className="w-full max-w-lg lg:max-w-xs">
-              <label htmlFor="search" className="sr-only">
-                Search
-              </label>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <MagnifyingGlassIcon
-                    aria-hidden="true"
-                    className="h-5 w-5 text-gray-400"
-                  />
-                </div>
-                <input
-                  id="search"
-                  name="search"
-                  type="search"
-                  placeholder="Search"
-                  className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
+
           <div className="flex items-center lg:hidden">
             {/* Mobile menu button */}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
