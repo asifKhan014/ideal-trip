@@ -80,7 +80,6 @@ export default function Register() {
       )
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
-
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
@@ -106,7 +105,6 @@ export default function Register() {
       )
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
-
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
@@ -157,7 +155,6 @@ export default function Register() {
       )
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
-
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),

@@ -1,12 +1,12 @@
 // import Banner from "@/components/layouts/banner/banner";
 import TourGuide from "../components/layouts/tourGuide/TourGuide";
 import Banner from "../components/layouts/banner/Banner";
+import withAuth from "../components/hoc/WithAuth";
 export default function Home() {
   return (
     <div className="">
       <Banner />
       <TourGuide />
-
       {/* 
       <LocalHomeRoom />
       <HotelRoom /> */}
