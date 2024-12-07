@@ -9,9 +9,7 @@ function ForgotPassword() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-  
     try {
-      console.log(emailAddress);
   
       // Send a POST request to the API with the email, setting the Content-Type to application/json
       const result = await axios.post(
@@ -27,7 +25,7 @@ function ForgotPassword() {
       );
   
       if (result.data.isSuccess) {
-        router.push("/otp"); // Redirect to OTP page on success
+        router.push(`/verify-email?email=${encodeURIComponent(emailAddress)}`);
       } else {
         console.error("Something went wrong:", result.data);
       }
@@ -35,7 +33,6 @@ function ForgotPassword() {
       console.error("Error sending request:", error);
     }
   };
-  
 
   return (
     <main id="content" role="main" className="w-full max-w-md mx-auto p-6">
