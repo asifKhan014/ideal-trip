@@ -24,10 +24,46 @@
 
 // export default page;
 "use client";
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 
 function page() {
   const [editMode, setEditMode] = useState(false);
+  const [userDetails, setUserDetails] = useState(null); // Store user info including profile photo URL
+  const [loading, setLoading] = useState(true); // For handling loading state
+
+  useEffect(() => {
+    // Fetch user data on component mount (or page load)
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await fetch('https://localhost:7216/api/user/profile', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch user profile');
+          }
+
+          const userData = await response.json();
+          setUserDetails(userData); // Set user profile data (including profile photo URL)
+        } catch (error) {
+          console.error(error.message);
+        } finally {
+          setLoading(false); // Stop loading after fetching
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Loading state
+  }
 
   const handleEdit = () => {
     setEditMode(!editMode);

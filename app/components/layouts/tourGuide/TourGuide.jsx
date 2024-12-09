@@ -220,6 +220,7 @@
 // }
 
 "use client";
+import Image from "next/image";
 import TourGuideCard from "./TourGideCard";
 import { useState } from "react";
 
@@ -333,6 +334,19 @@ export default function TourGuide() {
   return (
     <div className="min-h-screen bg-gray-50 py-10">
       <div className="max-w-7xl mx-auto px-4">
+        <div className="pb-16 text-3xl sm:text-5xl text-center text-black font-bold mb-8">
+          Top Tour Packages
+        </div>
+
+        <div className="w-full h-[150px] sm:w-full sm:h-[300px] relative px-9 mb-16">
+          <Image
+            src="/tours-home.jpg"
+            layout="fill"
+            objectFit="cover"
+            alt="Tours Home"
+            className="rounded-md"
+          />
+        </div>
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Top Tour Packages</h1>
           <button

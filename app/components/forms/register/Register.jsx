@@ -4,12 +4,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [role, setRole] = useState("tourist");
-  const [backendError, setBackendError] = useState(null);  // State to store backend error
-  const router = useRouter();
+  const [error,setError] = useState("");
+
   const initialValues = {
     tourist: {
       FullName: "",
@@ -70,16 +69,12 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^(03[0-9]{9})$/, "Phone number must be a valid Pakistani number (e.g., 03001234567)")
+        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       Password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-      )
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
@@ -90,7 +85,7 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^(03[0-9]{9})$/, "Phone number must be a valid Pakistani number (e.g., 03001234567)")
+        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       vehicleDetails: Yup.string().required("Vehicle details are required"),
@@ -99,12 +94,8 @@ export default function Register() {
       ),
       driverLicense: Yup.mixed().required("Driver License is required"),
       Password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-      )
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
@@ -115,7 +106,7 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^(03[0-9]{9})$/, "Phone number must be a valid Pakistani number (e.g., 03001234567)")
+        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       propertyDetails: Yup.string().required("Property details are required"),
@@ -124,12 +115,8 @@ export default function Register() {
       ),
       imageGalleryDoc: Yup.mixed().required("Image Gallery is required"),
       Password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-      )
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
@@ -140,7 +127,7 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^(03[0-9]{9})$/, "Phone number must be a valid Pakistani number (e.g., 03001234567)")
+        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       hotelDetails: Yup.string().required("Hotel details are required"),
@@ -149,12 +136,8 @@ export default function Register() {
       ),
       imageGalleryDoc: Yup.mixed().required("Image Gallery is required"),
       Password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-      )
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
@@ -165,17 +148,13 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^(03[0-9]{9})$/, "Phone number must be a valid Pakistani number (e.g., 03001234567)")
+        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       idCard: Yup.mixed().required("ID Card is required"),
       Password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-      )
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
       ConfirmPassword: Yup.string()
         .oneOf([Yup.ref("Password"), null], "Passwords must match")
         .required("Confirm Password is required"),
@@ -185,10 +164,12 @@ export default function Register() {
   const handleSubmit = async (values) => {
     const formData = new FormData();
     Object.entries(values).forEach(([key, value]) => {
-      if (key === "imageGalleryDoc") {
-        value?.forEach((file) => formData.append(key, file));
+      if (value instanceof File) {
+        formData.append(key, value); // For single file
+      } else if (Array.isArray(value)) {
+        value.forEach((file) => formData.append(key, file)); // For multiple files
       } else {
-        formData.append(key, value);
+        formData.append(key, value); // For other fields
       }
     });
     try {
@@ -203,16 +184,14 @@ export default function Register() {
       );
       console.log("Success:", response.data); // Logs the success response
       if (response.data.isSuccess) {
-        router.push(`/verify-email?email=${encodeURIComponent(values.Email)}`);
+        console.log("Should redirect now");
       }
     } catch (error) {
-      // Handle error and set backend error message
+      // Handle error and access backend response
       if (error.response) {
-        // Extract backend error message
-        setBackendError(error.response.data.message || "Something went wrong!");
-        console.error("Backend Error:", error.response.data);
-      } else {
-        setBackendError("Network error. Please try again later.");
+        // Extract backend response message
+        const backendMessage = error.response.data.messege;
+        console.error("Backend Error:", backendMessage);
       }
     }
   };
@@ -246,91 +225,92 @@ export default function Register() {
             <option value="tourGuide">Tour Guide</option>
           </select>
 
-          {backendError && (
-            <div className="text-red-500 text-sm mt-4">{backendError}</div>
-          )}
-
           <Formik
+            key={role}
             initialValues={initialValues[role]}
             validationSchema={validationSchema[role]}
             onSubmit={handleSubmit}
+            enableReinitialize
           >
-            {({ isSubmitting }) => (
+            {({ setFieldValue }) => (
               <Form className="space-y-6">
-                <div>
-                  <Field
-                    id="FullName"
-                    name="FullName"
-                    type="text"
-                    placeholder="Full Name"
-                    className="block w-full p-3 rounded-md border-gray-300"
-                  />
-                  <ErrorMessage name="FullName" component="div" className="text-red-500 text-sm" />
-                </div>
-                <div>
-                  <Field
-                    id="Email"
-                    name="Email"
-                    type="email"
-                    placeholder="Email"
-                    className="block w-full p-3 rounded-md border-gray-300"
-                  />
-                  <ErrorMessage name="Email" component="div" className="text-red-500 text-sm" />
-                </div>
-                <div>
-                  <Field
-                    id="PhoneNumber"
-                    name="PhoneNumber"
-                    type="text"
-                    placeholder="Phone Number (e.g., 03001234567)"
-                    className="block w-full p-3 rounded-md border-gray-300"
-                  />
-                  <ErrorMessage name="PhoneNumber" component="div" className="text-red-500 text-sm" />
-                </div>
-                <div>
-                  <Field
-                    id="Address"
-                    name="Address"
-                    type="text"
-                    placeholder="Address"
-                    className="block w-full p-3 rounded-md border-gray-300"
-                  />
-                  <ErrorMessage name="Address" component="div" className="text-red-500 text-sm" />
-                </div>
-                <div>
-                  <Field
-                    id="Password"
-                    name="Password"
-                    type="password"
-                    placeholder="Password"
-                    className="block w-full p-3 rounded-md border-gray-300"
-                  />
-                  <ErrorMessage name="Password" component="div" className="text-red-500 text-sm" />
-                </div>
-                <div>
-                  <Field
-                    id="ConfirmPassword"
-                    name="ConfirmPassword"
-                    type="password"
-                    placeholder="Confirm Password"
-                    className="block w-full p-3 rounded-md border-gray-300"
-                  />
-                  <ErrorMessage name="ConfirmPassword" component="div" className="text-red-500 text-sm" />
-                </div>
-                <div className="flex justify-center">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-indigo-600 text-white rounded-md py-3 px-6 hover:bg-indigo-700 focus:outline-none"
-                  >
-                    {isSubmitting ? "Submitting..." : "Register"}
-                  </button>
-                </div>
+                {Object.keys(initialValues[role]).map((field, index) => (
+                  <div key={index}>
+                    <label
+                      htmlFor={field}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      {field
+                        .replace(/([A-Z])/g, " $1")
+                        .replace(/^./, (str) => str.toUpperCase())}
+                    </label>
+                    {[
+                      "vehicleRegistrationDoc",
+                      "driverLicense",
+                      "propertyOwnershipDoc",
+                      "imageGalleryDoc",
+                      "idCard",
+                    ].includes(field) ? (
+                      field === "imageGalleryDoc" ? (
+                        <input
+                          id={field}
+                          type="file"
+                          multiple
+                          onChange={(e) =>
+                            setFieldValue(field, Array.from(e.target.files))
+                          }
+                          className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                        />
+                      ) : (
+                        <input
+                          id={field}
+                          type="file"
+                          onChange={(e) =>
+                            setFieldValue(field, e.target.files[0])
+                          }
+                          className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                        />
+                      )
+                    ) : (
+                      <Field
+                        id={field}
+                        name={field}
+                        type={
+                          field.toLowerCase().includes("password")
+                            ? "password"
+                            : "text"
+                        }
+                        className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                      />
+                    )}
+                    <ErrorMessage
+                      name={field}
+                      component="div"
+                      className="text-sm text-red-600"
+                    />
+                  </div>
+                ))}
+                <button
+                  type="submit"
+                  className="w-full py-3 px-6 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                >
+                  Register
+                </button>
               </Form>
             )}
           </Formik>
         </div>
+        <p className="mb-10 text-center text-sm text-gray-500">
+          Already have a account?
+          <Link
+            href="/login"
+            className="font-bold ml-2 leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Login
+          </Link>
+        </p>
       </div>
+      <span className="errors">{error}</span>
     </div>
   );
 }

@@ -14,50 +14,54 @@ import Link from "next/link";
 import { useAuth } from "../../../hooks/useAuth"; // Adjust the path based on your actual context location
 import { isTokenValid } from "../../../../utils/isTokenValid"; // Import the token validity function
 import { useState,useEffect } from "react";
+import axios from "axios";
 
 export default function Navbar() {
-  const { user, isAuthenticated, logout } = useAuth(); // Assuming token is stored in user object
-  const [userDetails, setUserDetails] = useState(null); // Store user info including profile photo URL
-  const [loading, setLoading] = useState(true); // For handling loading state
+  let isAuthenticated = true;
+  // const { user, isAuthenticated, logout } = useAuth(); // Assuming token is stored in user object
+  // const [userDetails, setUserDetails] = useState(null); // Store user info including profile photo URL
+  // const [loading, setLoading] = useState(true); // For handling loading state
 
-  useEffect(() => {
-    // Fetch user data on component mount (or page load)
-    const fetchUserProfile = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const response = await fetch('https://localhost:7216/api/user/profile', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
+  // useEffect(() => {
+  //   // Fetch user data on component mount (or page load)
+  //   const fetchUserProfile = async () => {
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       try {
+  //         const response = await axios.get('https://localhost:7216/api/auth/profile', {
+  //           headers: {
+  //             'Authorization': `Bearer ${token}`,
+  //           },
+  //         });
 
-          if (!response.ok) {
-            throw new Error('Failed to fetch user profile');
-          }
+  //         console.log(response.data);
 
-          const userData = await response.json();
-          setUserDetails(userData); // Set user profile data (including profile photo URL)
-        } catch (error) {
-          console.error(error.message);
-        } finally {
-          setLoading(false); // Stop loading after fetching
-        }
-      }
-    };
+  //         if (!response.ok) {
+  //           throw new Error('Failed to fetch user profile');
+  //         }
+  //         if(response.data.isSuccess){
+  //           const userData = response.data.data;
+  //           setUserDetails(userData);
+  //         }
+  //       } catch (error) {
+  //         console.log(error.response);
+  //       } finally {
+  //         setLoading(false); // Stop loading after fetching
+  //       }
+  //     }
+  //   };
 
-    fetchUserProfile();
-  }, []);
+  //   fetchUserProfile();
+  // }, []);
 
-  if (loading) {
-    return <div>Loading...</div>; // Loading state
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Loading state
+  // }
   return (
-    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50 py-4">
+    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50 py-3">
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
         <div className="flex h-16 justify-between">
-          <div className="flex px-2 lg:px-0">
+          <div className="flex  px-2 lg:px-0">
             <div className="flex flex-shrink-0 items-center">
               <img
                 alt="Ideal Trip"
@@ -65,14 +69,16 @@ export default function Navbar() {
                 className="h-14 w-auto"
               />
             </div>
-            <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
-              {/* Menu links */}
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="hidden  lg:ml-6 lg:flex lg:space-x-8">
+              {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
               <Link
                 href="/"
                 className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
               >
                 Home
-              </Link>
+                </Link>
               <Link
                 href="#home-tours"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -99,27 +105,21 @@ export default function Navbar() {
               </Link>
             </div>
           </div>
-          <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-            <div className="w-full max-w-lg lg:max-w-xs">
-              <label htmlFor="search" className="sr-only">
-                Search
-              </label>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <MagnifyingGlassIcon
-                    aria-hidden="true"
-                    className="h-5 w-5 text-gray-400"
-                  />
-                </div>
-                <input
-                  id="search"
-                  name="search"
-                  type="search"
-                  placeholder="Search"
-                  className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+
+          <div className="flex items-center lg:hidden">
+            {/* Mobile menu button */}
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+              <span className="absolute -inset-0.5" />
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon
+                aria-hidden="true"
+                className="block h-6 w-6 group-data-[open]:hidden"
+              />
+              <XMarkIcon
+                aria-hidden="true"
+                className="hidden h-6 w-6 group-data-[open]:block"
+              />
+            </DisclosureButton>
           </div>
           <div className="hidden lg:ml-4 lg:flex lg:items-center">
             {/* Profile dropdown or login/signup buttons */}
@@ -132,7 +132,7 @@ export default function Navbar() {
                     <span className="sr-only">Open user menu</span>
                     <img
                       alt=""
-                      src={userDetails? userDetails.ProfilePhotoUrl || '/user.png' : '/user.png'}
+                      src='/user.png'
                       className="h-8 w-8 rounded-full"
                     />
                   </MenuButton>
@@ -158,8 +158,7 @@ export default function Navbar() {
                     </Link>
                   </MenuItem>
                   <MenuItem>
-                    <button
-                      onClick={logout} // Assuming logout function is available
+                    <button // Assuming logout function is available
                       className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                     >
                       Sign out
