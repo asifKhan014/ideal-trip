@@ -146,7 +146,7 @@ export default function TourGuideHighlights() {
   const tourGuides = [
     {
       name: "Sarah Williams",
-      image: "/images/sarah.jpg",
+      image: "/images/guide-2.jpg",
       expertise: "Mountain Expeditions",
       description:
         "Experienced in leading hikes and mountain treks with 10+ years of experience.",
@@ -155,7 +155,7 @@ export default function TourGuideHighlights() {
     },
     {
       name: "John Smith",
-      image: "/images/john.jpg",
+      image: "/images/guide-1.jpg",
       expertise: "City Tours",
       description:
         "Specializes in urban cultural tours and historical site explanations.",
@@ -164,7 +164,7 @@ export default function TourGuideHighlights() {
     },
     {
       name: "Emma Brown",
-      image: "/images/emma.jpg",
+      image: "/images/guide-3.jpg",
       expertise: "Adventure Sports",
       description:
         "Expert in organizing adventure activities like rafting and paragliding.",
@@ -174,7 +174,7 @@ export default function TourGuideHighlights() {
   ];
 
   return (
-    <section className="py-16 px-20 bg-gradient-to-r from-blue-50 to-gray-100">
+    <section className="py-20 px-4 lg:px-20 bg-gradient-to-r from-blue-50 to-gray-100">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-12">
           Meet Our Expert Tour Guides

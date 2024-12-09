@@ -133,7 +133,7 @@ export default function TestimonialsAndReviews() {
       rating: 5,
       feedback:
         "The trip exceeded my expectations! The services were seamless, and the staff was fantastic. Highly recommended.",
-      profilePic: "/john.jpg",
+      profilePic: "/images/guide-1.jpg",
     },
     {
       id: 2,
@@ -142,7 +142,7 @@ export default function TestimonialsAndReviews() {
       rating: 4.5,
       feedback:
         "From start to finish, everything was flawless. The hotel and activities were exactly as described. Great experience!",
-      profilePic: "/jane.jpg",
+      profilePic: "/images/guide-2.jpg",
     },
     {
       id: 3,
@@ -151,13 +151,17 @@ export default function TestimonialsAndReviews() {
       rating: 4,
       feedback:
         "Comfortable transport, excellent guide, and a memorable experience overall. Worth every penny.",
-      profilePic: "/ali.jpg",
+      profilePic: "/images/guide-3.jpg",
     },
   ];
 
   const visualContent = {
-    video: "/testimonials-video.mp4", // Replace with your video URL or path
-    userPhotos: ["/photo1.jpg", "/photo2.jpg", "/photo3.jpg"], // Replace with actual paths
+    video: "/videos/testimonials-video.mp4", // Replace with your video URL or path
+    userPhotos: [
+      "/images/story1.jpg",
+      "/images/story3.jpg",
+      "/images/story2.jpg",
+    ], // Replace with actual paths
   };
 
   const nextSlide = () =>
@@ -168,7 +172,7 @@ export default function TestimonialsAndReviews() {
     );
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-gray-100 py-16">
+    <section className="bg-gradient-to-b from-gray-50 to-gray-100 py-20">
       <div className="container mx-auto px-6">
         {/* Section Heading */}
         <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-12">
@@ -218,7 +222,7 @@ export default function TestimonialsAndReviews() {
         </div>
 
         {/* Visual Content */}
-        <div className="mt-16">
+        <div className="mt-16 lg:mt-24">
           <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
             User Stories and Memories
           </h3>

@@ -248,7 +248,7 @@ export default function HotelAndLocalRooms() {
   const [hotelRooms] = useState([
     {
       id: 1,
-      image: "/hotel1.jpg",
+      image: "/images/hotel1.jpg",
       name: "Luxury Hotel Suite",
       features: ["Free WiFi", "Pool Access", "Breakfast Included"],
       rating: 4.7,
@@ -256,7 +256,7 @@ export default function HotelAndLocalRooms() {
     },
     {
       id: 2,
-      image: "/hotel2.jpg",
+      image: "/images/hotel2.jpg",
       name: "Deluxe Double Room",
       features: ["Free WiFi", "Airport Shuttle", "City View"],
       rating: 4.5,
@@ -267,7 +267,7 @@ export default function HotelAndLocalRooms() {
   const [localRooms] = useState([
     {
       id: 1,
-      image: "/local1.jpg",
+      image: "/images/local1.jpg",
       name: "Cozy Cottage",
       features: ["Kitchen Access", "Pet Friendly", "Countryside View"],
       rating: 4.8,
@@ -275,7 +275,7 @@ export default function HotelAndLocalRooms() {
     },
     {
       id: 2,
-      image: "/local2.jpg",
+      image: "/images/local2.jpg",
       name: "Modern Studio Apartment",
       features: ["Free WiFi", "Downtown Location", "Balcony"],
       rating: 4.6,
@@ -284,7 +284,7 @@ export default function HotelAndLocalRooms() {
   ]);
 
   return (
-    <section className="bg-gray-50 py-12 px-20">
+    <section className="bg-gray-50 py-20 px-4 lg:px-20">
       <div className="container mx-auto px-6">
         {/* Hotel Rooms Section */}
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
@@ -298,7 +298,7 @@ export default function HotelAndLocalRooms() {
         <ComparisonTable title="Compare Hotel Rooms" rooms={hotelRooms} />
 
         {/* Local Home Rooms Section */}
-        <h2 className="text-4xl font-bold text-center text-gray-800 mt-12 mb-8">
+        <h2 className="text-4xl pt-6 lg:pt-9 font-bold text-center text-gray-800 mt-12 mb-8">
           Local Home Stays
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

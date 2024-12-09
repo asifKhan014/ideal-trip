@@ -18,11 +18,13 @@ export default function Navbar() {
         <div className="flex h-16 justify-between">
           <div className="flex  px-2 lg:px-0">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Ideal Trip"
-                src="/travel.png"
-                className="h-14 w-auto"
-              />
+              <Link href={"/"}>
+                <img
+                  alt="Ideal Trip"
+                  src="/travel.png"
+                  className="h-14 w-auto"
+                />
+              </Link>
             </div>
           </div>
           <div className="flex items-center justify-center">

@@ -5,7 +5,7 @@ export default function CallToActionSection() {
     <section
       className="relative bg-cover bg-center h-screen flex items-center justify-center"
       style={{
-        backgroundImage: "url('/scenic-bg.jpg')", // Replace with your scenic image
+        backgroundImage: "url('/images/action.jpg')", // Replace with your scenic image
         backgroundAttachment: "fixed", // Parallax scrolling
       }}
     >
