@@ -1,6 +1,7 @@
 // import Banner from "@/components/layouts/banner/banner";
 import TourGuide from "../components/layouts/tourGuide/TourGuide";
 import Banner from "../components/layouts/banner/Banner";
+import withAuth from "../components/hoc/WithAuth";
 import HeroSction from "../components/hero/HeroSection";
 import ServicesSection from "../components/service/ServiceSection";
 import FeaturedPackages from "../components/features/FeaturePackageSection";

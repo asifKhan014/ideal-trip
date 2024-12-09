@@ -1,3 +1,4 @@
+'use client'
 import {
   Disclosure,
   DisclosureButton,
@@ -10,8 +11,52 @@ import {
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useAuth } from "../../../hooks/useAuth"; // Adjust the path based on your actual context location
+import { isTokenValid } from "../../../../utils/isTokenValid"; // Import the token validity function
+import { useState,useEffect } from "react";
+import axios from "axios";
 
 export default function Navbar() {
+  let isAuthenticated = true;
+  // const { user, isAuthenticated, logout } = useAuth(); // Assuming token is stored in user object
+  // const [userDetails, setUserDetails] = useState(null); // Store user info including profile photo URL
+  // const [loading, setLoading] = useState(true); // For handling loading state
+
+  // useEffect(() => {
+  //   // Fetch user data on component mount (or page load)
+  //   const fetchUserProfile = async () => {
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       try {
+  //         const response = await axios.get('https://localhost:7216/api/auth/profile', {
+  //           headers: {
+  //             'Authorization': `Bearer ${token}`,
+  //           },
+  //         });
+
+  //         console.log(response.data);
+
+  //         if (!response.ok) {
+  //           throw new Error('Failed to fetch user profile');
+  //         }
+  //         if(response.data.isSuccess){
+  //           const userData = response.data.data;
+  //           setUserDetails(userData);
+  //         }
+  //       } catch (error) {
+  //         console.log(error.response);
+  //       } finally {
+  //         setLoading(false); // Stop loading after fetching
+  //       }
+  //     }
+  //   };
+
+  //   fetchUserProfile();
+  // }, []);
+
+  // if (loading) {
+  //   return <div>Loading...</div>; // Loading state
+  // }
   return (
     <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50 py-3">
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -30,36 +75,36 @@ export default function Navbar() {
           <div className="flex items-center justify-center">
             <div className="hidden  lg:ml-6 lg:flex lg:space-x-8">
               {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-              <a
+              <Link
                 href="/"
                 className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
               >
                 Home
-              </a>
-              <a
+                </Link>
+              <Link
                 href="#home-tours"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
               >
                 Tours
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
               >
                 Transportation
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
               >
                 Accumodation
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/contact-us"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -79,65 +124,68 @@ export default function Navbar() {
             </DisclosureButton>
           </div>
           <div className="hidden lg:ml-4 lg:flex lg:items-center">
-            {/* <button
-              type="button"
-              className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="h-6 w-6" />
-            </button> */}
-
-            {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-4 flex-shrink-0">
-              <Link href={"/profile"}>
-                <MenuButton className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    className="h-8 w-8 rounded-full"
-                  />
-                </MenuButton>
-              </Link>
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-              >
-                <MenuItem>
-                  <Link
-                    href="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                  >
-                    Your Profile
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                  >
-                    Settings
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <Link
-                    href="/login"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                  >
-                    Sign out
-                  </Link>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
+            {/* Profile dropdown or login/signup buttons */}
+            {isAuthenticated ? (
+              // Profile dropdown
+              <Menu as="div" className="relative ml-4 flex-shrink-0">
+                <Link href={"/profile"}>
+                  <MenuButton className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">Open user menu</span>
+                    <img
+                      alt=""
+                      src='/user.png'
+                      className="h-8 w-8 rounded-full"
+                    />
+                  </MenuButton>
+                </Link>
+                <MenuItems
+                  transition
+                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                >
+                  <MenuItem>
+                    <Link
+                      href="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                    >
+                      Your Profile
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                    >
+                      Settings
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <button // Assuming logout function is available
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                    >
+                      Sign out
+                    </button>
+                  </MenuItem>
+                </MenuItems>
+              </Menu>
+            ) : (
+              // Login and SignUp links
+              <div className="flex items-center space-x-4">
+                <Link legacyBehavior href="/login">
+                  <a className="text-sm font-medium text-gray-500 hover:text-gray-700">Log In</a>
+                </Link>
+                <Link legacyBehavior href="/register">
+                  <a className="text-sm font-medium text-gray-500 hover:text-gray-700">Sign Up</a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       <DisclosurePanel className="lg:hidden">
         <div className="space-y-1 pb-3 pt-2">
-          {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
+          {/* Menu links for mobile */}
           <DisclosureButton
             as="a"
             href="#"
@@ -157,7 +205,7 @@ export default function Navbar() {
             href="#"
             className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
           >
-            Transportaion
+            Transportation
           </DisclosureButton>
           <DisclosureButton
             as="a"

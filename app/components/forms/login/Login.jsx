@@ -3,12 +3,14 @@ import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const { setAuth } = useAuth(); // Get setAuth from context
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,13 +26,20 @@ export default function Login() {
         }
       );
 
-      console.log("Login Success:", result.data);
-      var token = result.data.messege;
-      localStorage.setItem("authToken", token);
-      router.push("/");
+      if (result.data.isSuccess) {
+        const token = result.data.messege;  // Token
+        const user = result.data.data;      // User data
+
+        // Set the token and user in the AuthContext and localStorage
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        setAuth(token,user);
+        // Redirect to home page
+        router.push("/");
+      }
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data)
+        console.log(error.response.data);
         setError(error.response.data.messege || "Unexpected error");
       } else {
         console.error("Error:", error.message);
