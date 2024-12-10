@@ -17,7 +17,7 @@ export default function Login() {
 
     try {
       const result = await axios.post(
-        "https://localhost:7216/api/auth/login",
+        "http://localhost:5277/api/auth/login",
         { email, password },
         {
           headers: {
@@ -27,13 +27,13 @@ export default function Login() {
       );
 
       if (result.data.isSuccess) {
-        const token = result.data.messege;  // Token
-        const user = result.data.data;      // User data
+        const token = result.data.messege; // Token
+        const user = result.data.data; // User data
 
         // Set the token and user in the AuthContext and localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        setAuth(token,user);
+        setAuth(token, user);
         // Redirect to home page
         router.push("/");
       }

@@ -22,7 +22,7 @@ export default function VerifyEmail() {
 
     try {
       const response = await axios.post(
-        "https://localhost:7216/api/auth/resend-link",
+        "http://localhost:5277/api/auth/resend-link",
         { email }
       );
 
@@ -48,7 +48,7 @@ export default function VerifyEmail() {
       <main className="bg-white rounded-md shadow-md w-full max-w-md p-6">
         <header className="text-center mb-6">
           <div className="text-blue-600 text-[3.125rem]">
-          <img alt="Logo" src="/travel.png" className="w-32 h-32 mx-auto" />
+            <img alt="Logo" src="/travel.png" className="w-32 h-32 mx-auto" />
           </div>
         </header>
         <div className="text-center">

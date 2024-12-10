@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -10,10 +10,9 @@ function ForgotPassword() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     try {
-  
       // Send a POST request to the API with the email, setting the Content-Type to application/json
       const result = await axios.post(
-        "https://localhost:7216/api/auth/forgot-password",
+        "http://localhost:5277/api/auth/forgot-password",
         {
           emailAddress,
         },
@@ -23,7 +22,7 @@ function ForgotPassword() {
           },
         }
       );
-  
+
       if (result.data.isSuccess) {
         router.push(`/verify-email?email=${encodeURIComponent(emailAddress)}`);
       } else {

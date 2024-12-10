@@ -4,11 +4,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [role, setRole] = useState("tourist");
-  const [error,setError] = useState("");
-
+  const [error, setError] = useState("");
+  const router = useRouter();
   const initialValues = {
     tourist: {
       FullName: "",
@@ -174,7 +175,7 @@ export default function Register() {
     });
     try {
       const response = await axios.post(
-        `https://localhost:7216/api/auth/register/${role}`,
+        `http://localhost:5277/api/auth/register/${role}`,
         formData,
         {
           headers: {
@@ -185,6 +186,7 @@ export default function Register() {
       console.log("Success:", response.data); // Logs the success response
       if (response.data.isSuccess) {
         console.log("Should redirect now");
+        router.push(`/verify-email?email=${encodeURIComponent(values.Email)}`);
       }
     } catch (error) {
       // Handle error and access backend response

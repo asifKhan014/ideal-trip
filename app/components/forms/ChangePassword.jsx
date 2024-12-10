@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
@@ -21,60 +21,61 @@ function ChangePassword() {
     }
   }, [userId, token]);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMessage(""); // Clear previous messages
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage(""); // Clear previous messages
 
-  if (!userId || !token) {
-    setMessage("Invalid link. Please try again.");
-    return;
-  }
-
-  if (newPassword !== confirmPassword) {
-    setMessage("Passwords do not match.");
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    // Send POST request with Axios
-    const response = await axios.post("https://localhost:7216/api/auth/reset-password", {
-      userId,
-      token,
-      newPassword,
-      confirmPassword,
-    });
-    console.log(response);
-
-    // Handle success response
-    if(response.data.isSuccess)
-    {
-      setMessage(response.data.message || "Password reset successfully.");
-    // Wait 3 seconds, then redirect based on user role
-    setTimeout(() => {
-      // if (response.data.role === "Admin") {
-      //   router.push("/admin/home");
-      // } else if (response.data.role === "User") {
-      //   router.push("/user/home");
-      // } else {
-      //   router.push("/guest/home"); // Default fallback
-      // }
-      router.push('/');
-    }, 3000);
-  }
-  } catch (error) {
-    // Handle error response
-    if (error.response) {
-      setMessage(error.response.data.message || "Failed to reset password.");
-    } else {
-      setMessage("An error occurred. Please try again.");
+    if (!userId || !token) {
+      setMessage("Invalid link. Please try again.");
+      return;
     }
-  } finally {
-    setLoading(false);
-  }
-};
 
+    if (newPassword !== confirmPassword) {
+      setMessage("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // Send POST request with Axios
+      const response = await axios.post(
+        "http://localhost:5277/api/auth/reset-password",
+        {
+          userId,
+          token,
+          newPassword,
+          confirmPassword,
+        }
+      );
+      console.log(response);
+
+      // Handle success response
+      if (response.data.isSuccess) {
+        setMessage(response.data.message || "Password reset successfully.");
+        // Wait 3 seconds, then redirect based on user role
+        setTimeout(() => {
+          // if (response.data.role === "Admin") {
+          //   router.push("/admin/home");
+          // } else if (response.data.role === "User") {
+          //   router.push("/user/home");
+          // } else {
+          //   router.push("/guest/home"); // Default fallback
+          // }
+          router.push("/");
+        }, 3000);
+      }
+    } catch (error) {
+      // Handle error response
+      if (error.response) {
+        setMessage(error.response.data.message || "Failed to reset password.");
+      } else {
+        setMessage("An error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="bg-gray-50">
