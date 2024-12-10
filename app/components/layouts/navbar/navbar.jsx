@@ -299,7 +299,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Navbar() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const isAuthenticated = true;
+  // const { user, isAuthenticated, logout } = useAuth();
   const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
@@ -415,10 +416,7 @@ export default function Navbar() {
                     </Link>
                   </MenuItem>
                   <MenuItem>
-                    <button
-                      onClick={logout}
-                      className="block px-4 py-2 text-sm text-gray-700"
-                    >
+                    <button className="block px-4 py-2 text-sm text-gray-700">
                       Sign out
                     </button>
                   </MenuItem>
