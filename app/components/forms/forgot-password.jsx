@@ -10,9 +10,10 @@ function ForgotPassword() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       // Send a POST request to the API with the email, setting the Content-Type to application/json
       const result = await axios.post(
-        "http://localhost:5277/api/auth/forgot-password",
+        `${backendUrl}/api/auth/forgot-password`,
         {
           emailAddress,
         },

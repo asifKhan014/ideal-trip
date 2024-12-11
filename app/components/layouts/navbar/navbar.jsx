@@ -297,11 +297,13 @@ import Link from "next/link";
 import { useAuth } from "../../../hooks/useAuth"; // Adjust the path based on your actual context location
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Router } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const isAuthenticated = true;
-  // const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const [userDetails, setUserDetails] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Fetch user data if token exists
@@ -309,8 +311,9 @@ export default function Navbar() {
       const token = localStorage.getItem("token");
       if (token) {
         try {
+          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
           const response = await axios.get(
-            "http://localhost:5277/api/auth/profile",
+            `${backendUrl}/api/auth/profile`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -416,7 +419,11 @@ export default function Navbar() {
                     </Link>
                   </MenuItem>
                   <MenuItem>
-                    <button className="block px-4 py-2 text-sm text-gray-700">
+                    <button className="block px-4 py-2 text-sm text-gray-700"
+                    onClick={()=>{
+                      logout();
+                      router.push("/")
+                    }}>
                       Sign out
                     </button>
                   </MenuItem>

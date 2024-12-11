@@ -174,8 +174,9 @@ export default function Register() {
       }
     });
     try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const response = await axios.post(
-        `http://localhost:5277/api/auth/register/${role}`,
+        `${backendUrl}/api/auth/register/${role}`,
         formData,
         {
           headers: {

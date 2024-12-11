@@ -475,20 +475,23 @@ export default function PackageDetail() {
   const searchParams = useSearchParams();
   const packageId = searchParams.get("id");
   const router = useRouter();
-  const [packageDetails, setPackageDetails] = useState(packages[0]);
+  const [packageDetails, setPackageDetails] = useState("");
   // console.log("------------------->" + packageDetails);
-  // useEffect(() => {
-  //   if (packageId) {
-  //     // Fetch package details (Replace with your API or data source)
-  //     const fetchPackageDetails = async () => {
-  //       const response = await fetch(`/api/packages/${packageId}`);
-  //       const data = await response.json();
-  //       setPackageDetails(data);
-  //     };
+  useEffect(() => {
+    if (packageId) {
+      // Fetch package details (Replace with your API or data source)
+      const fetchPackageDetails = async () => {
+        const response = await fetch(`https:localhost:7216/api/package/${packageId}`);
+        const data = await response.json();
+        console.log(data)
+        if(data.isSuccess){
+          setPackageDetails(data.data);
+        }
+      };
 
-  //     fetchPackageDetails();
-  //   }
-  // }, [packageId]);
+      fetchPackageDetails();
+    }
+  }, [packageId]);
 
   if (!packageDetails) {
     return (
@@ -499,7 +502,7 @@ export default function PackageDetail() {
   }
 
   const handleProceedToBooking = () => {
-    router.push(`/tour-packages/booking/confirm-booking?id=1`);
+    router.push(`/tour-packages/booking/confirm-booking?id=${packageId}`);
     // router.push(`/tour-packages/booking?id=${packageId}`);
   };
 
@@ -555,7 +558,7 @@ export default function PackageDetail() {
                 </p>
               </div>
               <p className="text-3xl font-bold text-green-700 mt-6">
-                {packageDetails.price}
+                PKR {packageDetails.price} 
               </p>
             </div>
           </div>

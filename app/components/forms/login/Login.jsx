@@ -3,21 +3,22 @@ import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../../../hooks/useAuth";
+// import { useAuth } from "../../../hooks/useAuth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const { setAuth } = useAuth(); // Get setAuth from context
+  // const { setAuth } = useAuth(); // Get setAuth from context
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const result = await axios.post(
-        "http://localhost:5277/api/auth/login",
+        `${backendUrl}/api/auth/login`,
         { email, password },
         {
           headers: {
@@ -33,7 +34,7 @@ export default function Login() {
         // Set the token and user in the AuthContext and localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        setAuth(token, user);
+        // setAuth(token, user);
         // Redirect to home page
         router.push("/");
       }

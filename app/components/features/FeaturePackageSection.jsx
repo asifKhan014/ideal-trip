@@ -1418,40 +1418,61 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
+import { useState, useRef , useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSwipeable } from "react-swipeable";
 
-const packages = [
-  {
-    id: 1,
-    thumbnail: "/images/hero-3.jpg",
-    title: "Naran Kaghan",
-    durationDays: 5, // Duration in integer
-    price: "PKR 35,000",
-    description:
-      "Discover the serene beauty of Naran and Kaghan with guided tours and cozy stays.",
-    tag: "Most Popular",
-    tourDate: "2024-12-15",
-    availableSpots: 20,
-  },
-  {
-    id: 2,
-    thumbnail: "/images/hero-1.jpg",
-    title: "Hunza Valley",
-    durationDays: 7, // Duration in integer
-    price: "PKR 50,000",
-    description: "Immerse yourself in the breathtaking landscapes of Hunza.",
-    tag: "Hot Deal",
-    tourDate: "2024-12-20",
-    availableSpots: 15,
-  },
-];
+// const packages = [
+//   {
+//     id: 1,
+//     thumbnail: "/images/hero-3.jpg",
+//     title: "Naran Kaghan",
+//     durationDays: 5, // Duration in integer
+//     price: "PKR 35,000",
+//     description:
+//       "Discover the serene beauty of Naran and Kaghan with guided tours and cozy stays.",
+//     tag: "Most Popular",
+//     tourDate: "2024-12-15",
+//     availableSpots: 20,
+//   },
+//   {
+//     id: 2,
+//     thumbnail: "/images/hero-1.jpg",
+//     title: "Hunza Valley",
+//     durationDays: 7, // Duration in integer
+//     price: "PKR 50,000",
+//     description: "Immerse yourself in the breathtaking landscapes of Hunza.",
+//     tag: "Hot Deal",
+//     tourDate: "2024-12-20",
+//     availableSpots: 15,
+//   },
+// ];
 
 export default function FeaturedPackages() {
+  const [packages,setPackages] = useState([])
   const [currentSlide, setCurrentSlide] = useState(0);
   const isTransitioning = useRef(false);
   const router = useRouter();
+    // Fetch packages from the backend API
+    useEffect(() => {
+      const fetchPackages = async () => {
+        try {
+          const response = await fetch("https://localhost:7216/api/Package");
+          console.log(response);
+          const data = await response.json();
+          if (data.isSuccess) {
+            console.log(data);
+            setPackages(data.data);
+          } else {
+            console.error("Failed to fetch packages:", data.Messege);
+          }
+        } catch (error) {
+          console.error("Error while fetching packages:", error);
+        }
+      };
+  
+      fetchPackages();
+    }, []);
   // Slide Navigation Handlers
   const handlePrevSlide = () => {
     if (isTransitioning.current) return;
@@ -1474,8 +1495,15 @@ export default function FeaturedPackages() {
   });
 
   const handleBookNow = (id) => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      router.push(`/tour-packages/booking?id=${id}`);
+    }
+    else{
+      router.push("/login");
+    }
     // Navigate to booking page with package ID
-    router.push(`/tour-packages/booking?id=${id}`);
+    
   };
 
   return (
@@ -1501,7 +1529,7 @@ export default function FeaturedPackages() {
           >
             {packages.map((pkg) => (
               <div
-                key={pkg.id}
+                key={pkg.packageId}
                 className="w-full flex-shrink-0"
                 style={{ flexBasis: "100%" }}
               >
@@ -1543,11 +1571,11 @@ export default function FeaturedPackages() {
                     </div>
                     <div className="flex items-center justify-between mt-4">
                       <span className="text-xl font-bold text-green-600">
-                        {pkg.price}
+                        PKR : {pkg.price}
                       </span>
                       <button
                         // onClick={() => handleBookNow(1)}
-                        onClick={() => handleBookNow(pkg.id)}
+                        onClick={() => handleBookNow(pkg.packageId)}
                         className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
                       >
                         Book Now

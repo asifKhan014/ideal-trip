@@ -39,8 +39,9 @@ function ChangePassword() {
 
     try {
       // Send POST request with Axios
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const response = await axios.post(
-        "http://localhost:5277/api/auth/reset-password",
+        `${backendUrl}/api/auth/reset-password`,
         {
           userId,
           token,

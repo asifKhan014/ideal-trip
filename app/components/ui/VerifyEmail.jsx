@@ -21,8 +21,9 @@ export default function VerifyEmail() {
     setMessage(""); // Clear previous messages
 
     try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const response = await axios.post(
-        "http://localhost:5277/api/auth/resend-link",
+        `${backendUrl}/api/auth/resend-link`,
         { email }
       );
 

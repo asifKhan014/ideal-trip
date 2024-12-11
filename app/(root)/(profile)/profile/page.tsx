@@ -1491,271 +1491,546 @@
 
 // export default UserDashboard;
 
-"use client";
+// "use client";
 
-import axios from "axios";
+// import axios from "axios";
+// import React, { useState, useEffect } from "react";
+
+// function UserDashboard() {
+//   const [editMode, setEditMode] = useState(false);
+//   const [userId, setUserId] = useState(null);
+//   const [fullName, setFullName] = useState("");
+//   const [displayName, setDisplayName] = useState(""); // Separate display name
+//   const [address, setAddress] = useState("");
+//   const [profilePhoto, setProfilePicture] = useState("");
+//   const [loading, setLoading] = useState(true);
+//   const [email, setEmail] = useState("");
+//   const [file , setFile] = useState("");
+
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem("user");
+//     if (storedUser) {
+//       try {
+//         const userObject = JSON.parse(storedUser);
+//         setUserId(userObject.userId);
+//       } catch (error) {
+//         console.error("Failed to parse user data from localStorage:", error);
+//       }
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     if (!userId) return;
+
+//     const fetchUserData = async () => {
+//       try {
+//         const response = await fetch(
+//           `https://localhost:7216/api/User/${userId}`
+//         );
+//         const data = await response.json();
+//         if (data.isSuccess) {
+//           setFullName(data.data.userName);
+//           setDisplayName(data.data.userName); // Set initial display name
+//           setAddress(data.data.address);
+//           setProfilePicture(data.data.profilePhotoUrl);
+//           setEmail(data.data.email);
+//         } else {
+//           alert(data.messege || "Failed to fetch user data.");
+//         }
+//       } catch (error) {
+//         console.error("Error fetching user data:", error);
+//         alert("An error occurred while fetching user data.");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchUserData();
+//   }, [userId]);
+//   const handleSave = async () => {
+//     try {
+//       const formData = new FormData();
+//       formData.append("FullName", fullName);
+//       formData.append("Address", address);
+//       console.log(file)
+//       // Only append profile picture if a new image is uploaded
+//         formData.append("ProfilePhoto", file);
+  
+//       const response = await fetch(
+//         `https://localhost:7216/api/User/${userId}`,
+//         {
+//           method: "POST",
+//           body: formData,
+//         }
+//       );
+  
+//       const data = await response.json();
+//       if (data.isSuccess) {
+//         alert("Profile updated successfully!");
+//         setEditMode(false);
+//         setDisplayName(fullName); // Update display name after saving
+//         // setProfilePicture(profilePhoto);
+//       } else {
+//         alert(data.messege || "Failed to update profile.");
+//       }
+//     } catch (error) {
+//       console.error("Error updating profile:", error);
+//       alert("An error occurred while updating your profile.");
+//     }
+//   };
+//   // const [editMode, setEditMode] = useState(false);
+//   // const [userDetails, setUserDetails] = useState(null);
+//   // const [services, setServices] = useState([]);
+//   // const [loading, setLoading] = useState(true);
+//   // const [updatedDetails, setUpdatedDetails] = useState({
+//   //   userName: "",
+//   //   address: "",
+//   // });
+//   // const [selectedPhoto, setSelectedPhoto] = useState(null);
+//   // const [profilePhoto,setProfilePhoto] = useState(null);
+
+//   // useEffect(() => {
+//   //   const fetchUserData = async () => {
+//   //     const token = localStorage.getItem("token");
+//   //     const user = localStorage.getItem("user");
+
+//   //     if (!user) {
+//   //       console.error("User information is missing in localStorage");
+//   //       setLoading(false);
+//   //       return;
+//   //     }
+
+//   //     const { userId } = JSON.parse(user);
+
+//   //     if (token) {
+//   //       try {
+//   //         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+//   //         const userResponse = await axios.get(
+//   //           `${backendUrl}/api/User/${userId}`,
+//   //           {
+//   //             headers: { Authorization: `Bearer ${token}` },
+//   //           }
+//   //         );
+
+//   //         if (userResponse.data?.isSuccess) {
+//   //           const data = userResponse.data?.data;
+//   //           setUserDetails(data);
+//   //           setUpdatedDetails({
+//   //             userName: data.userName || "",
+//   //             address: data.address || "",
+//   //           });
+//   //           setProfilePhoto(data.profilePhotoUrl)
+//   //         } else {
+//   //           console.error(
+//   //             "Failed to fetch user details:",
+//   //             userResponse.data?.message
+//   //           );
+//   //         }
+//   //       } catch (error) {
+//   //         console.error("Error fetching data:", error);
+//   //       } finally {
+//   //         setLoading(false);
+//   //       }
+//   //     } else {
+//   //       console.error("No token found in localStorage");
+//   //       setLoading(false);
+//   //     }
+//   //   };
+
+//   //   fetchUserData();
+//   // }, []);
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     setUpdatedDetails((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handlePhotoChange = (e) => {
+//     const file = e.target.files[0];
+//     setSelectedPhoto(file);
+//   };
+
+//   // const handleSaveChanges = async () => {
+//   //   const token = localStorage.getItem("token");
+//   //   const user = localStorage.getItem("user");
+//   //   const { userId } = JSON.parse(user);
+
+//   //   console.log(userId);
+//   //   if (token) {
+//   //     try {
+//   //       const formData = new FormData();
+//   //       formData.append("fullName", updatedDetails.userName);
+//   //       formData.append("address", updatedDetails.address);
+
+//   //       if (selectedPhoto) {
+//   //         formData.append("profilePhoto", selectedPhoto);
+//   //       }
+//   //       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+//   //       const response = await axios.post(
+//   //         `${backendUrl}/api/User/${userId}`,
+//   //         formData,
+//   //         {
+//   //           headers: {
+//   //             Authorization: `Bearer ${token}`,
+//   //             "Content-Type": "multipart/form-data",
+//   //           },
+//   //         }
+//   //       );
+//   //       console.log(response.data?.isSuccess);
+//   //       if (response.data?.isSuccess) {
+//   //         const updatedData = response.data.data;
+//   //         setUserDetails((prev) => ({
+//   //           ...prev,
+//   //           ...updatedDetails,
+//   //           profilePhotoUrl:
+//   //             updatedData.profilePhotoUrl || prev.profilePhotoUrl,
+//   //         }));
+//   //         setEditMode(false);
+//   //         alert("Profile updated successfully!");
+//   //       } else {
+//   //         console.error("Error updating profile:", response.data?.message);
+//   //       }
+//   //     } catch (error) {
+//   //       console.error("Error while saving changes:", error);
+//   //     }
+//   //   }
+//   // };
+
+//   if (loading) {
+//     return (
+//       <div className="flex items-center justify-center h-screen">
+//         Loading...
+//       </div>
+//     );
+//   }
+
+//   const handleEditToggle = () => setEditMode(!editMode);
+
+//   return (
+//     <div className="min-h-screen flex flex-col lg:flex-row">
+//       {/* Sidebar */}
+//       <aside className="bg-gray-800 text-white w-full lg:w-64 p-6 space-y-4">
+//         <h1 className="text-2xl font-bold">User Dashboard</h1>
+//         <nav>
+//           <ul className="space-y-2">
+//             <li>
+//               <a
+//                 href="#profile"
+//                 className="block p-2 rounded-lg bg-gray-700 hover:bg-gray-600"
+//               >
+//                 Profile
+//               </a>
+//             </li>
+//             <li>
+//               <a
+//                 href="#services"
+//                 className="block p-2 rounded-lg bg-gray-700 hover:bg-gray-600"
+//               >
+//                 Availed Services
+//               </a>
+//             </li>
+//           </ul>
+//         </nav>
+//       </aside>
+
+//       {/* Main Content */}
+//       <main className="flex-1 p-6 bg-gray-100">
+//         {/* Profile Section */}
+//         <section id="profile" className="mb-8">
+//           <h2 className="text-xl font-bold mb-4">Profile Information</h2>
+//           <div className="bg-white rounded-lg shadow-lg p-6">
+//             <div className="flex items-center space-x-6">
+//               {/* Profile Picture */}
+//               <div className="relative">
+//                 <img
+//                   src={
+//                     userDetails?.profilePhotoUrl ||
+//                     "https://via.placeholder.com/150"
+//                   }
+//                   alt="Profile"
+//                   className="w-24 h-24 rounded-full object-cover"
+//                 />
+//                 {editMode && (
+//                   <label
+//                     htmlFor="upload-photo"
+//                     className="absolute bottom-0 right-0 bg-indigo-600 text-white px-2 py-1 rounded-full cursor-pointer"
+//                   >
+//                     Edit
+//                   </label>
+//                 )}
+//                 <input
+//                   id="upload-photo"
+//                   type="file"
+//                   className="hidden"
+//                   accept="image/*"
+//                   onChange={handlePhotoChange}
+//                 />
+//               </div>
+
+//               {/* User Info */}
+//               <div className="flex-1">
+//                 {editMode ? (
+//                   <>
+//                     <input
+//                       type="text"
+//                       name="userName"
+//                       value={updatedDetails.userName}
+//                       onChange={handleInputChange}
+//                       className="block w-full p-2 border rounded-lg mb-2"
+//                       placeholder="Username"
+//                     />
+//                     <input
+//                       type="email"
+//                       value={userDetails?.email}
+//                       readOnly
+//                       className="block w-full p-2 border rounded-lg mb-2 bg-gray-100 cursor-not-allowed"
+//                       placeholder="Email (Read-Only)"
+//                     />
+//                     <input
+//                       type="text"
+//                       name="address"
+//                       value={updatedDetails.address}
+//                       onChange={handleInputChange}
+//                       className="block w-full p-2 border rounded-lg mb-2"
+//                       placeholder="Address"
+//                     />
+//                   </>
+//                 ) : (
+//                   <>
+//                     <h3 className="text-lg font-bold">
+//                       {userDetails?.userName}
+//                     </h3>
+//                     <p className="text-gray-500">{userDetails?.email}</p>
+//                     <p className="text-gray-500">{userDetails?.address}</p>
+//                   </>
+//                 )}
+//               </div>
+//             </div>
+//             {/* Edit/Save Button */}
+//             <button
+//               onClick={editMode ? handleSaveChanges : handleEditToggle}
+//               className={`mt-4 px-4 py-2 rounded-lg ${
+//                 editMode ? "bg-green-500" : "bg-indigo-500"
+//               } text-white`}
+//             >
+//               {editMode ? "Save Changes" : "Edit Profile"}
+//             </button>
+//           </div>
+//         </section>
+
+//         {/* Services Section */}
+//         <section id="services">
+//           <h2 className="text-xl font-bold mb-4">Availed Services</h2>
+//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+//             {services.length > 0 ? (
+//               services.map((service) => (
+//                 <div
+//                   key={service.id}
+//                   className="bg-white rounded-lg shadow-lg p-4 space-y-2"
+//                 >
+//                   <h3 className="text-lg font-bold">{service.name}</h3>
+//                   <p className="text-sm text-gray-500">{service.description}</p>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="col-span-full text-center text-gray-500">
+//                 No services availed yet.
+//               </p>
+//             )}
+//           </div>
+//         </section>
+//       </main>
+//     </div>
+//   );
+// }
+
+// export default UserDashboard;
+"use client";
 import React, { useState, useEffect } from "react";
 
 function UserDashboard() {
   const [editMode, setEditMode] = useState(false);
-  const [userDetails, setUserDetails] = useState(null);
-  const [services, setServices] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const [displayName, setDisplayName] = useState(""); // Separate display name
+  const [address, setAddress] = useState("");
+  const [profilePhoto, setProfilePicture] = useState("");
   const [loading, setLoading] = useState(true);
-  const [updatedDetails, setUpdatedDetails] = useState({
-    userName: "",
-    address: "",
-  });
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [email, setEmail] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-      const user = localStorage.getItem("user");
-
-      if (!user) {
-        console.error("User information is missing in localStorage");
-        setLoading(false);
-        return;
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const userObject = JSON.parse(storedUser);
+        setUserId(userObject.userId);
+      } catch (error) {
+        console.error("Failed to parse user data from localStorage:", error);
       }
+    }
+  }, []);
 
-      const { userId } = JSON.parse(user);
+  useEffect(() => {
+    if (!userId) return;
 
-      if (token) {
-        try {
-          const userResponse = await axios.get(
-            `http://localhost:5277/api/User/${userId}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-
-          if (userResponse.data?.isSuccess) {
-            const data = userResponse.data?.data;
-            setUserDetails(data);
-            setUpdatedDetails({
-              userName: data.userName || "",
-              address: data.address || "",
-            });
-          } else {
-            console.error(
-              "Failed to fetch user details:",
-              userResponse.data?.message
-            );
-          }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        } finally {
-          setLoading(false);
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(
+          `https://localhost:7216/api/User/${userId}`
+        );
+        const data = await response.json();
+        if (data.isSuccess) {
+          setFullName(data.data.userName);
+          setDisplayName(data.data.userName); // Set initial display name
+          setAddress(data.data.address);
+          setProfilePicture(data.data.profilePhotoUrl);
+          setEmail(data.data.email);
+        } else {
+          alert(data.messege || "Failed to fetch user data.");
         }
-      } else {
-        console.error("No token found in localStorage");
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("An error occurred while fetching user data.");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchUserData();
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedDetails((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedPhoto(file);
-  };
-
-  const handleSaveChanges = async () => {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    const { userId } = JSON.parse(user);
-
-    console.log(userId);
-    if (token) {
-      try {
-        const formData = new FormData();
-        formData.append("fullName", updatedDetails.userName);
-        formData.append("address", updatedDetails.address);
-
-        if (selectedPhoto) {
-          formData.append("profilePhoto", selectedPhoto);
+  }, [userId]);
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("FullName", fullName);
+      formData.append("Address", address);
+      console.log(file)
+      // Only append profile picture if a new image is uploaded
+        formData.append("ProfilePhoto", file);
+  
+      const response = await fetch(
+        `https://localhost:7216/api/User/${userId}`,
+        {
+          method: "POST",
+          body: formData,
         }
-
-        const response = await axios.post(
-          `http://localhost:5277/api/User/${userId}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(response.data?.isSuccess);
-        if (response.data?.isSuccess) {
-          const updatedData = response.data.data;
-          setUserDetails((prev) => ({
-            ...prev,
-            ...updatedDetails,
-            profilePhotoUrl:
-              updatedData.profilePhotoUrl || prev.profilePhotoUrl,
-          }));
-          setEditMode(false);
-          alert("Profile updated successfully!");
-        } else {
-          console.error("Error updating profile:", response.data?.message);
-        }
-      } catch (error) {
-        console.error("Error while saving changes:", error);
+      );
+  
+      const data = await response.json();
+      if (data.isSuccess) {
+        alert("Profile updated successfully!");
+        setEditMode(false);
+        setDisplayName(fullName); // Update display name after saving
+        // setProfilePicture(profilePhoto);
+      } else {
+        alert(data.messege || "Failed to update profile.");
       }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("An error occurred while updating your profile.");
     }
   };
-
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        Loading...
-      </div>
-    );
+    return <p>Loading...</p>;
   }
 
-  const handleEditToggle = () => setEditMode(!editMode);
-
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Sidebar */}
-      <aside className="bg-gray-800 text-white w-full lg:w-64 p-6 space-y-4">
-        <h1 className="text-2xl font-bold">User Dashboard</h1>
-        <nav>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="#profile"
-                className="block p-2 rounded-lg bg-gray-700 hover:bg-gray-600"
-              >
-                Profile
-              </a>
-            </li>
-            <li>
-              <a
-                href="#services"
-                className="block p-2 rounded-lg bg-gray-700 hover:bg-gray-600"
-              >
-                Availed Services
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-100">
-        {/* Profile Section */}
-        <section id="profile" className="mb-8">
-          <h2 className="text-xl font-bold mb-4">Profile Information</h2>
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center space-x-6">
-              {/* Profile Picture */}
-              <div className="relative">
-                <img
-                  src={
-                    userDetails?.profilePhotoUrl ||
-                    "https://via.placeholder.com/150"
-                  }
-                  alt="Profile"
-                  className="w-24 h-24 rounded-full object-cover"
-                />
-                {editMode && (
-                  <label
-                    htmlFor="upload-photo"
-                    className="absolute bottom-0 right-0 bg-indigo-600 text-white px-2 py-1 rounded-full cursor-pointer"
-                  >
-                    Edit
-                  </label>
-                )}
-                <input
-                  id="upload-photo"
-                  type="file"
-                  className="hidden"
-                  accept="image/*"
-                  onChange={handlePhotoChange}
-                />
-              </div>
-
-              {/* User Info */}
-              <div className="flex-1">
-                {editMode ? (
-                  <>
-                    <input
-                      type="text"
-                      name="userName"
-                      value={updatedDetails.userName}
-                      onChange={handleInputChange}
-                      className="block w-full p-2 border rounded-lg mb-2"
-                      placeholder="Username"
-                    />
-                    <input
-                      type="email"
-                      value={userDetails?.email}
-                      readOnly
-                      className="block w-full p-2 border rounded-lg mb-2 bg-gray-100 cursor-not-allowed"
-                      placeholder="Email (Read-Only)"
-                    />
-                    <input
-                      type="text"
-                      name="address"
-                      value={updatedDetails.address}
-                      onChange={handleInputChange}
-                      className="block w-full p-2 border rounded-lg mb-2"
-                      placeholder="Address"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-lg font-bold">
-                      {userDetails?.userName}
-                    </h3>
-                    <p className="text-gray-500">{userDetails?.email}</p>
-                    <p className="text-gray-500">{userDetails?.address}</p>
-                  </>
-                )}
-              </div>
-            </div>
-            {/* Edit/Save Button */}
-            <button
-              onClick={editMode ? handleSaveChanges : handleEditToggle}
-              className={`mt-4 px-4 py-2 rounded-lg ${
-                editMode ? "bg-green-500" : "bg-indigo-500"
-              } text-white`}
+    <div className="min-h-screen bg-gray-100 p-6 w-full rounded-lg mx-auto mt-8 max-w-xl shadow-lg">
+      <div className="flex flex-col items-center">
+        <div className="relative">
+          <img
+            src={
+              profilePhoto
+                ? profilePhoto
+                : "https://via.placeholder.com/150"
+            }
+            alt="Profile"
+            className="w-32 h-32 rounded-full object-cover shadow-lg"
+          />
+          {editMode && (
+            <label
+              htmlFor="upload-profile-pic"
+              className="absolute bottom-0 right-0 bg-blue-600 text-white text-xs px-2 py-1 rounded-full cursor-pointer shadow-md"
             >
-              {editMode ? "Save Changes" : "Edit Profile"}
-            </button>
-          </div>
-        </section>
+              Change
+            </label>
+          )}
+          <input
+            type="file"
+            id="upload-profile-pic"
+            className="hidden"
+            onChange={(e) => {
+              if (e.target.files && e.target.files[0]) {
+                setFile(e.target.files[0]);
+                const imageUrl = URL.createObjectURL(e.target.files[0]);
+                console.log(imageUrl); // Create a temporary URL for preview
+                setProfilePicture(imageUrl); // Update the state with the image URL
+              }
+            }}            
+          />
+        </div>
+        <div className="mt-4 text-center">
+          <p className="text-xl font-semibold text-gray-800">{displayName}</p>
+          <p className="text-sm text-gray-500">{email}</p>
+        </div>
+      </div>
 
-        {/* Services Section */}
-        <section id="services">
-          <h2 className="text-xl font-bold mb-4">Availed Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {services.length > 0 ? (
-              services.map((service) => (
-                <div
-                  key={service.id}
-                  className="bg-white rounded-lg shadow-lg p-4 space-y-2"
-                >
-                  <h3 className="text-lg font-bold">{service.name}</h3>
-                  <p className="text-sm text-gray-500">{service.description}</p>
-                </div>
-              ))
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+        <h2 className="text-lg font-semibold text-gray-800">
+          Personal Information
+        </h2>
+        <div className="mt-4 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Full Name
+            </label>
+            {editMode ? (
+              <input
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full mt-2 p-3 text-black border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
             ) : (
-              <p className="col-span-full text-center text-gray-500">
-                No services availed yet.
-              </p>
+              <p className="text-gray-800">{fullName}</p>
             )}
           </div>
-        </section>
-      </main>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Address
+            </label>
+            {editMode ? (
+              <input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="w-full mt-2 p-3 text-black border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            ) : (
+              <p className="text-gray-800">{address}</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-8 flex flex-col gap-4">
+        {editMode ? (
+          <button
+            onClick={handleSave}
+            className="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-lg hover:bg-green-700 transition duration-200"
+          >
+            Save Changes
+          </button>
+        ) : (
+          <button
+            onClick={() => setEditMode(true)}
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-200"
+          >
+            Edit Profile
+          </button>
+        )}
+      </div>
     </div>
   );
 }

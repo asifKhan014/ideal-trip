@@ -243,6 +243,7 @@
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import axios from "axios";
 // import { loadStripe } from "@stripe/stripe-js";
 
 // Mock data for packages
@@ -283,24 +284,44 @@ export default function BookingPage() {
   const searchParams = useSearchParams();
   const packageId = searchParams.get("id"); // Extract package ID from URL
   // const packageId = parseInt(searchParams.get("id"), 10); // Extract package ID from URL
-  console.log("id: -----" + packageId);
+  // console.log("id: -----" + packageId);
   const router = useRouter();
 
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [travelers, setTravelers] = useState(1); // Default number of travelers
   const [totalPrice, setTotalPrice] = useState(0);
+  const [userId,setUserId] = useState("");
   //   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY); // Stripe public key
 
   // Fetch the package details based on ID
   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const userObject = JSON.parse(storedUser);
+        setUserId(userObject.userId);
+      } catch (error) {
+        console.error("Failed to parse user data from localStorage:", error);
+      }
+    }
     // const packageData = packages.find((pkg) => pkg.id === packageId);
     // console.log("------------------------->>>>>>>>>>>>" + packageData);
     // console.log("-------------------------" + JSON.stringify(packageData));
-
-    const packageData = packages.find((pkg) => pkg.id === Number(packageId));
-    if (packageData) {
-      setSelectedPackage(packageData);
-      setTotalPrice(packageData.price); // Initialize total price
+    if (packageId) {
+      // Fetch package details (Replace with your API or data source)
+      const fetchPackageDetails = async () => {
+        const response = await fetch(
+          `https:localhost:7216/api/package/${packageId}`
+        );
+        const data = await response.json();
+        // console.log(data);
+        if (data.isSuccess) {
+          // console.log(data);
+          setSelectedPackage(data.data);
+          setTotalPrice(data.data.price);
+        }
+      };
+      fetchPackageDetails();
     }
   }, [packageId]);
 
@@ -339,15 +360,94 @@ export default function BookingPage() {
     // }
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (travelers < 1) {
+  //     alert("Please enter a valid number of travelers.");
+  //     return;
+  //   }
+  //   // handleStripePayment();
+  //   router.push(`/tour-packages/booking/confirm-booking/success?id=1`);
+  // };
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validate form input
     if (travelers < 1) {
       alert("Please enter a valid number of travelers.");
       return;
     }
-    // handleStripePayment();
-    router.push(`/tour-packages/booking/confirm-booking/success?id=1`);
+    console.log(userId);
+  
+    // Gather form data
+    const formData = {
+      Id : userId,
+      fullName: e.target.fullName.value,
+      email: e.target.email.value,
+      phoneNumber: e.target.phone.value,
+      numberOfTravelers: travelers,
+      packageId: packageId, // Assuming `packageId` is the current package ID
+      totalBill: totalPrice,
+    };
+    console.log(formData);
+    router.push('/tour-packages/booking/confirm-booking/success?id=1')
+  
+    // try {
+    //   // Make the API request
+    //   const response = await fetch("https://localhost:7216/api/package/booking/initiate", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: formData,
+    //   });
+  
+    //   // Parse the response
+    //   const data = await response.json();
+  
+    //   if (response.ok && data.isSuccess) {
+    //     // Redirect to Stripe checkout or success page
+    //     console.log("Session ID:", data.SessionId);
+    //     // For Stripe Checkout: Redirect to Stripe with the Session ID
+    //     // window.location.href = `https://checkout.stripe.com/pay/${data.SessionId}`;
+    //   } else {
+    //     alert(data.message || "Failed to initiate booking.");
+    //   }
+    // } catch (error) {
+    //   console.error("Error during booking initiation:", error);
+    //   alert("An error occurred. Please try again.");
+    // }
+    // try {
+    //   // Make the API request
+    //   const response = await axios.post(
+    //     "https://localhost:7216/api/package/booking/initiate",
+    //     formData,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+  
+    //   // Check response status and data
+    //   if (response.data.isSuccess) {
+    //     // Redirect to Stripe checkout or success page
+    //     console.log("Session ID:", response.data.SessionId);
+    //     // For Stripe Checkout: Redirect to Stripe with the Session ID
+    //     // window.location.href = `https://checkout.stripe.com/pay/${response.data.SessionId}`;
+    //   } else {
+    //     alert(response.data.message || "Failed to initiate booking.");
+    //   }
+    // } catch (error) {
+    //   // Handle errors (network or API issues)
+    //   console.error("Error during booking initiation:", error);
+  
+    //   // Check if error response is available
+    //   if (error.response) {
+    //     alert(error.response.data.message || "An error occurred on the server.");
+    //   } else {
+    //     alert("An error occurred. Please try again.");
+    //   }
+    // }
   };
+  
 
   //   if (!selectedPackage) return <p>Loading package details...</p>;
 
