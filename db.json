@@ -1,0 +1,53 @@
+{
+  "transporter": {
+    "id": 1,
+    "name": "Ali Khan",
+    "email": "ali.khan@example.com",
+    "phone": "+92 300 1234567",
+    "address": "Islamabad, Pakistan"
+  },
+  "vehicles": [
+    {
+      "id": "1",
+      "name": "Toyota Hiace",
+      "type": "Van",
+      "number": "ABC-123"
+    },
+    {
+      "id": "2",
+      "name": "Honda Civic",
+      "type": "Car",
+      "number": "XYZ-789"
+    },
+    {
+      "id": 1734180641071,
+      "name": "new",
+      "type": "bus",
+      "number": "3030"
+    }
+  ],
+  "requests": [
+    {
+      "id": "1",
+      "customer": "John Doe",
+      "date": "2024-06-01",
+      "status": "Pending"
+    },
+    {
+      "id": "2",
+      "customer": "Jane Smith",
+      "date": "2024-06-02",
+      "status": "Approved"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "message": "Your vehicle Toyota Hiace has been approved."
+    },
+    {
+      "id": "2",
+      "message": "New transport request from John Doe."
+    }
+  ]
+}

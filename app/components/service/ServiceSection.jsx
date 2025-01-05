@@ -250,6 +250,7 @@
 // }
 
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import {
   FaSuitcase,
@@ -265,26 +266,31 @@ export default function ServicesSection() {
       icon: <FaSuitcase className="text-5xl text-orange-500" />,
       title: "Tour Packages",
       description: "Explore curated tours tailored to your preferences.",
+      link: "/",
     },
     {
       icon: <FaBus className="text-5xl text-blue-500" />,
       title: "Transport Facilities",
       description: "Convenient transportation options for your journey.",
+      link: "/transport",
     },
     {
       icon: <FaHotel className="text-5xl text-green-500" />,
       title: "Hotel Rooms",
       description: "Comfortable stays in top-rated hotels.",
+      link: "/transport",
     },
     {
       icon: <FaMapMarkerAlt className="text-5xl text-purple-500" />,
       title: "Local Accommodations",
       description: "Unique stays in local neighborhoods.",
+      link: "/transport",
     },
     {
       icon: <FaUserTie className="text-5xl text-teal-500" />,
       title: "Tour Guide",
       description: "Personalized guidance for your trips.",
+      link: "/transport",
     },
   ];
 
@@ -304,7 +310,8 @@ export default function ServicesSection() {
         {/* Service Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
+            <Link
+              href={`${service.link}`}
               key={index}
               onMouseEnter={() => setHovered(index)}
               onMouseLeave={() => setHovered(null)}
@@ -330,7 +337,7 @@ export default function ServicesSection() {
                   <div className="absolute w-3 h-3 bg-gray-800 transform rotate-45 top-[-6px] left-1/2 -translate-x-1/2"></div>
                 </div>
               )}
-            </div>
+            </Link>
           ))}
         </div>
       </div>
