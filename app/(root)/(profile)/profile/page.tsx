@@ -1886,6 +1886,7 @@ function UserDashboard() {
           setAddress(data.data.address);
           setProfilePicture(data.data.profilePhotoUrl);
           setEmail(data.data.email);
+          console.log(data.data)
         } else {
           alert(data.messege || "Failed to fetch user data.");
         }
@@ -1941,7 +1942,7 @@ function UserDashboard() {
           <img
             src={
               profilePhoto
-                ? profilePhoto
+                ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${profilePhoto}`
                 : "https://via.placeholder.com/150"
             }
             alt="Profile"

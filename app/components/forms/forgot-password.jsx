@@ -4,33 +4,32 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 function ForgotPassword() {
-  const [emailAddress, setEmail] = useState(""); // State to hold form input
+  const [emailAddress, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State to store error message
   const router = useRouter();
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
+    setErrorMessage(""); // Clear previous errors
+
     try {
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-      // Send a POST request to the API with the email, setting the Content-Type to application/json
       const result = await axios.post(
         `${backendUrl}/api/auth/forgot-password`,
-        {
-          emailAddress,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json", // Ensure the request body is sent as JSON
-          },
-        }
+        { emailAddress },
+        { headers: { "Content-Type": "application/json" } }
       );
 
       if (result.data.isSuccess) {
         router.push(`/verify-email?email=${encodeURIComponent(emailAddress)}`);
       } else {
-        console.error("Something went wrong:", result.data);
+        setErrorMessage(result.data.message || "Something went wrong.");
       }
     } catch (error) {
-      console.error("Error sending request:", error);
+      console.log(error.response);
+      setErrorMessage(
+        error.response?.data?.message || "An error occurred. Please try again."
+      );
     }
   };
 
@@ -42,7 +41,7 @@ function ForgotPassword() {
             <h1 className="block text-2xl font-bold text-gray-800">
               Forgot password?
             </h1>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-sm text-gray-600">
               Remember your password?
               <a
                 className="text-[#4F46E5] pl-1 decoration-2 hover:underline font-bold"
@@ -69,20 +68,18 @@ function ForgotPassword() {
                       id="emailAddress"
                       name="emailAddress"
                       value={emailAddress}
-                      onChange={(e) => setEmail(e.target.value)} // Update state on input change
+                      onChange={(e) => setEmail(e.target.value)}
                       className="py-3 px-4 block w-full border-2 rounded-md text-sm focus:ring-[#4F46E5] shadow-sm"
                       required
-                      aria-describedby="email-error"
                     />
                   </div>
-                  <p
-                    className="hidden text-xs text-red-600 mt-2"
-                    id="email-error"
-                  >
-                    Please include a valid email address so we can get back to
-                    you
-                  </p>
                 </div>
+
+                {/* Display Error Message */}
+                {errorMessage && (
+                  <p className="text-xs text-red-600 mt-2">{errorMessage}</p>
+                )}
+
                 <button
                   type="submit"
                   className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-[#4F46E5] text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all text-sm"

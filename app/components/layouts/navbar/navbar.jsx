@@ -320,7 +320,7 @@ export default function Navbar() {
               },
             }
           );
-
+          console.log(response.data);
           if (response.data.isSuccess) {
             setUserDetails(response.data.data);
           }
