@@ -1847,10 +1847,12 @@
 // export default UserDashboard;
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function UserDashboard() {
+  const router = useRouter();
   const [editMode, setEditMode] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const [authToken,setAuthToken] = useState(null);
   const [fullName, setFullName] = useState("");
   const [displayName, setDisplayName] = useState(""); // Separate display name
   const [address, setAddress] = useState("");
@@ -1860,25 +1862,39 @@ function UserDashboard() {
   const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const userObject = JSON.parse(storedUser);
-        setUserId(userObject.userId);
-      } catch (error) {
-        console.error("Failed to parse user data from localStorage:", error);
-      }
-    }
-  }, []);
+    const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!userId) return;
+    if (!token) {
+      router.replace("/login"); // Redirect to login if token is missing
+    } else {
+      setAuthToken(token);
+    }
+
+    // Prevent the user from going back after logout
+    window.history.pushState(null, "", window.location.href);
+    window.addEventListener("popstate", () => {
+      router.replace("/login");
+    });
+
+    return () => {
+      window.removeEventListener("popstate", () => {
+        router.replace("/login");
+      });
+    };
+  }, []);
 
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `https://localhost:7216/api/User/${userId}`
-        );
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User`,
+          {
+            method: "GET", // Or "POST", "PUT" depending on your API
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`, // Include Bearer token here
+            },
+          }
+        );        
         const data = await response.json();
         if (data.isSuccess) {
           setFullName(data.data.userName);
@@ -1897,9 +1913,11 @@ function UserDashboard() {
         setLoading(false);
       }
     };
-
-    fetchUserData();
-  }, [userId]);
+    useEffect(() => {
+      if (authToken) {
+        fetchUserData();
+      }
+    }, [authToken]);
   const handleSave = async () => {
     try {
       const formData = new FormData();
@@ -1910,7 +1928,7 @@ function UserDashboard() {
         formData.append("ProfilePhoto", file);
   
       const response = await fetch(
-        `https://localhost:7216/api/User/${userId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User`,
         {
           method: "POST",
           body: formData,

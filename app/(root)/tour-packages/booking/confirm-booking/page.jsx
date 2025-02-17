@@ -311,7 +311,7 @@ export default function BookingPage() {
       // Fetch package details (Replace with your API or data source)
       const fetchPackageDetails = async () => {
         const response = await fetch(
-          `https:localhost:7216/api/package/${packageId}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/${packageId}`
         );
         const data = await response.json();
         // console.log(data);

@@ -303,6 +303,7 @@ import { useRouter } from "next/navigation";
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const [userDetails, setUserDetails] = useState(null);
+  const [profilePhoto,setProfilePhoto] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -313,15 +314,15 @@ export default function Navbar() {
         try {
           const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
           const response = await axios.get(
-            `${backendUrl}/api/auth/profile`,
+            `${backendUrl}/api/user`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
           );
-          console.log(response.data);
           if (response.data.isSuccess) {
+            setProfilePhoto(response.data.data.profilePhotoUrl)
             setUserDetails(response.data.data);
           }
         } catch (error) {
@@ -380,7 +381,7 @@ export default function Navbar() {
               Accommodation
             </Link>
             <Link
-              href="/contact-us"
+              href="/"
               className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
             >
               Contact Us
@@ -396,7 +397,7 @@ export default function Navbar() {
                     <span className="sr-only">Open user menu</span>
                     <img
                       alt=""
-                      src={userDetails?.profilePhoto || "/user.png"}
+                      src={profilePhoto? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${profilePhoto}`: "/user.png"}
                       className="h-8 w-8 rounded-full"
                     />
                   </MenuButton>

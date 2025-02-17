@@ -481,7 +481,7 @@ export default function PackageDetail() {
     if (packageId) {
       // Fetch package details (Replace with your API or data source)
       const fetchPackageDetails = async () => {
-        const response = await fetch(`https:localhost:7216/api/package/${packageId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/${packageId}`);
         const data = await response.json();
         console.log(data)
         if(data.isSuccess){
