@@ -14,12 +14,12 @@ export default function Home() {
     <div className="">
       <HeroSction />
       <ServicesSection />
-      <FeaturedPackages />
+      {/* <FeaturedPackages />
       <ExploreDestinations />
       <TourGuideHighlights />
       <HotelsRoom />
       <TestimonialsAndReviews />
-      <CallToActionSection />
+      <CallToActionSection /> */}
     </div>
   );
 }
