@@ -14,8 +14,8 @@ export default function Home() {
     <div className="">
       <HeroSction />
       <ServicesSection />
-      {/* <FeaturedPackages />
-      <ExploreDestinations />
+      <FeaturedPackages />
+      {/* <ExploreDestinations /> */}
       <TourGuideHighlights />
       {/* <HotelsRoom /> */}
       {/* <TestimonialsAndReviews /> */}
