@@ -290,7 +290,7 @@ export default function ServicesSection() {
       icon: <FaUserTie className="text-5xl text-teal-500" />,
       title: "Tour Guide",
       description: "Personalized guidance for your trips.",
-      link: "/transport",
+      link: "/tourguide",
     },
   ];
 

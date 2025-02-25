@@ -12,7 +12,9 @@ const TourGuideCard = ({
 }) => {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg border border-gray-200">
-      <img className="w-full" src={image} alt={`Image of ${location}`} />
+      <img className="w-full" src={'/images/guide-3.jpg'} alt={`Image of ${location}`} />
+      {/* <img className="w-full" src={image} alt={`Image of ${location}`} /> */}
+      
       <div className="px-6 py-4">
         <h2 className="text-lg font-bold">Location: {location}</h2>
         <p className="text-sm text-gray-600">

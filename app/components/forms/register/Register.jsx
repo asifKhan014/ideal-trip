@@ -57,6 +57,10 @@ export default function Register() {
       Email: "",
       PhoneNumber: "",
       Address: "",
+      HourlyRate: "",
+      PreferedLocation: "",
+      Bio: "",
+      Experience: "",
       idCard: null,
       Password: "",
       ConfirmPassword: "",
@@ -153,6 +157,10 @@ export default function Register() {
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       idCard: Yup.mixed().required("ID Card is required"),
+      HourlyRate: Yup.number().integer().min(1).max(20000).required("Per Day Rate is required"),
+      Bio: Yup.string().required("Bio is required"),
+      Experience: Yup.string().required("Experience is required"),
+      PreferedLocation: Yup.string().required("Preferred Location is required"),
       Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
