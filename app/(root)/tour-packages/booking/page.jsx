@@ -406,65 +406,65 @@
 //   );
 // }
 "use client";
-const packages = [
-  {
-    id: 1,
-    thumbnail: "/images/hero-3.jpg",
-    title: "Naran Kaghan",
-    durationDays: 5, // Duration in integer
-    price: "PKR 35,000",
-    description:
-      "Discover the serene beauty of Naran and Kaghan with guided tours and cozy stays.",
-    tag: "Most Popular",
-    tourDate: "2024-12-15",
-    availableSpots: 20,
-  },
-  {
-    id: 2,
-    thumbnail: "/images/hero-1.jpg",
-    title: "Hunza Valley",
-    durationDays: 7, // Duration in integer
-    price: "PKR 50,000",
-    description: "Immerse yourself in the breathtaking landscapes of Hunza.",
-    tag: "Hot Deal",
-    tourDate: "2024-12-20",
-    availableSpots: 15,
-  },
-  {
-    id: 3,
-    thumbnail: "/images/hero-3.jpg",
-    title: "Swat",
-    durationDays: 4, // Duration in integer
-    price: "PKR 28,000",
-    description: "Explore the Switzerland of the East with luxurious stays.",
-    tag: "Limited Time Offer",
-    tourDate: "2024-12-25",
-    availableSpots: 10,
-  },
-  {
-    id: 4,
-    thumbnail: "/images/hero-3.jpg",
-    title: "Skardu Adventure",
-    durationDays: 6, // Duration in integer
-    price: "PKR 60,000",
-    description:
-      "Experience the majestic Skardu with adventure-filled activities.",
-    tag: "Best Seller",
-    tourDate: "2024-12-30",
-    availableSpots: 8,
-  },
-  {
-    id: 5,
-    thumbnail: "/images/hero-3.jpg",
-    title: "Karachi City Tour",
-    durationDays: 3, // Duration in integer
-    price: "PKR 20,000",
-    description: "A vibrant city tour of the metropolitan hub of Pakistan.",
-    tag: "Recommended",
-    tourDate: "2024-12-10",
-    availableSpots: 25,
-  },
-];
+// const packages = [
+//   {
+//     id: 1,
+//     thumbnail: "/images/hero-3.jpg",
+//     title: "Naran Kaghan",
+//     durationDays: 5, // Duration in integer
+//     price: "PKR 35,000",
+//     description:
+//       "Discover the serene beauty of Naran and Kaghan with guided tours and cozy stays.",
+//     tag: "Most Popular",
+//     tourDate: "2024-12-15",
+//     availableSpots: 20,
+//   },
+//   {
+//     id: 2,
+//     thumbnail: "/images/hero-1.jpg",
+//     title: "Hunza Valley",
+//     durationDays: 7, // Duration in integer
+//     price: "PKR 50,000",
+//     description: "Immerse yourself in the breathtaking landscapes of Hunza.",
+//     tag: "Hot Deal",
+//     tourDate: "2024-12-20",
+//     availableSpots: 15,
+//   },
+//   {
+//     id: 3,
+//     thumbnail: "/images/hero-3.jpg",
+//     title: "Swat",
+//     durationDays: 4, // Duration in integer
+//     price: "PKR 28,000",
+//     description: "Explore the Switzerland of the East with luxurious stays.",
+//     tag: "Limited Time Offer",
+//     tourDate: "2024-12-25",
+//     availableSpots: 10,
+//   },
+//   {
+//     id: 4,
+//     thumbnail: "/images/hero-3.jpg",
+//     title: "Skardu Adventure",
+//     durationDays: 6, // Duration in integer
+//     price: "PKR 60,000",
+//     description:
+//       "Experience the majestic Skardu with adventure-filled activities.",
+//     tag: "Best Seller",
+//     tourDate: "2024-12-30",
+//     availableSpots: 8,
+//   },
+//   {
+//     id: 5,
+//     thumbnail: "/images/hero-3.jpg",
+//     title: "Karachi City Tour",
+//     durationDays: 3, // Duration in integer
+//     price: "PKR 20,000",
+//     description: "A vibrant city tour of the metropolitan hub of Pakistan.",
+//     tag: "Recommended",
+//     tourDate: "2024-12-10",
+//     availableSpots: 25,
+//   },
+// ];
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -479,9 +479,19 @@ export default function PackageDetail() {
   // console.log("------------------->" + packageDetails);
   useEffect(() => {
     if (packageId) {
+      const authToken = localStorage.getItem("token");
       // Fetch package details (Replace with your API or data source)
       const fetchPackageDetails = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/${packageId}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/${packageId}`,
+          {
+            method: "GET", // Adjust method as needed (GET, POST, etc.)
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`, // Include Bearer token
+            },
+          }
+        );        
         const data = await response.json();
         console.log(data)
         if(data.isSuccess){
