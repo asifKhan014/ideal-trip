@@ -4,11 +4,11 @@ import Footer from "../components/layouts/footer/footer";
 export default function RootLayout({ children }) {
   return (
     <AuthProvider>
-      {/* <Navbar /> */}
+      
       <Navbar />
       {children}
       <Footer />
-      {/* <Footer /> */}
+      
     </AuthProvider>
   );
 }
