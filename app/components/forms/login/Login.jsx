@@ -28,6 +28,7 @@ export default function Login() {
       );
 
       if (result.data.isSuccess) {
+        // console.log("my info " , result.data);
         const token = result.data.messege; // Token
         const user = result.data.data; // User data
 
@@ -56,6 +57,7 @@ export default function Login() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"
@@ -143,6 +145,7 @@ export default function Login() {
               Join Now
             </Link>
           </p>
+        </div>
         </div>
       </div>
     </>

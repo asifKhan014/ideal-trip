@@ -266,7 +266,7 @@ function StripeCheckoutForm({ bookingId }) {
       console.log(response.data);
 
       if (response.data.isSuccess) {
-        router.push(`/TourGuide/booking/success?bookingId=${bookingId}`);
+        router.push(`/tourguide/booking/success?bookingId=${bookingId}`);
       } else {
         console.log(response.data);
         console.log("Payment processed but failed to update status.");

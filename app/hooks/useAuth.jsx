@@ -7,8 +7,10 @@ export const useAuth = () => {
   const { token, user, setAuth, logout } = useContext(AuthContext);
 
   const isAuthenticated = Boolean(token);
-
-  const hasRole = (role) => user?.roles?.includes(role);
-
+  // console.log("token:", token);
+  const hasRole = user?.role;
+  // console.log("HasRole: ",hasRole)
+  
+  console.log("Hi user:",user)
   return { token, user, setAuth, logout, isAuthenticated, hasRole };
 };

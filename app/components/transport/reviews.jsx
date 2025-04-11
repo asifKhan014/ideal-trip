@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function FeedbackSection({ tourGuideId }) {
+export default function FeedbackSection({ localHomeId }) {
   const [feedbackList, setFeedbackList] = useState([]);
   const [ratingStats, setRatingStats] = useState(null);
   const [feedbackText, setFeedbackText] = useState("");
@@ -14,7 +14,7 @@ export default function FeedbackSection({ tourGuideId }) {
       try {
         const authToken = localStorage.getItem("token");
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/get-feedback/${tourGuideId}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/get-feedback/${localHomeId}`,
           {
             method: "GET",
             headers: {
@@ -45,16 +45,16 @@ export default function FeedbackSection({ tourGuideId }) {
       }
     };
 
-    if (tourGuideId) fetchFeedbackData();
-  }, [tourGuideId]);
+    if (localHomeId) fetchFeedbackData();
+  }, [localHomeId]);
 
-  const submitFeedback = async (tourGuideId, feedbackText, rating) => {
+  const submitFeedback = async (localHomeId, feedbackText, rating) => {
     try {
       const authToken = localStorage.getItem("token");
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/add-feedback`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/add-feedback`,
         {
-          serviceId: tourGuideId,
+          serviceId: localHomeId,
           feedbackText,
           rating,
         },
@@ -78,7 +78,7 @@ export default function FeedbackSection({ tourGuideId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await submitFeedback(tourGuideId, feedbackText, rating);
+    await submitFeedback(localHomeId, feedbackText, rating);
     setLoading(false);
   };
 

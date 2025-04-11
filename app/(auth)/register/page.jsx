@@ -3,8 +3,10 @@ import Register from "../../components/forms/register/Register";
 
 function page() {
   return (
-    <div className="">
+    <div >
+     
       <Register />
+
     </div>
   );
 }

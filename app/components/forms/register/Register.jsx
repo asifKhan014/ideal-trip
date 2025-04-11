@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 export default function Register() {
   const [role, setRole] = useState("tourist");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const initialValues = {
     tourist: {
@@ -58,7 +59,7 @@ export default function Register() {
       PhoneNumber: "",
       Address: "",
       HourlyRate: "",
-      PreferedLocation: "",
+      Location: "",
       Bio: "",
       Experience: "",
       idCard: null,
@@ -157,10 +158,14 @@ export default function Register() {
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       idCard: Yup.mixed().required("ID Card is required"),
-      HourlyRate: Yup.number().integer().min(1).max(20000).required("Per Day Rate is required"),
+      HourlyRate: Yup.number()
+        .integer()
+        .min(1)
+        .max(20000)
+        .required("Per Day Rate is required"),
       Bio: Yup.string().required("Bio is required"),
       Experience: Yup.string().required("Experience is required"),
-      PreferedLocation: Yup.string().required("Preferred Location is required"),
+      Location: Yup.string().required("Preferred Location is required"),
       Password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -171,6 +176,8 @@ export default function Register() {
   };
 
   const handleSubmit = async (values) => {
+    setLoading(true); 
+    setError("");
     const formData = new FormData();
     Object.entries(values).forEach(([key, value]) => {
       if (value instanceof File) {
@@ -192,23 +199,28 @@ export default function Register() {
           },
         }
       );
-      console.log("Success:", response.data); // Logs the success response
+      console.log("formData: ", formData);
+      // console.log("Success:", response); // Logs the success response
       if (response.data.isSuccess) {
-        console.log("Should redirect now");
+        // console.log("Should redirect now");
         router.push(`/verify-email?email=${encodeURIComponent(values.Email)}`);
       }
     } catch (error) {
       // Handle error and access backend response
       if (error.response) {
         // Extract backend response message
-        const backendMessage = error.response.data.messege;
-        console.error("Backend Error:", backendMessage);
+        const backendMessage = error.response.data.message;
+        // console.error("Backend Error:", backendMessage);
+        setError(backendMessage);
       }
+    }
+    finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-6">
+    <div className="min-h-screen bg-gradient-to-r from-blue-400 to-indigo-400 flex items-center justify-center py-12 px-6 ">
       <div className="w-full max-w-3xl bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-indigo-600 to-blue-500 py-8 px-4 text-center">
           <h1 className="text-3xl font-bold text-white">Create Your Account</h1>
@@ -301,11 +313,23 @@ export default function Register() {
                     />
                   </div>
                 ))}
-                <button
+                {error && <div className="text-sm text-red-600">{error}</div>}
+                {/* <button
                   type="submit"
                   className="w-full py-3 px-6 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                 >
                   Register
+                </button> */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full py-3 px-6 rounded-md text-white ${
+                    loading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-indigo-600 hover:bg-indigo-700"
+                  }`}
+                >
+                  {loading ? "Registering..." : "Register"}
                 </button>
               </Form>
             )}

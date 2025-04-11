@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function FeedbackSection({ tourGuideId }) {
+export default function FeedbackSection({ localHomeId }) {
   const [feedbackList, setFeedbackList] = useState([]);
   const [ratingStats, setRatingStats] = useState(null);
   const [feedbackText, setFeedbackText] = useState("");
@@ -14,7 +14,7 @@ export default function FeedbackSection({ tourGuideId }) {
       try {
         const authToken = localStorage.getItem("token");
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/get-feedback/${tourGuideId}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/get-feedback/${localHomeId}`,
           {
             method: "GET",
             headers: {
@@ -45,16 +45,16 @@ export default function FeedbackSection({ tourGuideId }) {
       }
     };
 
-    if (tourGuideId) fetchFeedbackData();
-  }, [tourGuideId]);
+    if (localHomeId) fetchFeedbackData();
+  }, [localHomeId]);
 
-  const submitFeedback = async (tourGuideId, feedbackText, rating) => {
+  const submitFeedback = async (localHomeId, feedbackText, rating) => {
     try {
       const authToken = localStorage.getItem("token");
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/add-feedback`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/add-feedback`,
         {
-          serviceId: tourGuideId,
+          serviceId: localHomeId,
           feedbackText,
           rating,
         },
@@ -78,7 +78,7 @@ export default function FeedbackSection({ tourGuideId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await submitFeedback(tourGuideId, feedbackText, rating);
+    await submitFeedback(localHomeId, feedbackText, rating);
     setLoading(false);
   };
 
@@ -86,7 +86,7 @@ export default function FeedbackSection({ tourGuideId }) {
     <div className="w-full p-6 flex gap-6 py-36">
       <div className="w-1/2">
         <h2 className="text-2xl font-semibold mb-4">Share Your Feedback</h2>
-        <div className="mb-6 p-4 border rounded-lg shadow-md">
+        <form className="mb-6 p-4 border rounded-lg shadow-md">
           <textarea
             className="w-full p-2 border rounded-md"
             rows="4"
@@ -102,8 +102,8 @@ export default function FeedbackSection({ tourGuideId }) {
               required
               onChange={(e) => setRating(e.target.value)}
             >
-              <option value="0">Rate</option>
-              <option value="1">⭐</option>
+              {/* <option value="0">Rate</option> */}
+              <option className="text-yellow-600" value="1">⭐</option>
               <option value="2">⭐⭐</option>
               <option value="3">⭐⭐⭐</option>
               <option value="4">⭐⭐⭐⭐</option>
@@ -118,7 +118,7 @@ export default function FeedbackSection({ tourGuideId }) {
             </button>
           </div>
           {error && <p className="text-red-600 mt-2">{error}</p>}
-        </div>
+        </form>
       </div>
 
       <div className="w-1/2">
@@ -144,7 +144,7 @@ export default function FeedbackSection({ tourGuideId }) {
           </div>
         )}
 
-        <div>
+        <div className="h-[700px] overflow-y-auto px-3">
           {feedbackList?.map((feedback, index) => (
             <div key={index} className="p-4 mb-4 border rounded-lg shadow-md bg-white">
               <div className="flex items-center mb-2">

@@ -3,23 +3,24 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { FaMapMarkerAlt, FaStar, FaBriefcase } from "react-icons/fa";
-import FeedBackForm from "../../../components/tourguide/reviews";
-export default function TourGuideDetail({ params }) {
-  const router = useRouter();
-  const id = router?.query?.id || params?.id; // Fix: Access `id` correctly
+import { FaMapMarkerAlt, FaUsers, FaClock, FaMoneyBillWave } from "react-icons/fa";
+import FeedBackForm from "../../../components/transport/reviews"; // Optional: Rename or remove if not needed
 
-  const [guideDetails, setGuideDetails] = useState(null);
+export default function TransportDetail({ params }) {
+  const router = useRouter();
+  const id = router?.query?.id || params?.id;
+
+  const [transport, setTransport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (id) {
-      const fetchGuideDetails = async () => {
+      const fetchTransportDetails = async () => {
         try {
           const authToken = localStorage.getItem("token");
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/${id}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-transport/${id}`,
             {
               method: "GET",
               headers: {
@@ -30,19 +31,19 @@ export default function TourGuideDetail({ params }) {
           );
           const data = await response.json();
           if (data.isSuccess) {
-            setGuideDetails(data.data);
+            setTransport(data.data);
           } else {
-            setError(data.message || "Failed to fetch guide details");
+            setError(data.message || "Failed to fetch transport details");
           }
         } catch (error) {
           setError("Something went wrong while fetching data.");
-          console.error("Error fetching guide details:", error);
+          console.error("Error fetching transport details:", error);
         } finally {
           setLoading(false);
         }
       };
 
-      fetchGuideDetails();
+      fetchTransportDetails();
     }
   }, [id]);
 
@@ -62,18 +63,18 @@ export default function TourGuideDetail({ params }) {
     );
   }
 
-  if (!guideDetails) {
+  if (!transport) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-center text-xl text-gray-500">
-          No guide details available
+          No transport details available
         </p>
       </div>
     );
   }
 
-  const handleBookGuide = () => {
-    router.push(`/tourguide/booking?id=${id}`);
+  const handleBookTransport = () => {
+    router.push(`/transportation/booking?id=${id}`);
   };
 
   return (
@@ -81,50 +82,63 @@ export default function TourGuideDetail({ params }) {
       {/* Hero Section */}
       <div className="relative">
         <Image
-          src={guideDetails.idCard || "/banner.jpg"}
-          alt={guideDetails.Name}
+          src={transport.primaryImage || "/banner.jpg"}
+          alt={transport.name}
           width={1920}
           height={600}
           className="w-full h-96 object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent flex items-center justify-center">
           <h1 className="text-5xl font-extrabold text-white">
-            {guideDetails.Name}
+            {transport.name}
           </h1>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-16 space-y-12">
-        {/* Guide Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Left Section */}
           <div>
             <h2 className="text-4xl font-bold text-gray-800">
-              About {guideDetails.fullName}
+              About {transport.name}
             </h2>
-            <p className="text-gray-600 mt-4 text-lg">{guideDetails.bio}</p>
+            <p className="text-gray-600 mt-4 text-lg">
+              Type: {transport.type}
+            </p>
+
             <div className="mt-6 space-y-4">
               <div className="flex items-center space-x-4">
                 <FaMapMarkerAlt className="text-red-600 text-xl" />
                 <p className="text-lg text-gray-600">
-                  <strong>Location:</strong> {guideDetails.location}
+                  <strong>Route:</strong> {transport.startLocation} ➔ {transport.destination}
                 </p>
               </div>
+
               <div className="flex items-center space-x-4">
-                <FaBriefcase className="text-blue-600 text-xl" />
+                <FaClock className="text-blue-600 text-xl" />
                 <p className="text-lg text-gray-600">
-                  <strong>Experience:</strong> {guideDetails.experience} years
+                  <strong>Departure:</strong>{" "}
+                  {new Date(transport.departureTime).toLocaleString()}
                 </p>
               </div>
+
               <div className="flex items-center space-x-4">
-                <FaStar className="text-yellow-500 text-xl" />
+                <FaUsers className="text-purple-600 text-xl" />
                 <p className="text-lg text-gray-600">
-                  <strong>Rating:</strong> {guideDetails.rating || "N/A"}
+                  <strong>Seats Available:</strong> {transport.seatsAvailable} / {transport.capacity}
                 </p>
               </div>
-              <p className="text-3xl font-bold text-green-700 mt-6">
-                PKR {guideDetails.ratePerDay} / day
+
+              <div className="flex items-center space-x-4">
+                <FaMoneyBillWave className="text-green-600 text-xl" />
+                <p className="text-lg text-gray-600">
+                  <strong>Ticket Price:</strong> ₹{transport.ticketPrice}
+                </p>
+              </div>
+
+              <p className="text-2xl font-bold text-green-700 mt-6">
+                {transport.isAvailable ? "Currently Available ✅" : "Not Available ❌"}
               </p>
             </div>
           </div>
@@ -132,30 +146,30 @@ export default function TourGuideDetail({ params }) {
           {/* Right Section */}
           <div className="relative bg-white p-10 rounded-lg shadow-lg">
             <h3 className="text-2xl font-bold text-gray-800">
-              Why Choose This Guide?
+              Why Book This Transport?
             </h3>
             <ul className="mt-6 space-y-6">
               <li className="flex items-start space-x-4">
-                <span className="text-blue-600 text-3xl">🌍</span>
+                <span className="text-blue-600 text-3xl">🚌</span>
                 <span className="text-lg text-gray-600">
-                  Extensive knowledge of local attractions.
+                  Reliable and comfortable transport service.
                 </span>
               </li>
               <li className="flex items-start space-x-4">
-                <span className="text-blue-600 text-3xl">💬</span>
+                <span className="text-blue-600 text-3xl">🕒</span>
                 <span className="text-lg text-gray-600">
-                  Fluent in multiple languages for better communication.
+                  On-time departure and flexible bookings.
                 </span>
               </li>
               <li className="flex items-start space-x-4">
-                <span className="text-blue-600 text-3xl">🚗</span>
+                <span className="text-blue-600 text-3xl">💺</span>
                 <span className="text-lg text-gray-600">
-                  Provides private transportation for convenience.
+                  Spacious seating and clean interiors.
                 </span>
               </li>
             </ul>
             <button
-              onClick={handleBookGuide}
+              onClick={handleBookTransport}
               className="mt-10 w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-lg rounded-lg shadow-lg hover:opacity-90 focus:outline-none focus:ring focus:ring-blue-300"
             >
               Book Now
@@ -163,8 +177,10 @@ export default function TourGuideDetail({ params }) {
           </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto ">
-       <FeedBackForm tourGuideId={id}/>
+
+      {/* Feedback Form (optional) */}
+      <div className="max-w-7xl mx-auto">
+        <FeedBackForm localHomeId={id} />
       </div>
     </section>
   );

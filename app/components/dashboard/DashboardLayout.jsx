@@ -3,9 +3,9 @@ import React from "react";
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen ">
       {/* Sidebar */}
-      <div className="w-1/4 bg-gray-800 text-white p-5">
+      <div className="w-1/6 bg-gray-800 text-white p-5">
         <h1 className="text-2xl font-bold mb-5">Dashboard</h1>
         <ul className="space-y-4">
           <li>
@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }) {
       </div>
 
       {/* Main Content */}
-      <div className="w-3/4 bg-gray-100 p-5 overflow-auto">{children}</div>
+      <div className="w-full bg-gray-100 p-5 overflow-auto">{children}</div>
     </div>
   );
 }
