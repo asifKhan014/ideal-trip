@@ -58,7 +58,7 @@ export default function BookingPage() {
       const endTime = new Date(end).getTime();
       const dayDifference = (endTime - startTime) / (1000 * 60 * 60 * 24);
       if (dayDifference > 0) {
-        setTotalPrice(dayDifference * tourGuide.ratePerDay * travelers);
+        setTotalPrice(dayDifference * tourGuide.ratePerDay );
       } else {
         setTotalPrice(0);
       }
@@ -263,7 +263,7 @@ function StripeCheckoutForm({ bookingId }) {
         { bookingId, paymentIntentId: paymentIntent.id },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.data.isSuccess) {
         router.push(`/tourguide/booking/success?bookingId=${bookingId}`);

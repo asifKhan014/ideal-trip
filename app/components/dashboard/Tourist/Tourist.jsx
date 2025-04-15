@@ -11,7 +11,7 @@ export default function UserDashboardBookingDetail() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // fetchBookings();
+    fetchBookings();
   }, []);
 
   const fetchBookings = async () => {
@@ -23,7 +23,7 @@ export default function UserDashboardBookingDetail() {
       }
 
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/bookings/user`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User/user-bookings`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -32,7 +32,7 @@ export default function UserDashboardBookingDetail() {
       );
 
       if (response.data.isSuccess) {
-        setBookings(response.data.bookings);
+        setBookings(response.data.data);
       } else {
         setError(response.data.message || "Failed to fetch bookings.");
       }
@@ -45,55 +45,69 @@ export default function UserDashboardBookingDetail() {
   };
 
   const handleBookingClick = (bookingId) => {
-    router.push(`/localhome/booking/details?bookingId=${bookingId}`);
+    // router.push(`/localhome/booking/details?bookingId=${bookingId}`);
   };
 
   if (loading) {
     return (
-      <div className="text-center py-16">
-        <p>Loading your bookings...</p>
+      <div className="text-center py-20">
+        <p className="text-lg text-gray-600 animate-pulse">Loading your bookings...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-16">
-        <p className="text-red-600">{error}</p>
+      <div className="text-center py-20">
+        <p className="text-red-600 text-lg font-medium">{error}</p>
       </div>
     );
   }
 
   if (bookings.length === 0) {
     return (
-      <div className="text-center py-16">
-        <p>No bookings found. Please make a booking to view here.</p>
+      <div className="text-center py-20">
+        <p className=" text-lg">No bookings found. Please make a booking to view here.</p>
       </div>
     );
   }
 
   return (
-    <section className="bg-gray-50 py-16">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-2xl font-semibold mb-4">Your Bookings</h1>
+    <section className="bg-gray-50 min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Your Bookings</h1>
 
-        <div className="space-y-4">
+        <div className="space-y-6 h-[1200px] overflow-y-auto px-5">
           {bookings.map((booking) => (
             <div
               key={booking.bookingId}
               onClick={() => handleBookingClick(booking.bookingId)}
-              className="border p-4 rounded-md cursor-pointer hover:bg-gray-100 transition"
+              className="border border-gray-200 p-6 rounded-lg shadow-sm bg-white cursor-pointer hover:shadow-md hover:bg-gray-50 transition"
             >
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-medium">Booking ID: {booking.bookingId}</h3>
-                  <p className="text-gray-500">Local Home ID: {booking.localHomeId}</p>
-                  <p className="text-gray-500">Dates: {new Date(booking.startDate).toLocaleDateString()} to {new Date(booking.endDate).toLocaleDateString()}</p>
-                  <p className="text-gray-500">Total Days: {booking.totalDays}</p>
-                  <p className="text-gray-500">Status: {booking.status}</p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-1">
+                    Booking ID: {booking.bookingId}
+                  </h3>
+                  <p className="text-sm  mb-1">
+                    Date: {new Date(booking.bookingDate).toLocaleDateString()}
+                  </p>
+                  <p className="text-sm  mb-1">Total Days: {booking.totalDays}</p>
+                  <p className="text-sm  mb-1">Status: {booking.status}</p>
+                  <p className="text-sm  mb-1">Service: {booking.bookingType}</p>
+
+                  {booking.bookingType === "Transporter" && (
+                    <>
+                      <p className="text-sm  mb-1">Location: {booking.location}</p>
+                      <p className="text-sm ">People: {booking.numberOfPeople}</p>
+                    </>
+                  )}
                 </div>
+
                 <div className="text-right">
-                  <p className="font-semibold text-blue-700">PKR {booking.totalPrice}</p>
+                  <p className="text-lg font-bold text-blue-700">
+                    PKR {booking.amountPaid}
+                  </p>
                 </div>
               </div>
             </div>

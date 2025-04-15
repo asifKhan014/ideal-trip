@@ -29,6 +29,7 @@ export default function BookingPage() {
   useEffect(() => {
     const fetchTransportData = async () => {
       const authToken = localStorage.getItem("token");
+      console.log("TOken 1",authToken)
       try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-transport/${transportId}`,
@@ -72,6 +73,8 @@ export default function BookingPage() {
     };
 
     try {
+      const authToken = localStorage.getItem("token");
+      console.log("TOken 2",authToken)
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/booking/initiate`,
         payload,

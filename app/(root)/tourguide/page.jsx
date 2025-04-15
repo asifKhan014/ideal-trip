@@ -16,14 +16,13 @@ function TourGuide() {
   useEffect(() => {
     const fetchTourGuides = async () => {
       try {
-      console.log("Token", authToken);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
+              // Authorization: `Bearer ${authToken}`,
             },
           }
         );
@@ -32,7 +31,7 @@ function TourGuide() {
         if (data.isSuccess) {
           setTourGuides(data.data);
         } else {
-          setError(data.messege || "Failed to fetch tour guides");
+          setError(data.message || "Failed to fetch tour guides");
         }
       } catch (err) {
         setError("Something went wrong while fetching data.");
@@ -41,9 +40,9 @@ function TourGuide() {
       }
 
 
-      if (authToken == null) {
-        router.push("/login");
-      }
+      // if (authToken == null) {
+      //   router.push("/login");
+      // }
     };
 
     fetchTourGuides();
@@ -87,7 +86,7 @@ function TourGuide() {
               <Link href={`/tourguide/${guide.id}`} key={guide.id}>
                 <TourGuideCard
                   idCard={guide.id}
-                  hourlyRate={guide.ratePerDay}
+                  ratePerDay={guide.ratePerDay}
                   bio={guide.bio}
                   experience={guide.experience}
                   location={guide.location}

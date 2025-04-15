@@ -20,7 +20,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-
+import { useRouter } from "next/navigation";
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   // console.log("User: ", user);
@@ -28,6 +28,7 @@ export default function Navbar() {
   const [userDetails, setUserDetails] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const pathname = usePathname();
+  const router = useRouter();
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem("token");
@@ -64,7 +65,9 @@ export default function Navbar() {
               <Link href={"/"}>
                 <img
                   alt="Ideal Trip"
-                  src="/travel.png"
+                  // src="/travel.png"
+                  src="/logo1.png"
+
                   className="h-14 w-auto"
                 />
               </Link>

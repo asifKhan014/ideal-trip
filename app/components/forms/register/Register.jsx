@@ -58,7 +58,7 @@ export default function Register() {
       Email: "",
       PhoneNumber: "",
       Address: "",
-      HourlyRate: "",
+      ratePerDay: "",
       Location: "",
       Bio: "",
       Experience: "",
@@ -75,7 +75,7 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
+        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       Password: Yup.string()
@@ -91,7 +91,7 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
+        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       vehicleDetails: Yup.string().required("Vehicle details are required"),
@@ -112,7 +112,7 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
+        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       propertyDetails: Yup.string().required("Property details are required"),
@@ -133,7 +133,7 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
+        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       hotelDetails: Yup.string().required("Hotel details are required"),
@@ -154,11 +154,11 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^\d{10,15}$/, "Phone number must be 10-15 digits")
+        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       idCard: Yup.mixed().required("ID Card is required"),
-      HourlyRate: Yup.number()
+      ratePerDay: Yup.number()
         .integer()
         .min(1)
         .max(20000)

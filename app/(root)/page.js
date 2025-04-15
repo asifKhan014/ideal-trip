@@ -15,11 +15,11 @@ export default function Home() {
       <HeroSction />
       <ServicesSection />
       <FeaturedPackages />
-      {/* <ExploreDestinations /> */}
+      <ExploreDestinations />
       <TourGuideHighlights />
-      {/* <HotelsRoom /> */}
-      {/* <TestimonialsAndReviews /> */}
-      {/* <CallToActionSection /> */}
+      <HotelsRoom />
+      <TestimonialsAndReviews />
+      <CallToActionSection />
     </div>
   );
 }

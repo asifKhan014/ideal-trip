@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 
-function TourGuideCard({ id, idCard, hourlyRate, bio, experience, location }) {
+function TourGuideCard({ id, idCard, ratePerDay, bio, experience, location }) {
     const imageSrc = idCard 
         ? (idCard instanceof Blob ? URL.createObjectURL(idCard) : idCard) 
         : '/default-tour-guide.jpg'; // Replace with an actual default image path
-console.log("bio");
+// console.log("bio");
+console.log("Hourly Rate:", ratePerDay);
     return (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
             <img src={'/images/guide-3.jpg'} alt="Tour Guide" className="h-56 w-full object-cover" />
@@ -13,7 +14,7 @@ console.log("bio");
             <div className="p-6 flex flex-col space-y-4">
                 <h2 className="text-2xl font-semibold text-black">Tour Guide</h2>
                 <p className="text-black text-sm mb-2">
-                    <strong>Hourly Rate:</strong> ${hourlyRate || 'Not Available'}
+                    <strong>Hourly Rate:</strong> ${ratePerDay || 'Not Available'}
                 </p>
                 <p className="mt-2 text-black text-sm">
                     <strong>Bio:</strong> {bio || 'No bio available'}

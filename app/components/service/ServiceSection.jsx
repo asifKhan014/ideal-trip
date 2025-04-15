@@ -46,12 +46,12 @@ export default function ServicesSection() {
   const [hovered, setHovered] = useState(null);
 
   return (
-    <section className="py-24 bg-gray-100">
+    <section className="py-16 md:py-36 bg-gray-100">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 text-center mb-8">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-blue-600 text-center mb-8">
           What We Offer
         </h2>
-        <p className="text-lg text-gray-600 text-center mb-12">
+        <p className="text-lg  text-center mb-12">
           Discover services designed to make your trips memorable and
           hassle-free.
         </p>
@@ -77,7 +77,7 @@ export default function ServicesSection() {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-600 text-center">{service.description}</p>
+              <p className=" text-center">{service.description}</p>
 
               {/* Hover Tooltip */}
               {hovered === index && (

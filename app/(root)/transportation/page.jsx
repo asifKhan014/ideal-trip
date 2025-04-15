@@ -8,7 +8,8 @@ function TransporterList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
-  const authToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const authToken =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   useEffect(() => {
     const fetchTransporters = async () => {
@@ -81,23 +82,56 @@ function TransporterList() {
               <Link
                 href={`/transportation/${transporter.id}`}
                 key={transporter.id}
-                className="border rounded-lg p-4 shadow-md bg-white hover:shadow-lg transition"
+                className=" rounded-lg p-4 shadow-md bg-white hover:shadow-lg transition"
               >
-                <div>
-                  <img
+                <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 p-6 space-y-5 transition-transform duration-300 hover:scale-105">
+                  {/* <img
                     src={transporter.primaryImage}
                     alt={transporter.name}
-                    className="w-full h-48 object-cover rounded"
-                  />
-                  <h2 className="text-xl font-bold mt-2">{transporter.name}</h2>
-                  <p className="text-sm text-gray-600">
-                    From: {transporter.startLocation} → To: {transporter.destination}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Departure: {new Date(transporter.departureTime).toLocaleString()}
-                  </p>
-                  <p className="text-sm text-gray-700">Seats Available: {transporter.seatsAvailable}</p>
-                  <p className="text-lg font-semibold text-green-700">₹{transporter.ticketPrice}</p>
+                    className="w-full h-48 object-cover rounded-md"
+                  /> */}
+
+                  <div className="text-9xl text-blue-500 text-center">🚌</div>
+
+                  <h2 className="text-3xl font-bold text-gray-800 text-center">
+                    {transporter.name}
+                  </h2>
+
+                  <div className="text-sm text-gray-600 text-center">
+                    <p>
+                      <span className="font-semibold text-gray-800">From:</span>{" "}
+                      {transporter.startLocation}
+                      <span className="mx-2">→</span>
+                      <span className="font-semibold text-gray-800">
+                        To:
+                      </span>{" "}
+                      {transporter.destination}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Departure:
+                      </span>{" "}
+                      {new Date(transporter.departureTime).toLocaleString()}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Seats Available:
+                      </span>{" "}
+                      {transporter.seatsAvailable}
+                    </p>
+                  </div>
+
+                  <div className="flex justify-center items-center">
+                    <p className="text-lg font-semibold text-green-600">
+                      ₹{transporter.ticketPrice}
+                    </p>
+                  </div>
+
+                  <div className="flex justify-center">
+                    <button className="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg w-full sm:w-auto hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-200 ease-in-out">
+                      Book Now
+                    </button>
+                  </div>
                 </div>
               </Link>
             ))

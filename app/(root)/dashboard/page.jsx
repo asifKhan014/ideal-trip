@@ -7,6 +7,7 @@ import LocalHomeOwner from "../../components/dashboard/LocalHomeOwner/LocalHomeO
 import Tourist from "../../components/dashboard/Tourist/Tourist";
 import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
+import HotelOwnerDashboard from "../../components/dashboard/HotelOwner/HotelOwner";
 
 export default function Dashboard() {
   const [role, setRole] = useState("");
@@ -32,6 +33,8 @@ export default function Dashboard() {
         return <LocalHomeOwner />;
       case "Tourist":
         return <Tourist />;
+        case "HotelOwner":
+          return <HotelOwnerDashboard />;
       default:
         return <p>Loading dashboard...</p>;
     }

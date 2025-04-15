@@ -1,9 +1,10 @@
-import { useState } from "react";
+'use client";'
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function AddLocalHomeForm() {
+export default function AddLocalHomeForm({ home = null, onClose, fetchHomes }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -20,6 +21,22 @@ export default function AddLocalHomeForm() {
   const [error, setError] = useState(null);
 
   const authToken = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (home) {
+      setFormData({
+        name: home.name,
+        description: home.description,
+        addressLine: home.addressLine,
+        pricePerNight: home.pricePerNight,
+        capacity: home.capacity,
+        availableFrom: home.availableFrom,
+        availableTo: home.availableTo,
+        primaryImage: null,
+        images: []
+      });
+    }
+  }, [home]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -49,35 +66,25 @@ export default function AddLocalHomeForm() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/add-localhome`, 
+        home
+          ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/update-localhome/${home.id}`
+          : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/add-localhome`,
         {
-          method: "POST",
+          method: home ? "PUT" : "POST",
           body: data,
           headers: {
             "Authorization": `Bearer ${authToken}`,
           },
         }
       );
-      
       const result = await response.json();
 
       if (result.isSuccess) {
-        // Handle success (redirect, show success message, etc.)
-        // For now, you can log the result or clear the form
-        console.log(result);
-        setFormData({
-          name: "",
-          description: "",
-          addressLine: "",
-          pricePerNight: "",
-          capacity: "",
-          availableFrom: "",
-          availableTo: "",
-          primaryImage: null,
-          images: []
-        });
+        alert(home ? "Home updated successfully." : "Home added successfully.");
+        fetchHomes();
+        onClose();
       } else {
-        setError(result.message || "Failed to add local home");
+        setError(result.message || "Failed to add/update home.");
       }
     } catch (err) {
       setError("Something went wrong while submitting the form.");
@@ -88,7 +95,7 @@ export default function AddLocalHomeForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 p-6 max-w-2xl text-black bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold">Add Local Home</h2>
+      <h2 className="text-2xl font-bold">{home ? "Edit Local Home" : "Add Local Home"}</h2>
 
       <Input
         name="name"
@@ -153,7 +160,6 @@ export default function AddLocalHomeForm() {
         name="primaryImage"
         type="file"
         accept="image/*"
-        required
         onChange={handleChange}
         className="text-black"
       />
