@@ -56,7 +56,7 @@ const AddHotelForm = ({
     setLoading(true);
     setError(null);
     setSuccessMessage(null);
-
+    
     const endpoint = isEditMode
       ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${initialData.hotelId}`
       : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel`;
@@ -64,19 +64,7 @@ const AddHotelForm = ({
     const method = isEditMode ? "PUT" : "POST";
 
     try {
-      console.log("Form data being sent:", {
-        hotelName,
-        hotelDescription,
-        address,
-        isAvailable,
-        primaryImage,
-        images,
-      });
-      console.log("primaryImage:", primaryImage);
-      console.log("Endpoint:", endpoint);
-      console.log("Method:", method);
-      console.log("Auth Token:", authToken);
-      console.log("FormData:", formData);
+      
       const response = await fetch(endpoint, {
         method,
         body: formData,
@@ -86,7 +74,7 @@ const AddHotelForm = ({
       });
 
       const result = await response.json();
-      console.log("Hotel operation result:", result); 
+     
       if (response.ok) {
         setSuccessMessage(isEditMode ? "Hotel updated successfully!" : "Hotel added successfully!");
 
@@ -97,7 +85,6 @@ const AddHotelForm = ({
         }
 
         if (!isEditMode) {
-          // Reset only on add
           setHotelName("");
           setHotelDescription("");
           setAddress("");

@@ -40,7 +40,7 @@ export default function TourGuideDetail({ params }) {
           // Check if the response body is not empty
           const text = await response.text();
           const data = text ? JSON.parse(text) : {}; // Safe parsing
-          console.log("Guide Details:", data);
+        
           if (data.isSuccess) {
             setGuideDetails(data.data);
           } else {

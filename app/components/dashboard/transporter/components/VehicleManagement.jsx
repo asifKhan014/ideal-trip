@@ -8,7 +8,7 @@ import { Upload, AlertTriangle } from "lucide-react";
 export default function AddTransporterForm() {
   const [formData, setFormData] = useState({
     name: "",
-    type: "",
+    type: "Bus",
     capacity: "",
     seatsAvailable: "",
     startLocation: "",
@@ -23,7 +23,6 @@ export default function AddTransporterForm() {
   const [error, setError] = useState(null);
 
   const authToken = typeof window !== "undefined" ? localStorage.getItem("token") : "";
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -86,7 +85,7 @@ export default function AddTransporterForm() {
 
   return (
     <div className="w-full max-w-3xl p-6 bg-white rounded-2xl shadow-lg ">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Add New Transporter</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">Add New Transport</h2>
 
       {error && (
         <div className="flex items-center gap-2 bg-red-100 text-red-700 px-4 py-3 rounded-md mb-4 border border-red-300">
@@ -97,7 +96,7 @@ export default function AddTransporterForm() {
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
         <Input name="name" placeholder="Name" value={formData.name} onChange={handleChange} required className="text-black"/>
-        <Input name="type" placeholder="Type" value={formData.type} onChange={handleChange} required className="text-black"/>
+        <Input name="type" placeholder="Type" value={formData.type} onChange={handleChange} required className="text-black" disabled/>
 
         <Input name="capacity" type="number" placeholder="Capacity" value={formData.capacity} onChange={handleChange} required className="text-black"/>
         <Input name="seatsAvailable" type="number" placeholder="Seats Available" value={formData.seatsAvailable} onChange={handleChange} required className="text-black"/>

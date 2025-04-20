@@ -16,15 +16,13 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export default function BookingPage() {
   const searchParams = useSearchParams();
-  const [localHomeId, setLocalHomeId] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [totalDays, setTotalDays] = useState(0);
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
   const [bookingId, setBookingId] = useState(null);
-  
-  // Calculate total days between start and end dates
+
   const calculateTotalDays = (start, end) => {
     if (start && end) {
       const startTime = new Date(start).getTime();
@@ -37,7 +35,7 @@ export default function BookingPage() {
   const handleStartDateChange = (e) => {
     const selectedStartDate = e.target.value;
     setStartDate(selectedStartDate);
-    setEndDate(""); // Reset end date
+    setEndDate("");
     calculateTotalDays(selectedStartDate, endDate);
   };
 
@@ -52,7 +50,8 @@ export default function BookingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const localHomeId = searchParams.get("id");
+
+    const hotelRoomId = searchParams.get("id");
     const authToken = localStorage.getItem("token");
 
     if (!authToken) {
@@ -61,22 +60,23 @@ export default function BookingPage() {
     }
 
     const formData = {
-      localHomeId: localHomeId,
-      startDate: startDate,
-      endDate: endDate,
-      totalDays: totalDays,
+      hotelRoomId,
+      startDate,
+      endDate,
+      totalDays,
     };
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/booking/initiate`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/booking/initiate`,
         formData,
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
-
       if (response.data.isSuccess) {
-        setClientSecret(response.data.clientSecret);
-        setBookingId(response.data.bookingId);
+        setClientSecret(response.data.data.clientSecret);
+        setBookingId(response.data.data.bookingId);
       } else {
         alert(response.data.message || "Failed to initiate booking.");
       }
@@ -87,11 +87,11 @@ export default function BookingPage() {
       setLoading(false);
     }
   };
-
+ 
   return (
     <section className="bg-gray-50 py-16">
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-2xl font-semibold mb-4">Book Your Local Home</h1>
+        <h1 className="text-2xl font-semibold mb-4">Book Your Hotel Room</h1>
 
         {clientSecret ? (
           <Elements stripe={stripePromise} options={{ clientSecret }}>
@@ -102,17 +102,6 @@ export default function BookingPage() {
             onSubmit={handleSubmit}
             className="space-y-4 p-4 border rounded-lg shadow-md bg-white"
           >
-            {/* <div>
-              <label className="block font-medium mb-1">Local Home ID</label>
-              <input
-                type="text"
-                value={localHomeId}
-                onChange={(e) => setLocalHomeId(e.target.value)}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
-                required
-              />
-            </div> */}
-
             <div>
               <label className="block font-medium mb-1">Start Date</label>
               <input
@@ -177,15 +166,15 @@ function StripeCheckoutForm({ bookingId }) {
 
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      confirmParams: {}, // Remove return_url to prevent automatic redirection
-      redirect: "if_required", // Prevents Stripe from redirecting automatically
+      confirmParams: {},
+      redirect: "if_required",
     });
 
     if (error) {
       console.error("Payment Error:", error.message);
       alert(error.message);
       setLoading(false);
-      router.push(`/localhomes/booking/fail-payment`);
+      router.push("/hotels/booking/fail-payment");
       return;
     }
 
@@ -193,21 +182,26 @@ function StripeCheckoutForm({ bookingId }) {
       const authToken = localStorage.getItem("token");
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/booking/payment-success`,
-        { bookingId, paymentIntentId: paymentIntent.id },
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/booking/payment-success`,
+        {
+          bookingId,
+          paymentIntentId: paymentIntent.id,
+        },
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
 
       if (response.data.isSuccess) {
-        router.push(`/local-stays/booking/success?bookingId=${bookingId}`);
+        router.push(`/hotels/booking/success?bookingId=${bookingId}`);
       } else {
         alert("Payment processed but failed to update status.");
-        router.push(`/localhomes/booking/fail-payment`);
+        router.push("/hotels/booking/fail-payment");
       }
     } catch (error) {
       console.error("Error updating payment status:", error);
       alert("Payment processed but failed to update status.");
-      router.push(`/localhomes/booking/fail-payment`);
+      router.push("/hotels/booking/fail-payment");
     }
 
     setLoading(false);

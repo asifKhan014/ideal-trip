@@ -105,7 +105,7 @@ export default function Login() {
                 <div className="text-sm">
                   <a
                     href="/forgot-password"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-blue-600 hover:text-blue-500"
                     onClick={handleForgetPassword}
                   >
                     Forgot password?
@@ -129,7 +129,7 @@ export default function Login() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
@@ -140,7 +140,7 @@ export default function Login() {
             Not a member?{" "}
             <Link
               href="/register"
-              className="font-bold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-bold leading-6 text-blue-600 hover:text-blue-500"
             >
               Join Now
             </Link>

@@ -10,7 +10,6 @@ export default function PackageDetail() {
   const packageId = searchParams.get("id");
   const router = useRouter();
   const [packageDetails, setPackageDetails] = useState("");
-  // console.log("------------------->" + packageDetails);
   useEffect(() => {
     if (packageId) {
       const authToken = localStorage.getItem("token");
@@ -27,7 +26,7 @@ export default function PackageDetail() {
           }
         );        
         const data = await response.json();
-        console.log(data)
+       
         if(data.isSuccess){
           setPackageDetails(data.data);
         }

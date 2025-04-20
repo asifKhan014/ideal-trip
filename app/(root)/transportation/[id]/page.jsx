@@ -19,6 +19,8 @@ export default function TransportDetail({ params }) {
       const fetchTransportDetails = async () => {
         try {
           const authToken = localStorage.getItem("token");
+          console.log("Auth Token:", authToken);
+
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-transport/${id}`,
             {
@@ -83,6 +85,7 @@ export default function TransportDetail({ params }) {
       <div className="relative">
         <Image
           src={transport.primaryImage || "/banner.jpg"}
+          // src={`http://localhost:5277${transport.primaryImage}`}
           alt={transport.name}
           width={1920}
           height={600}
@@ -133,7 +136,7 @@ export default function TransportDetail({ params }) {
               <div className="flex items-center space-x-4">
                 <FaMoneyBillWave className="text-green-600 text-xl" />
                 <p className="text-lg text-gray-600">
-                  <strong>Ticket Price:</strong> ₹{transport.ticketPrice}
+                  <strong>Ticket Price:</strong> PKR{transport.ticketPrice}
                 </p>
               </div>
 
@@ -180,7 +183,7 @@ export default function TransportDetail({ params }) {
 
       {/* Feedback Form (optional) */}
       <div className="max-w-7xl mx-auto">
-        <FeedBackForm localHomeId={id} />
+        <FeedBackForm transporterId={id} />
       </div>
     </section>
   );

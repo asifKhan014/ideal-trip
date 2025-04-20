@@ -79,11 +79,9 @@ export default function BookingPage() {
       );
 
       if (response.data.isSuccess) {
-        console.log("response")
-        console.log(response.data)
+
         setClientSecret(response.data.clientSecret);
-        console.log("Booking Id")
-        console.log(response.data.bookingId)
+        
         setBookingId(response.data.bookingId);
       } else {
         alert(response.data.message || "Failed to initiate booking.");
@@ -174,7 +172,7 @@ function StripeCheckoutForm({ bookingId }) {
     }
 
     try {
-      console.log("payment success started");
+   
       const authToken = localStorage.getItem("token");
 
       // Send payment confirmation to backend
@@ -183,15 +181,14 @@ function StripeCheckoutForm({ bookingId }) {
         { bookingId, paymentIntentId: paymentIntent.id },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
-      console.log(response.data);
+   
 
       if (response.data.isSuccess) {
         router.push(
           `/tour-packages/booking/confirm-booking/success?bookingId=${bookingId}`
         );
       } else {
-        console.log(response.data);
-        console.log("Payment processed but failed to update status.");
+    
         alert("Payment processed but failed to update status.");
         // router.push(`/tour-packages/booking/fail-payment`);
       }

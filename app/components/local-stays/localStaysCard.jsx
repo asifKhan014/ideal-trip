@@ -17,8 +17,8 @@ function LocalStaysCard({
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <img
-        // src={imageUrl}
-        src={"/home.jpg"}
+        src={imageUrl}
+        // src={"/home.jpg"}
         alt={name}
         className="w-full h-56 object-cover rounded-lg mb-4"
       />

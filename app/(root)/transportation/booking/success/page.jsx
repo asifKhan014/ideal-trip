@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 export default function SuccessPage() {
   const router = useRouter();
   // const { session_id } = router;
+  const bookingId = new URLSearchParams(window.location.search).get("bookingId");  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -15,9 +16,9 @@ export default function SuccessPage() {
           Thank you for booking your tour. Your payment has been processed
           successfully.
         </p>
-        <p className="mt-2 text-gray-500">
-          Your session ID is:
-          {/* <strong>{session_id}</strong> */}
+        <p className="mt-2 flex flex-col items-center">
+          Your session ID is: 
+          <strong>{bookingId}</strong>
         </p>
         <button
           onClick={() => router.push("/")}

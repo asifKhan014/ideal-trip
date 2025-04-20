@@ -27,7 +27,7 @@ export default function Dashboard() {
     switch (role) {
       case "Transporter":
         return <Transporter />;
-      case "tourguide":
+      case "TourGuide":
         return <TourGuide />;
       case "LocalHomeOwner":
         return <LocalHomeOwner />;

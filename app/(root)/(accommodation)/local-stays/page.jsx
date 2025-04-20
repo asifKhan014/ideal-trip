@@ -26,8 +26,8 @@ function LocalHomes() {
           }
         );
         const data = await response.json();
+        console.log("Local homes data:", data.data.localHomes);
         if (data.isSuccess) {
-          // console.log("Local homes fetched successfully:", data.data.localHomes);
           setLocalHomes(data.data.localHomes); // Assuming response data has a `data` field containing local homes
         } else {
           setError(data.message || "Failed to fetch local homes");
@@ -61,7 +61,8 @@ function LocalHomes() {
         </h1>
         <div>
           <p className="text-white text-2xl">
-            We have a list of local homes that can make your stay comfortable and memorable.
+            We have a list of local homes that can make your stay comfortable
+            and memorable.
           </p>
         </div>
         <div className="flex justify-center">
@@ -91,7 +92,8 @@ function LocalHomes() {
                   availableTo={home.availableTo}
                   pricePerNight={home.pricePerNight}
                   rating={home.rating}
-                  imageUrl={home.imageUrl}
+                  // imageUrl={home.imageUrl}
+                  imageUrl={`http://localhost:5277${home.imageUrl}`}
                   capacity={home.capacity}
                 />
               </Link>

@@ -5,41 +5,26 @@ import TransportRequests from "./components/TransportRequests";
 import Notifications from "./components/Notifications";
 import StatsCard from "./components/StatsCard";
 import AddTransporterForm from "./components/VehicleManagement";
+import TransportList from "./components/TransportList";
 
 const TransporterDashboard = () => {
   const [profile, setProfile] = useState({});
   const [vehicles, setVehicles] = useState([]);
   const [requests, setRequests] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const authToken = typeof window !== "undefined" ? localStorage.getItem("token") : "";
 
-  // Fetch data from JSON Server
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/transporter")
-  //     .then((res) => res.json())
-  //     .then((data) => setProfile(data));
-  //   fetch("http://localhost:5000/vehicles")
-  //     .then((res) => res.json())
-  //     .then((data) => setVehicles(data));
-  //   fetch("http://localhost:5000/requests")
-  //     .then((res) => res.json())
-  //     .then((data) => setRequests(data));
-  //   fetch("http://localhost:5000/notifications")
-  //     .then((res) => res.json())
-  //     .then((data) => setNotifications(data));
-  // }, []);
+  useEffect(() => {
+    fetchTransports();
+  }, []);
 
-  const addVehicle = (vehicle) => {
-    fetch("http://localhost:5000/vehicles", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...vehicle, id: Date.now() }),
-    }).then(() => setVehicles([...vehicles, { ...vehicle, id: Date.now() }]));
-  };
-
-  const deleteVehicle = (id) => {
-    fetch(`http://localhost:5000/vehicles/${id}`, { method: "DELETE" }).then(
-      () => setVehicles(vehicles.filter((v) => v.id !== id))
-    );
+  const fetchTransports = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/my-tranports`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+    const data = await res.json();
+    console.log("total transports:", data.data.length);
+    if (data?.isSuccess) setVehicles(data.data || []);
   };
 
   return (
@@ -68,14 +53,29 @@ const TransporterDashboard = () => {
       </div>
 
       <div className="mt-6">
-       <AddTransporterForm/>
+        <AddTransporterForm />
       </div>
-
       <div className="mt-6">
-        <TransportRequests requests={requests} />
+        <TransportList />
       </div>
     </div>
   );
 };
 
 export default TransporterDashboard;
+
+// Please improve this dashboard of transporter
+// add functionalities of delete, update and display added transports of transporter
+// I provide you a code that I already implement
+// your task is to complete other functionalites so :
+// 1. Add a form to add new transports.
+// 2. Display the list of added transports.
+// 3. Implement delete functionality for each transport.
+// 4. Implement update functionality for each transport.
+// 5. Ensure the UI is user-friendly and responsive.
+
+// apis
+// add:/api/Transport/add-transport
+// update:/api/Transport/update-transport/{transportId}
+// delete:/api/Transport/delete-transport/{id}
+// get:/api/Transport/my-tranports

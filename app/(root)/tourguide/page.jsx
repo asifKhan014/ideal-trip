@@ -12,7 +12,7 @@ function TourGuide() {
   const router = useRouter();
   // const authToken = localStorage.getItem("token");
   // const authToken = localStorage.getItem("token");
-  const {token:authToken} = useAuth();
+  const { token: authToken } = useAuth();
   useEffect(() => {
     const fetchTourGuides = async () => {
       try {
@@ -27,18 +27,17 @@ function TourGuide() {
           }
         );
         const data = await response.json();
-        console.log("TourGuide Data", data);
+        // console.log("Tour Guides Data:", data);
         if (data.isSuccess) {
           setTourGuides(data.data);
         } else {
-          setError(data.message || "Failed to fetch tour guides");
+          setError(data.errors || "Failed to fetch tour guides");
         }
       } catch (err) {
         setError("Something went wrong while fetching data.");
       } finally {
         setLoading(false);
       }
-
 
       // if (authToken == null) {
       //   router.push("/login");
@@ -48,57 +47,60 @@ function TourGuide() {
     fetchTourGuides();
   }, []);
   // var token = localStorage.getItem("token");
-  
-  return (
-    <div className="min-h-screen  mx-auto px-4 py-8">
-      <div className="flex flex-col gap-6 text-center mb-8 min-h-96 bg-blue-500 pt-20 ">
-        <div>
-          <span className="bg-yellow-400 px-6 py-1 rounded-lg font-bold">
-            TourGuide
-          </span>
-        </div>
-        <h1 className="text-4xl text-white font-bold">
-          Here, Find your required tourGuide
-        </h1>
-        <div>
-          <p className="text-white text-2xl ">
-            We have a list of tour guides who can help you to make your trip
-            memorable.
-          </p>
-        </div>
-        <div className="flex justify-center">
-          <input
-            type="text"
-            className="h-12 px-6 py-3 rounded-full shadow-lg w-full max-w-md"
-            placeholder="Search for tour guide..."
-          />
-        </div>
-      </div>
 
-      {loading ? (
-        <p className="text-center">Loading...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
+  return (
+    <div className="min-h-screen mx-auto px-4 py-8 bg-gray-100">
+  <div className="flex flex-col gap-6 text-center mb-8 min-h-96 bg-blue-500 pt-20 rounded-lg shadow-xl">
+    <div>
+      <span className="bg-yellow-400 px-6 py-1 rounded-lg font-bold text-lg">
+        Tour Guide
+      </span>
+    </div>
+    <h1 className="text-4xl text-white font-bold mb-4">
+      Find Your Perfect Tour Guide
+    </h1>
+    <div>
+      <p className="text-white text-2xl mb-4">
+        We have a list of experienced tour guides to help make your trip memorable.
+      </p>
+    </div>
+    <div>
+      <input
+        type="text"
+        className="h-12 px-6 py-3 rounded-full shadow-lg w-full max-w-md mx-auto"
+        placeholder="Search for a tour guide..."
+      />
+    </div>
+  </div>
+
+  {loading ? (
+    <p className="text-center text-lg text-gray-600">Loading...</p>
+  ) : error ? (
+    <p className="text-center text-red-500">{error}</p>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-6 max-w-7xl mx-auto">
+      {tourGuides.length > 0 ? (
+        tourGuides.map((guide) => (
+          <Link href={`/tourguide/${guide.id}`} key={guide.id}>
+            <TourGuideCard
+              id={guide.id}
+              fullName={guide.fullName}
+              phoneNumber={guide.phoneNumber}
+              ratePerDay={guide.ratePerDay}
+              experience={guide.experience}
+              bio={guide.bio}
+              location={guide.location}
+              rating={guide.rating}
+            />
+          </Link>
+        ))
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 gap-4 px-6 max-w-7xl mx-auto">
-          {tourGuides.length > 0 ? (
-            tourGuides.map((guide) => (
-              <Link href={`/tourguide/${guide.id}`} key={guide.id}>
-                <TourGuideCard
-                  idCard={guide.id}
-                  ratePerDay={guide.ratePerDay}
-                  bio={guide.bio}
-                  experience={guide.experience}
-                  location={guide.location}
-                />
-              </Link>
-            ))
-          ) : (
-            <p className="text-center col-span-3">No tour guides available</p>
-          )}
-        </div>
+        <p className="text-center text-lg col-span-3">No tour guides available</p>
       )}
     </div>
+  )}
+</div>
+
   );
 }
 

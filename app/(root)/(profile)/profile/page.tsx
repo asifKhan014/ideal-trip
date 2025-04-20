@@ -56,7 +56,7 @@ function UserDashboard() {
           setAddress(data.data.address);
           setProfilePicture(data.data.profilePhotoUrl);
           setEmail(data.data.email);
-          console.log(data.data)
+         
         } else {
           alert(data.messege || "Failed to fetch user data.");
         }
@@ -77,7 +77,7 @@ function UserDashboard() {
       const formData = new FormData();
       formData.append("FullName", fullName);
       formData.append("Address", address);
-      console.log(file)
+    
       // Only append profile picture if a new image is uploaded
         formData.append("ProfilePhoto", file);
   
@@ -136,7 +136,7 @@ function UserDashboard() {
               if (e.target.files && e.target.files[0]) {
                 setFile(e.target.files[0]);
                 const imageUrl = URL.createObjectURL(e.target.files[0]);
-                console.log(imageUrl); // Create a temporary URL for preview
+             
                 setProfilePicture(imageUrl); // Update the state with the image URL
               }
             }}            
