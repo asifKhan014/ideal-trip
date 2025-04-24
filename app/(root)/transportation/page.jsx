@@ -169,7 +169,7 @@ function TransporterList() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
+              // Authorization: `Bearer ${authToken}`,
             },
           }
         );
@@ -187,13 +187,13 @@ function TransporterList() {
       }
     };
 
-    if (authToken) fetchTransporters();
-  }, [authToken]);
+     fetchTransporters();
+  }, []);
 
-  if (!authToken) {
-    router.push("/login");
-    return null;
-  }
+  // if (!authToken) {
+  //   router.push("/login");
+  //   return null;
+  // }
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-8">

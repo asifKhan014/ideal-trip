@@ -120,7 +120,7 @@ function Hotels() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
+            // Authorization: `Bearer ${authToken}`,
           },
         });
 
@@ -140,10 +140,8 @@ function Hotels() {
       }
     };
 
-    if (authToken) {
       fetchHotels();
-    }
-  }, [authToken]);
+  }, []);
 
   return (
     <main className="min-h-screen bg-gray-50">

@@ -21,7 +21,7 @@ function LocalHomes() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
+              // Authorization: `Bearer ${authToken}`,
             },
           }
         );
@@ -43,10 +43,10 @@ function LocalHomes() {
   }, []);
 
   // Redirect to login if token is missing
-  if (!authToken) {
-    router.push("/login");
-    return null;
-  }
+  // if (!authToken) {
+  //   router.push("/login");
+  //   return null;
+  // }
 
   return (
     <div className="min-h-screen mx-auto px-4 py-8">

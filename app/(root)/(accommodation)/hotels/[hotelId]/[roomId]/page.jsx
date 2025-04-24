@@ -81,14 +81,14 @@ export default function RoomDetail({ params }) {
   const handleBookRoom = () => {
     router.push(`/hotels/booking?id=${id}`);
   };
-
+  console.log("Room Details:", roomDetails);
   return (
     <section className="bg-gray-50">
       {/* Hero Section */}
       <div className="relative">
         <Image
-          // src={`http://localhost:5277${hotel.primaryImage}` || "/banner.jpg"}  
-          src={"/banner.jpg"}  
+          src={`http://localhost:5277${roomDetails.primaryImage}`}  
+          // src={"/banner.jpg"}  
           alt={roomDetails.roomType}
           width={1920}
           height={600}

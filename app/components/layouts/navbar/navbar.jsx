@@ -357,7 +357,7 @@ export default function Navbar() {
                       <Link
                         key={sub.name}
                         href={sub.href}
-                        className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
+                        className="block px-4 py-2 text-base font-bold text-black hover:bg-gray-100"
                       >
                         {sub.name}
                       </Link>

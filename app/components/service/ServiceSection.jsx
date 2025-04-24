@@ -39,7 +39,7 @@ export default function ServicesSection() {
   const [hovered, setHovered] = useState(null);
 
   return (
-    <section className="py-20 md:py-36 bg-gradient-to-b from-white to-gray-100">
+    <section className="py-20 md:py-36 bg-gradient-to-b from-white to-blue-200">
       <div className="max-w-screen-2xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-extrabold text-blue-600 text-center mb-6">
           What We Offer

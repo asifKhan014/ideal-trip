@@ -33,7 +33,7 @@ function TourGuideCard({
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out max-w-sm mx-auto hover:shadow-2xl">
+    <div className="bg-white rounded-3xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out max-w-md mx-auto hover:shadow-2xl">
       <img
         src={imageSrc}
         alt="Tour Guide"

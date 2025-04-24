@@ -19,7 +19,7 @@ export default function TransportDetail({ params }) {
       const fetchTransportDetails = async () => {
         try {
           const authToken = localStorage.getItem("token");
-          console.log("Auth Token:", authToken);
+          // console.log("Auth Token:", authToken);
 
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-transport/${id}`,
@@ -76,16 +76,20 @@ export default function TransportDetail({ params }) {
   }
 
   const handleBookTransport = () => {
+    if (!authToken) {
+      router.push("/login");
+      return null;
+    }
     router.push(`/transportation/booking?id=${id}`);
   };
-
+  console.log("transport data: ", transport.images?.[0].imageUrl)
   return (
     <section className="bg-gray-50">
       {/* Hero Section */}
       <div className="relative">
         <Image
-          src={transport.primaryImage || "/banner.jpg"}
-          // src={`http://localhost:5277${transport.primaryImage}`}
+          // src={transport.primaryImage || "/banner.jpg"}
+          src={`http://localhost:5277${transport.images?.[0].imageUrl}`}
           alt={transport.name}
           width={1920}
           height={600}

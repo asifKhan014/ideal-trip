@@ -78,7 +78,7 @@ function TourGuide() {
   ) : error ? (
     <p className="text-center text-red-500">{error}</p>
   ) : (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-6 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-6 max-w-screen-2xl mx-auto min-h-screen mt-16">
       {tourGuides.length > 0 ? (
         tourGuides.map((guide) => (
           <Link href={`/tourguide/${guide.id}`} key={guide.id}>

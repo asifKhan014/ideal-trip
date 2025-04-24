@@ -13,12 +13,12 @@ export default function LocalHomeDetail({ params }) {
   const [localHomeDetails, setLocalHomeDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const authToken = localStorage.getItem("token");
 
   useEffect(() => {
     if (id) {
       const fetchLocalHomeDetails = async () => {
         try {
-          const authToken = localStorage.getItem("token");
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/GetLocalHomeById/${id}`,
             {
@@ -63,6 +63,8 @@ export default function LocalHomeDetail({ params }) {
     );
   }
 
+
+
   if (!localHomeDetails) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -74,15 +76,19 @@ export default function LocalHomeDetail({ params }) {
   }
 
   const handleBookHome = () => {
+
+
     router.push(`/local-stays/booking?id=${id}`);
   };
+console.log("Local Home Details:", localHomeDetails);
 
   return (
     <section className="bg-gray-50">
       {/* Hero Section */}
       <div className="relative">
         <Image
-          src={localHomeDetails.imageUrl || "/banner.jpg"}
+          src={`http://localhost:5277${localHomeDetails.mainImage}`}  
+
           alt={localHomeDetails.name}
           width={1920}
           height={600}
