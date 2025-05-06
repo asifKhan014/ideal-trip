@@ -15,9 +15,7 @@ const RoomManager = ({ hotelId }: { hotelId: string }) => {
     console.log("Fetching rooms for hotelId:", hotelId);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${hotelId}/rooms`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        credentials:'include'
       });
       const data = await res.json();
       console.log("Fetched rooms:", data);
@@ -51,9 +49,7 @@ const RoomManager = ({ hotelId }: { hotelId: string }) => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/room/${roomId}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        credentials:'include'
       });
 
       if (res.ok) {

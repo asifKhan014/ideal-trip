@@ -25,10 +25,7 @@ export default function TransportDetail({ params }) {
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-transport/${id}`,
             {
               method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${authToken}`,
-              },
+              credentials:'include'
             }
           );
           const data = await response.json();

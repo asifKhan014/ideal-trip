@@ -54,9 +54,7 @@ export default function AddTransporterForm() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/add-transport`, {
         method: "POST",
         body: data,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        credentials:'include'
       });
 
       const result = await response.json();

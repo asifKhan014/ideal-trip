@@ -297,33 +297,57 @@ export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const [userDetails, setUserDetails] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [LoggedIn,setLoggedIn] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
         try {
-          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-          const { data } = await axios.get(`${backendUrl}/api/user`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
+          const response = await fetch(
+            `/api/User`,
+            {
+              method: "GET",
+              credentials: "include", // 🔐 Send cookies
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log(response);
+    
+          if (response.status === 401) {
+            setLoggedIn(false)
+          }
+          const data = await response.json();
+          console.log(data)
           if (data.isSuccess) {
+            setLoggedIn(true)
             setProfilePhoto(data.data.profilePhotoUrl);
             setUserDetails(data.data);
           }
         } catch (error) {
           console.error("Error fetching profile:", error);
         }
-      }
     };
 
     fetchUserProfile();
   }, []);
+  const handleLogOut = async ()=>{
+    const response = await fetch(
+      `/api/Auth/logout`,
+      {
+        method: "post",
+        credentials: "include", // 🔐 Send cookies
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if(response.status==200){
+      setLoggedIn(false);
+    }
+  }
 
   return (
     <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50 py-4">
@@ -339,50 +363,54 @@ export default function Navbar() {
 
           {/* Navigation Links */}
           <div className="hidden lg:flex space-x-8 items-center">
-            {navLinks.map((link) =>
-              link.submenu ? (
-                <div className="relative group" key={link.name}>
-                  <Link
-                    href={link.href}
-                    className={`text-lg font-medium border-b-2 px-1 pt-1 transition-all ${
-                      pathname === link.href || link.submenu.some((s) => s.href === pathname)
-                        ? "border-indigo-500 text-gray-900"
-                        : "border-transparent text-black hover:border-gray-300 hover:text-gray-700"
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                  <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-0 w-40 z-50">
-                    {link.submenu.map((sub) => (
-                      <Link
-                        key={sub.name}
-                        href={sub.href}
-                        className="block px-4 py-2 text-base font-bold text-black hover:bg-gray-100"
-                      >
-                        {sub.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-lg font-medium border-b-2 px-1 pt-1 transition-all ${
-                    pathname === link.href
-                      ? "border-indigo-500 text-gray-900"
-                      : "border-transparent text-black hover:border-gray-300 hover:text-gray-700"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              )
-            )}
-          </div>
+  {navLinks.map((link) => {
+    // Hide Dashboard if not logged in
+    if (link.name === "Dashboard" && !LoggedIn) return null;
+
+    return link.submenu ? (
+      <div className="relative group" key={link.name}>
+        <Link
+          href={link.href}
+          className={`text-lg font-medium border-b-2 px-1 pt-1 transition-all ${
+            pathname === link.href || link.submenu.some((s) => s.href === pathname)
+              ? "border-indigo-500 text-gray-900"
+              : "border-transparent text-black hover:border-gray-300 hover:text-gray-700"
+          }`}
+        >
+          {link.name}
+        </Link>
+        <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-0 w-40 z-50">
+          {link.submenu.map((sub) => (
+            <Link
+              key={sub.name}
+              href={sub.href}
+              className="block px-4 py-2 text-base font-bold text-black hover:bg-gray-100"
+            >
+              {sub.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <Link
+        key={link.name}
+        href={link.href}
+        className={`text-lg font-medium border-b-2 px-1 pt-1 transition-all ${
+          pathname === link.href
+            ? "border-indigo-500 text-gray-900"
+            : "border-transparent text-black hover:border-gray-300 hover:text-gray-700"
+        }`}
+      >
+        {link.name}
+      </Link>
+    );
+  })}
+</div>
+
 
           {/* Right Side: Profile / Auth Buttons */}
           <div className="flex items-center space-x-4">
-            {isAuthenticated ? (
+            {LoggedIn ? (
               <>
                 <BellAlertIcon className="h-6 w-6 text-gray-700" />
 
@@ -417,8 +445,7 @@ export default function Navbar() {
                     <MenuItem>
                       <button
                         onClick={() => {
-                          logout();
-                          router.push("/");
+                          handleLogOut();
                         }}
                         className="block w-full text-left px-4 py-2 text-sm text-black hover:bg-gray-100"
                       >
@@ -431,8 +458,7 @@ export default function Navbar() {
                 <Button
                   className="hidden lg:flex px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                   onClick={() => {
-                    logout();
-                    router.push("/");
+                    handleLogOut();
                   }}
                 >
                   Sign out

@@ -31,14 +31,18 @@ export default function BookingPage() {
   const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
-    const authToken = localStorage.getItem("token");
 
-    if (Id && authToken) {
+    if (Id) {
       axios
         .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/${Id}`, {
-          headers: { Authorization: `Bearer ${authToken}` },
+          withCredentials:true,
         })
         .then((response) => {
+          if (response.status === 401) {
+            alert("Session expired. Please log in again.");
+            router.push("/login");
+            return;
+          }
           if (response.data.isSuccess) {
             setTourGuide(response.data.data);
             // setTotalPrice(response.data.data.price);
@@ -88,12 +92,6 @@ export default function BookingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const authToken = localStorage.getItem("token");
-
-    if (!authToken) {
-      alert("Authentication token missing. Please log in again.");
-      return;
-    }
 
     const formData = {
       tourGuideId: Id,
@@ -107,7 +105,7 @@ export default function BookingPage() {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/booking/initiate`,
         formData,
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        { withCredentials:true }
       );
 
       if (response.data.isSuccess) {
@@ -119,6 +117,11 @@ export default function BookingPage() {
         alert(response.data.message || "Failed to initiate booking.");
       }
     } catch (error) {
+      if (error.response?.status === 401) {
+        alert("Session expired. Please log in again.");
+        router.push("/login");
+        return;
+      }
       console.error("Error during booking initiation:", error);
       alert(error.response?.data?.message || "An error occurred.");
     } finally {
@@ -257,7 +260,7 @@ function StripeCheckoutForm({ bookingId }) {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/booking/payment-success`,
         { bookingId, paymentIntentId: paymentIntent.id },
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        { withCredentials:true}
       );
 
       if (response.data.isSuccess) {

@@ -18,7 +18,7 @@ export default function Login() {
     try {
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const result = await axios.post(
-        `${backendUrl}/api/auth/login`,
+        `/api/auth/login`,
         { email, password },
         {
           headers: {
@@ -28,12 +28,8 @@ export default function Login() {
       );
 
       if (result.data.isSuccess) {
-        // console.log("my info " , result.data);
-        const token = result.data.messege; // Token
+        console.log(result.data)
         const user = result.data.data; // User data
-
-        // Set the token and user in the AuthContext and localStorage
-        localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         // setAuth(token, user);
         // Redirect to home page

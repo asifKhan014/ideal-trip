@@ -12,11 +12,7 @@ export default function TourGuideDetail({ params }) {
   const [guideDetails, setGuideDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const authToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
   useEffect(() => {
-      if(!authToken){
-        router.push("/login")
-      }
     if (id) {
       
       const fetchGuideDetails = async () => {
@@ -25,9 +21,9 @@ export default function TourGuideDetail({ params }) {
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/${id}`,
             {
               method: "GET",
+              credentials:'include',
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${authToken}`,
               },
             }
           );

@@ -167,6 +167,7 @@ function TransporterList() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-all-transports`,
           {
             method: "GET",
+            credentials:'include',
             headers: {
               "Content-Type": "application/json",
               // Authorization: `Bearer ${authToken}`,

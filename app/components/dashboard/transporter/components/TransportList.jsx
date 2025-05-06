@@ -19,7 +19,7 @@ export default function TransportList() {
 
   const fetchTransports = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/my-tranports`, {
-      headers: { Authorization: `Bearer ${token}` },
+      credentials:'include',
     });
     const data = await res.json();
     console.log("My transports:", data.data);
@@ -29,7 +29,7 @@ export default function TransportList() {
   const handleDelete = async (id) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/delete-transport/${id}`, {
       method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
+      credentials:'include',
     });
 
     const result = await res.json();
@@ -83,9 +83,7 @@ export default function TransportList() {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/update-transport/${id}`, {
         method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials:'include',
         body: formData,
       });
 

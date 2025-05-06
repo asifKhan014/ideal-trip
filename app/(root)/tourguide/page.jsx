@@ -20,6 +20,7 @@ function TourGuide() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide`,
           {
             method: "GET",
+            credentials:'include',
             headers: {
               "Content-Type": "application/json",
               // Authorization: `Bearer ${authToken}`,

@@ -56,9 +56,7 @@ const RoomForm = ({
       const res = await fetch(url, {
         method,
         body: formData,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        credentials:'include',
       });
 
       const result = await res.json();
