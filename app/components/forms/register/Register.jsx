@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [role, setRole] = useState("tourist");
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const initialValues = {
@@ -75,7 +75,10 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
+        .matches(
+          /^03\d{9}$/,
+          "Phone number must start with 03 and be exactly 11 digits"
+        )
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       Password: Yup.string()
@@ -91,7 +94,10 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
+        .matches(
+          /^03\d{9}$/,
+          "Phone number must start with 03 and be exactly 11 digits"
+        )
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       vehicleDetails: Yup.string().required("Vehicle details are required"),
@@ -112,7 +118,10 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
+        .matches(
+          /^03\d{9}$/,
+          "Phone number must start with 03 and be exactly 11 digits"
+        )
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       propertyDetails: Yup.string().required("Property details are required"),
@@ -133,7 +142,10 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
+        .matches(
+          /^03\d{9}$/,
+          "Phone number must start with 03 and be exactly 11 digits"
+        )
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       hotelDetails: Yup.string().required("Hotel details are required"),
@@ -154,7 +166,10 @@ export default function Register() {
         .email("Invalid Email address")
         .required("Email is required"),
       PhoneNumber: Yup.string()
-        .matches(/^03\d{9}$/, "Phone number must start with 03 and be exactly 11 digits")
+        .matches(
+          /^03\d{9}$/,
+          "Phone number must start with 03 and be exactly 11 digits"
+        )
         .required("Phone Number is required"),
       Address: Yup.string().required("Address is required"),
       idCard: Yup.mixed().required("ID Card is required"),
@@ -176,8 +191,8 @@ export default function Register() {
   };
 
   const handleSubmit = async (values) => {
-    setLoading(true); 
-    setError("");
+    setLoading(true);
+    setError([]);
     const formData = new FormData();
     Object.entries(values).forEach(([key, value]) => {
       if (value instanceof File) {
@@ -188,6 +203,9 @@ export default function Register() {
         formData.append(key, value); // For other fields
       }
     });
+    const formatErrors = (errorObj) => {
+      return Object.values(errorObj).flat();
+    };    
     try {
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const response = await axios.post(
@@ -199,7 +217,6 @@ export default function Register() {
           },
         }
       );
-      console.log("formData: ", formData);
       // console.log("Success:", response); // Logs the success response
       if (response.data.isSuccess) {
         // console.log("Should redirect now");
@@ -208,13 +225,17 @@ export default function Register() {
     } catch (error) {
       // Handle error and access backend response
       if (error.response) {
+        console.log(error.response.data.errors);
+        let backendErrors = error.response.data.errors;
+        const errorMessages = formatErrors(backendErrors); // returns an array of strings
+        setError(errorMessages);
+        // setError(error.response.data.errors);
         // Extract backend response message
-        const backendMessage = error.response.data.message;
+        // const backendMessage = error.response.data.message;
         // console.error("Backend Error:", backendMessage);
-        setError(backendMessage);
+        // setError(backendMessage);
       }
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -306,14 +327,22 @@ export default function Register() {
                         className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
                       />
                     )}
-                    <ErrorMessage
+                    {/* <ErrorMessage
                       name={field}
                       component="div"
                       className="text-sm text-red-600"
-                    />
+                    /> */}
                   </div>
                 ))}
-                {error && <div className="text-sm text-red-600">{error}</div>}
+                {error.length > 0 && (
+  <ol className="text-sm text-red-600 list-decimal pl-5">
+    {error.map((err, index) => (
+      <li key={index}>{err}</li>
+    ))}
+  </ol>
+)}
+
+
                 {/* <button
                   type="submit"
                   className="w-full py-3 px-6 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
@@ -345,7 +374,6 @@ export default function Register() {
           </Link>
         </p>
       </div>
-      <span className="errors">{error}</span>
     </div>
   );
 }
