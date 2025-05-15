@@ -22,7 +22,7 @@ export default function CallToActionSection() {
         </p>
         <Link
           href="/start-your-adventure"
-          className="mt-8 inline-block px-8 py-4 bg-orange-500 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-orange-600 transition focus:outline-none focus:ring-4 focus:ring-orange-300"
+          className="mt-8 inline-block px-8 py-4 bg-blue-500 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-600 transition focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Get Started Now!
         </Link>

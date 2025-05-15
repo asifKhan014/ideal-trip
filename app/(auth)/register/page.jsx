@@ -3,10 +3,10 @@ import Register from "../../components/forms/register/Register";
 
 function page() {
   return (
-    <div classNameName="flex">
-      <div classNameName="w-1/2">
+    <div className="">
+      {/* <div className="w-1/2"> */}
         <Register />
-      </div>
+      {/* </div> */}
       {/* <div className="w-1/2 bg-gradient-to-br from-blue-800 via-blue-600 to-blue-400 text-white p-10 rounded-xl h-full shadow-xl ">
         <div className="space-y-8">
           <h1 className="text-4xl font-bold leading-tight">

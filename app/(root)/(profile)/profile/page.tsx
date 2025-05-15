@@ -10,7 +10,7 @@ function UserDashboard() {
   const [fullName, setFullName] = useState("");
   const [displayName, setDisplayName] = useState(""); // Separate display name
   const [address, setAddress] = useState("");
-  const [profilePhoto, setProfilePicture] = useState("");
+  const [profilePhotoPath, setProfilePicture] = useState("");
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -42,19 +42,20 @@ function UserDashboard() {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User`,
           {
-            method: "GET", // Or "POST", "PUT" depending on your API
+            method: "GET", 
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`, // Include Bearer token here
+              Authorization: `Bearer ${authToken}`, 
             },
           }
         );        
         const data = await response.json();
+        // console.log("User data:  ============= ", data.data);
         if (data.isSuccess) {
           setFullName(data.data.userName);
           setDisplayName(data.data.userName); // Set initial display name
           setAddress(data.data.address);
-          setProfilePicture(data.data.profilePhotoUrl);
+          setProfilePicture(data.data.profilePhotoPath);
           setEmail(data.data.email);
          
         } else {
@@ -79,12 +80,16 @@ function UserDashboard() {
       formData.append("Address", address);
     
       // Only append profile picture if a new image is uploaded
-        formData.append("ProfilePhoto", file);
+        formData.append("profilePhotoPath", file);
   
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User`,
         {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`, 
+          },
           body: formData,
         }
       );
@@ -94,7 +99,7 @@ function UserDashboard() {
         alert("Profile updated successfully!");
         setEditMode(false);
         setDisplayName(fullName); // Update display name after saving
-        // setProfilePicture(profilePhoto);
+        setProfilePicture(profilePhotoPath);
       } else {
         alert(data.messege || "Failed to update profile.");
       }
@@ -108,13 +113,13 @@ function UserDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 w-full rounded-lg mx-auto mt-8 max-w-xl shadow-lg">
+    <div className=" bg-gray-100 p-6 w-full rounded-lg mx-auto mt-8 md:mt-28 max-w-2xl shadow-lg">
       <div className="flex flex-col items-center">
         <div className="relative">
           <img
             src={
-              profilePhoto
-                ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${profilePhoto}`
+              profilePhotoPath
+                ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${profilePhotoPath}`
                 : "https://via.placeholder.com/150"
             }
             alt="Profile"
@@ -154,7 +159,7 @@ function UserDashboard() {
         </h2>
         <div className="mt-4 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-500">
               Full Name
             </label>
             {editMode ? (
@@ -170,7 +175,7 @@ function UserDashboard() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-500">
               Address
             </label>
             {editMode ? (
