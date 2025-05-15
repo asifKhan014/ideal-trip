@@ -16,14 +16,6 @@ function UserDashboard() {
   const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      router.replace("/login"); // Redirect to login if token is missing
-    } else {
-      setAuthToken(token);
-    }
-
     // Prevent the user from going back after logout
     window.history.pushState(null, "", window.location.href);
     window.addEventListener("popstate", () => {
@@ -42,10 +34,10 @@ function UserDashboard() {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User`,
           {
-            method: "GET", 
+            method: "GET", // Or "POST", "PUT" depending on your API
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`, 
+              Authorization: `Bearer ${authToken}`, // Include Bearer token here
             },
           }
         );        
@@ -69,10 +61,8 @@ function UserDashboard() {
       }
     };
     useEffect(() => {
-      if (authToken) {
         fetchUserData();
-      }
-    }, [authToken]);
+    }, []);
   const handleSave = async () => {
     try {
       const formData = new FormData();
@@ -91,6 +81,7 @@ function UserDashboard() {
             Authorization: `Bearer ${authToken}`, 
           },
           body: formData,
+          credentials:'include'
         }
       );
   

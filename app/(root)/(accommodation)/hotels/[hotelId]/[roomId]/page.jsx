@@ -27,9 +27,9 @@ export default function RoomDetail({ params }) {
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/rooms/${id}`, // API Path for fetching room details
             {
               method: "GET",
+              credentials:'include',
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${authToken}`,
               },
             }
           );
@@ -87,7 +87,11 @@ export default function RoomDetail({ params }) {
       {/* Hero Section */}
       <div className="relative">
         <Image
-          src={`http://localhost:5277${roomDetails.primaryImage}`}  
+          src={
+            roomDetails.primaryImage == null
+              ? '/hotel1.jpg'
+              : `${process.env.NEXT_PUBLIC_BACKEND_URL}/${roomDetails.primaryImage}`
+          }            
           // src={"/banner.jpg"}  
           alt={roomDetails.roomType}
           width={1920}

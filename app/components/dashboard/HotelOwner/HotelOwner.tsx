@@ -222,9 +222,7 @@ const HotelOwnerDashboard = () => {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/my-hotels`,
           {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
+            credentials:'include',
           }
         );
         const result = await response.json();
@@ -251,9 +249,7 @@ const HotelOwnerDashboard = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${hotelId}`,
         {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
+          credentials:'include',
         }
       );
 

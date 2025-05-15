@@ -19,9 +19,7 @@ const RoomManagement = ({ hotelId, authToken }) => {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${hotelId}/rooms`, {
           method: 'GET',
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
+          credentials:'include',
         });
         const result = await response.json();
         if (response.ok) {
@@ -77,9 +75,7 @@ const RoomManagement = ({ hotelId, authToken }) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${hotelId}/add-room`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        credentials:'include',
         body: data,
       });
       const result = await response.json();
@@ -108,9 +104,7 @@ const RoomManagement = ({ hotelId, authToken }) => {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${hotelId}/rooms/${roomId}`, {
           method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
+          credentials:'include'
         });
         if (response.ok) {
           setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));

@@ -72,9 +72,7 @@ export default function AddLocalHomeForm({ home = null, onClose, fetchHomes }) {
         {
           method: home ? "PUT" : "POST",
           body: data,
-          headers: {
-            "Authorization": `Bearer ${authToken}`,
-          },
+          credentials:'include'
         }
       );
       const result = await response.json();

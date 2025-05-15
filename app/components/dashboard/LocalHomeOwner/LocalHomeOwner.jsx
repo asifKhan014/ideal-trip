@@ -15,9 +15,7 @@ function LocalHomeOwner() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/GetLocalHomes`, {
         method: "GET",
-        headers: {
-          "Authorization": `Bearer ${authToken}`,
-        },
+        credentials:'include'
       });
       const result = await response.json();
       console.log("Response of fectchHomes:", result.data.localHomes);
@@ -35,9 +33,7 @@ function LocalHomeOwner() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/delete-localhome/${id}`,
           {
             method: "DELETE",
-            headers: {
-              "Authorization": `Bearer ${authToken}`,
-            },
+            credentials:'include'
           }
         );
         const result = await response.json();

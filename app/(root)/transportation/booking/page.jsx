@@ -33,7 +33,7 @@ export default function BookingPage() {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-transport/${transportId}`,
           {
-            headers: { Authorization: `Bearer ${authToken}` },
+            withCredentials:true,
           }
         );
         if (res.data.isSuccess) {
@@ -72,13 +72,11 @@ export default function BookingPage() {
     };
 
     try {
-      const authToken = localStorage.getItem("token");
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/booking/initiate`,
         payload,
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        { withCredentials:true }
       );
-
       if (res.data.isSuccess) {
         setClientSecret(res.data.clientSecret);
         setBookingId(res.data.bookingId);
@@ -86,6 +84,11 @@ export default function BookingPage() {
         alert(res.data.message || "Booking initiation failed.");
       }
     } catch (error) {
+      if (error.response?.status === 401) {
+        alert("Session expired. Please log in again.");
+        router.push("/login");
+        return;
+      }
       console.error("Error initiating transport booking:", error);
       alert(error.response?.data?.message || "An error occurred.");
     } finally {
@@ -171,7 +174,7 @@ function StripeCheckoutForm({ bookingId }) {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/booking/payment-success`,
         { bookingId, paymentIntentId: paymentIntent.id },
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        { withCredentials:true }
       );
 
       if (response.data.isSuccess) {

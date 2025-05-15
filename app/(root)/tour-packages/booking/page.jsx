@@ -19,9 +19,9 @@ export default function PackageDetail() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/${packageId}`,
           {
             method: "GET", // Adjust method as needed (GET, POST, etc.)
+            credentials:'include',
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`, // Include Bearer token
             },
           }
         );        

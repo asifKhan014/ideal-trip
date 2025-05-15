@@ -23,9 +23,9 @@ export default function LocalHomeDetail({ params }) {
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/GetLocalHomeById/${id}`,
             {
               method: "GET",
+              credentials:'include',
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${authToken}`,
               },
             }
           );
@@ -87,7 +87,7 @@ console.log("Local Home Details:", localHomeDetails);
       {/* Hero Section */}
       <div className="relative">
         <Image
-          src={`http://localhost:5277${localHomeDetails.mainImage}`}  
+          src={`${localHomeDetails.mainImage!=null?`/${localHomeDetails.mainImage}`:'/local1.jpg'}`}  
 
           alt={localHomeDetails.name}
           width={1920}

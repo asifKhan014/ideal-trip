@@ -20,10 +20,10 @@ export default function FeedbackSection({ transporterId }) {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-feedback/${transporterId}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
+            credentials: "include", // 🔐 Send cookies
+            headers: {
+              "Content-Type": "application/json",
+            },
         }
       );
       const data = await response.json();
@@ -53,10 +53,7 @@ export default function FeedbackSection({ transporterId }) {
           rating,
         },
         {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
+         withCredentials:true,
         }
       );
       console.log("Feedback response:", response.data);

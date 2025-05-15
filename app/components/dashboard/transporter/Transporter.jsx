@@ -20,7 +20,7 @@ const TransporterDashboard = () => {
 
   const fetchTransports = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/my-tranports`, {
-      headers: { Authorization: `Bearer ${authToken}` },
+      credentials:'include',
     });
     const data = await res.json();
     console.log("total transports:", data.data.length);

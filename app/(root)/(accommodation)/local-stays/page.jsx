@@ -19,6 +19,7 @@ function LocalHomes() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/GetLocalHomes`,
           {
             method: "GET",
+            credentials:'include',
             headers: {
               "Content-Type": "application/json",
               // Authorization: `Bearer ${authToken}`,
@@ -93,7 +94,7 @@ function LocalHomes() {
                   pricePerNight={home.pricePerNight}
                   rating={home.rating}
                   // imageUrl={home.imageUrl}
-                  imageUrl={`http://localhost:5277${home.imageUrl}`}
+                  imageUrl={`http://localhost:5277/${home.imageUrl}`}
                   capacity={home.capacity}
                 />
               </Link>

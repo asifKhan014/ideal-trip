@@ -37,7 +37,7 @@ export default function BookingPage() {
         .get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/${packageId}`,
           {
-            headers: { Authorization: `Bearer ${authToken}` },
+            withCredentials:true,
           }
         )
         .then((response) => {
@@ -75,7 +75,7 @@ export default function BookingPage() {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/booking/initiate`,
         formData,
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        { withCredentials:true}
       );
 
       if (response.data.isSuccess) {
@@ -179,7 +179,7 @@ function StripeCheckoutForm({ bookingId }) {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/package/booking/payment-success`,
         { bookingId, paymentIntentId: paymentIntent.id },
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        { withCredentials:true }
       );
    
 

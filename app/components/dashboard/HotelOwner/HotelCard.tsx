@@ -9,9 +9,7 @@ const HotelCard = ({ hotel, onDelete, onEdit }) => {
     try {
       const response = await fetch(`/api/Hotel/${hotel.id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        credentials:'include',
       });
       if (response.ok) {
         onDelete(hotel.id);

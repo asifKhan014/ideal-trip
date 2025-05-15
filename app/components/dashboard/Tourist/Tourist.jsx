@@ -16,18 +16,10 @@ export default function UserDashboardBookingDetail() {
 
   const fetchBookings = async () => {
     try {
-      const authToken = localStorage.getItem("token");
-      if (!authToken) {
-        setError("Authentication token is missing. Please log in again.");
-        return;
-      }
-
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User/user-bookings`,
         {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
+          withCredentials:true
         }
       );
 

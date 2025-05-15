@@ -19,9 +19,9 @@ function HotelDetail() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${hotelId}/rooms`,
           {
             method: "GET",
+            credentials:'include',
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
             },
           }
         );
@@ -41,16 +41,11 @@ function HotelDetail() {
       }
     };
 
-    if (hotelId && authToken) {
+    if (hotelId) {
       fetchRooms();
     }
-  }, [hotelId, authToken]);
+  }, [hotelId]);
 
-  if (!authToken) {
-    return (
-      <p className="text-center text-red-500">Unauthorized. Please login.</p>
-    );
-  }
 
   // Helper to map roomType numbers to names
   const mapRoomType = (type) => {
@@ -88,7 +83,12 @@ function HotelDetail() {
               className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-[1.02]"
             >
               <img
-                    src={`http://localhost:5277${room.primaryImage}`}
+                    src={
+                      room.primaryImage == null
+                        ? 'hotel1.jpg'
+                        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/${room.primaryImage}`
+                    }
+                    
                     alt="Room"
                 className="w-full h-52 object-cover"
               />

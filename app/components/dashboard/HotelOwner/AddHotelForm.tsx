@@ -68,9 +68,7 @@ const AddHotelForm = ({
       const response = await fetch(endpoint, {
         method,
         body: formData,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        credentials:'include',
       });
 
       const result = await response.json();
