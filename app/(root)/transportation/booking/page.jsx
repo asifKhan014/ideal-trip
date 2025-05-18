@@ -28,7 +28,6 @@ export default function BookingPage() {
   // Fetch transport price (optional if already available in props or page)
   useEffect(() => {
     const fetchTransportData = async () => {
-      const authToken = localStorage.getItem("token");
       try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-transport/${transportId}`,
@@ -57,12 +56,6 @@ export default function BookingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const authToken = localStorage.getItem("token");
-
-    if (!authToken) {
-      alert("Please log in to continue.");
-      return;
-    }
 
     const payload = {
       transportId,

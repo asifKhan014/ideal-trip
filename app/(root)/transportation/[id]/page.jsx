@@ -18,7 +18,6 @@ export default function TransportDetail({ params }) {
     if (id) {
       const fetchTransportDetails = async () => {
         try {
-          const authToken = localStorage.getItem("token");
           // console.log("Auth Token:", authToken);
 
           const response = await fetch(
@@ -73,10 +72,6 @@ export default function TransportDetail({ params }) {
   }
 
   const handleBookTransport = () => {
-    if (!authToken) {
-      router.push("/login");
-      return null;
-    }
     router.push(`/transportation/booking?id=${id}`);
   };
   console.log("transport data: ", transport.images?.[0].imageUrl)

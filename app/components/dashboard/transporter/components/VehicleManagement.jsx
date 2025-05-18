@@ -72,7 +72,8 @@ export default function AddTransporterForm() {
           images: [],
         });
       } else {
-        setError(result.message || "Failed to add transporter");
+        console.log(result)
+        setError(result.messege || "Failed to add transporter");
       }
     } catch (err) {
       setError("Something went wrong while submitting the form.");
