@@ -9,9 +9,9 @@ export default function DashboardLayout({ children }) {
     const { user, isAuthenticated, logout } = useAuth();
     const router = useRouter();
     useEffect(() => {
-        if (!user) {
-            router.push("/login");
-        }
+        // if (!user) {
+        //     router.push("/login");
+        // }
     }, [user, router]); 
   return (
     <div className="flex h-screen">

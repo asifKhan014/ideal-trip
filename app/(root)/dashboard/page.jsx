@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/login");
+      // router.push("/login");
     } else {
       setRole(user?.role); // Set the role when the user is available
     }

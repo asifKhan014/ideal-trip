@@ -456,7 +456,7 @@ export default function Navbar() {
                 </Menu>
 
                 <Button
-                  className="hidden lg:flex px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="hidden lg:flex px-5 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
                   onClick={() => {
                     handleLogOut();
                   }}
@@ -467,12 +467,12 @@ export default function Navbar() {
             ) : (
               <>
                 <Link href="/register">
-                  <Button className="hidden lg:flex px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ">
+                  <Button className="hidden lg:flex px-5 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 ">
                     Sign Up
                   </Button>
                 </Link>
                 <Link href="/login">
-                  <Button className="px-5 py-2 border border-black text-black hover:bg-blue-700 hover:text-white rounded-lg">
+                  <Button className="px-5 py-2 border border-black text-black hover:bg-blue-700 text-lg hover:text-white rounded-lg">
                     Login
                   </Button>
                 </Link>
