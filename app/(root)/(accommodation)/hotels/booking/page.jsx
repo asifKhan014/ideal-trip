@@ -22,6 +22,7 @@ export default function BookingPage() {
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
   const [bookingId, setBookingId] = useState(null);
+  const router = useRouter();
 
   const calculateTotalDays = (start, end) => {
     if (start && end) {
@@ -178,7 +179,6 @@ function StripeCheckoutForm({ bookingId }) {
     }
 
     try {
-      const authToken = localStorage.getItem("token");
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/booking/payment-success`,

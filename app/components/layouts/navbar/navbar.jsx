@@ -323,7 +323,7 @@ export default function Navbar() {
           console.log(data)
           if (data.isSuccess) {
             setLoggedIn(true)
-            setProfilePhoto(data.data.profilePhotoUrl);
+            setProfilePhoto(data.data.profilePhotoPath);
             setUserDetails(data.data);
           }
         } catch (error) {
