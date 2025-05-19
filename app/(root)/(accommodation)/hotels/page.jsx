@@ -177,7 +177,7 @@ function Hotels() {
                     location={hotel.address}
                     pricePerNight={room.pricePerNight || 0}
                     rating={hotel.rating}
-                    imageUrl={`http://localhost:5277${hotel.primaryImage}`}
+                    imageUrl={`http://localhost:7216${hotel.primaryImage}`}
                     capacity={room.capacity || 1}
                   />
                   

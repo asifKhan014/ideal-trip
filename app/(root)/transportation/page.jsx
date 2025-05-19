@@ -85,7 +85,7 @@
 //               >
 //                 <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 p-6 space-y-5 transition-transform duration-300 hover:scale-105">
 //                   <img
-//                     src={`localhost:5277${transporter.primaryImage}`}
+//                     src={`localhost:7216${transporter.primaryImage}`}
 //                     alt={transporter.name}
 //                     className="w-full h-48 object-cover rounded-md"
 //                   />
@@ -236,7 +236,7 @@ function TransporterList() {
               >
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 border border-gray-200 overflow-hidden">
                   <img
-                    src={`http://localhost:5277${transporter.primaryImage}`}
+                    src={`http://localhost:7216${transporter.primaryImage}`}
                     alt={transporter.name}
                     className="w-full h-48 object-cover"
                   />

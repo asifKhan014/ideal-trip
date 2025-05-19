@@ -86,7 +86,7 @@ export default function TransportDetail({ params }) {
       <div className="relative">
         <Image
           // src={transport.primaryImage || "/banner.jpg"}
-          src={`http://localhost:5277${transport.images?.[0].imageUrl}`}
+          src={`http://localhost:7216${transport.images?.[0].imageUrl}`}
           alt={transport.name}
           width={1920}
           height={600}
