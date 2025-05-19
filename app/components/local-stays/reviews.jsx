@@ -15,7 +15,6 @@ export default function FeedbackSection({ localHomeId }) {
 
   const fetchFeedbackData = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/get-feedback/${localHomeId}`,
         {
@@ -27,6 +26,7 @@ export default function FeedbackSection({ localHomeId }) {
         }
       );
       const data = await response.json();
+      console.log("response ---------------------[LOCAL HOME]", data);
       if (data.isSuccess) {
         setFeedbackList(data.data);
 
@@ -44,7 +44,6 @@ export default function FeedbackSection({ localHomeId }) {
 
   const submitFeedback = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/add-feedback`,
         {

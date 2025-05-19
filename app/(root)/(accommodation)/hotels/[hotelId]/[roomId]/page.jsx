@@ -21,8 +21,7 @@ export default function RoomDetail({ params }) {
       const fetchRoomDetails = async () => {
        
         try {
-          const authToken = localStorage.getItem("token");
-
+    
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/rooms/${id}`, // API Path for fetching room details
             {

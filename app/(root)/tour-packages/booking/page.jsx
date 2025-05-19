@@ -12,7 +12,6 @@ export default function PackageDetail() {
   const [packageDetails, setPackageDetails] = useState("");
   useEffect(() => {
     if (packageId) {
-      const authToken = localStorage.getItem("token");
       // Fetch package details (Replace with your API or data source)
       const fetchPackageDetails = async () => {
         const response = await fetch(

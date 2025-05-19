@@ -15,7 +15,6 @@ export default function FeedbackSection({ transporterId }) {
 
   const fetchFeedbackData = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/get-feedback/${transporterId}`,
         {
@@ -29,6 +28,7 @@ export default function FeedbackSection({ transporterId }) {
       const data = await response.json();
       if (data.isSuccess) {
         setFeedbackList(data.data);
+        console.log("response ---------------------", data.data);
 
         const stats = { total: data.data.length, average: 0, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0, 0: 0 };
         data.data.forEach(feedback => stats[feedback.rating]++);
@@ -44,7 +44,6 @@ export default function FeedbackSection({ transporterId }) {
 
   const submitFeedback = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Transport/add-feedback`,
         {
@@ -53,11 +52,11 @@ export default function FeedbackSection({ transporterId }) {
           rating,
         },
         {
-         withCredentials:true,
+          withCredentials:true,
         }
       );
-      console.log("Feedback response:", response.data);
       if (response.data.isSuccess) {
+        console.log("response ---------------------[transport] add", response.data);
         const newFeedback = {
           user: { fullName: "You" }, // Fallback name
           rating,
@@ -73,8 +72,7 @@ export default function FeedbackSection({ transporterId }) {
         setError(response.data.message || "Feedback submission failed.");
       }
     } catch (error) {
-
-      setError("You can only give feedback after completing booking.");
+      setError("An error occurred while submitting feedback!");
     }
   };
 

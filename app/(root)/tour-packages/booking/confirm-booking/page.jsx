@@ -173,7 +173,6 @@ function StripeCheckoutForm({ bookingId }) {
 
     try {
    
-      const authToken = localStorage.getItem("token");
 
       // Send payment confirmation to backend
       const response = await axios.post(

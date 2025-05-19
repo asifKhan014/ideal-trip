@@ -77,7 +77,7 @@ function HotelCard({
         </div>
 
         <div className="flex justify-between items-center mt-5">
-          <span className="text-xl font-bold text-blue-600">₹{pricePerNight}/night</span>
+          <span className="text-xl font-bold text-blue-600">PKR {pricePerNight}/night</span>
           <div className="flex items-center text-yellow-500 font-medium">
             ⭐ {rating} / 5
           </div>

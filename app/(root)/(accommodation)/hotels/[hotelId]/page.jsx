@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import FeedBackForm from "../../../../components/hotels/reviews"
+import FeedBackForm from "../../../../components/hotels/reviews";
 function HotelDetail() {
   const { hotelId } = useParams();
   const [rooms, setRooms] = useState([]);
@@ -10,24 +10,23 @@ function HotelDetail() {
   const [error, setError] = useState(null);
   const authToken =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
- 
+
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/${hotelId}/rooms`,
           {
             method: "GET",
-            credentials:'include',
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
           }
         );
-        
+
         const data = await response.json();
-       
+
         if (data.isSuccess) {
           setRooms(data.rooms);
         } else {
@@ -46,7 +45,6 @@ function HotelDetail() {
     }
   }, [hotelId]);
 
-
   // Helper to map roomType numbers to names
   const mapRoomType = (type) => {
     switch (type) {
@@ -60,7 +58,6 @@ function HotelDetail() {
         return "Standard Room";
     }
   };
-
   return (
     <div className="min-h-screen px-4 py-8 bg-gray-50">
       <div className="text-center mb-10">
@@ -74,68 +71,62 @@ function HotelDetail() {
       ) : rooms.length === 0 ? (
         <p className="text-center">No rooms found for this hotel.</p>
       ) : (
-       <div>
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {rooms.map((room) => (
-            <Link
-              href={`/hotels/${hotelId}/${room.roomId}`}
-              key={room.roomId}
-              className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-[1.02]"
-            >
-              <img
-                    src={
-                      room.primaryImage == null
-                        ? 'hotel1.jpg'
-                        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/${room.primaryImage}`
-                    }
-                    
-                    alt="Room"
-                className="w-full h-52 object-cover"
-              />
-              <div className="p-5 flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-semibold text-gray-800">
-                    {mapRoomType(room.roomType)}
-                  </h2>
-                  <span className="text-lg font-bold text-green-600">
-                    ₹{room.pricePerNight} / night
-                  </span>
-                </div>
-
-                <div className="text-sm text-gray-600 flex flex-col gap-1">
-                  <p>
-                    <span className="font-medium">Capacity:</span>{" "}
-                    {room.capacity} {room.capacity === 1 ? "person" : "people"}
-                  </p>
-                  <p>
-                    <span className="font-medium">Beds:</span>{" "}
-                    {room.numberOfBeds}
-                  </p>
-                  <p>
-                    <span className="font-medium">Availability:</span>{" "}
-                    <span
-                      className={`font-semibold ${
-                        room.isAvailable ? "text-green-600" : "text-red-500"
-                      }`}
-                    >
-                      {room.isAvailable ? "Available" : "Not Available"}
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {rooms.map((room) => (
+              <Link
+                href={`/hotels/${hotelId}/${room.roomId}`}
+                key={room.roomId}
+                className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-[1.02]"
+              >
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${room.primaryImage}`}
+                  alt="Room"
+                  className="w-full h-52 object-cover"
+                />
+                <div className="p-5 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-semibold text-gray-800">
+                      {mapRoomType(room.roomType)}
+                    </h2>
+                    <span className="text-lg font-bold text-green-600">
+                      PKR{room.pricePerNight} / night
                     </span>
-                  </p>
+                  </div>
+
+                  <div className="text-sm text-gray-600 flex flex-col gap-1">
+                    <p>
+                      <span className="font-medium">Capacity:</span>{" "}
+                      {room.capacity}{" "}
+                      {room.capacity === 1 ? "person" : "people"}
+                    </p>
+                    <p>
+                      <span className="font-medium">Beds:</span>{" "}
+                      {room.numberOfBeds}
+                    </p>
+                    <p>
+                      <span className="font-medium">Availability:</span>{" "}
+                      <span
+                        className={`font-semibold ${
+                          room.isAvailable ? "text-green-600" : "text-red-500"
+                        }`}
+                      >
+                        {room.isAvailable ? "Available" : "Not Available"}
+                      </span>
+                    </p>
+                  </div>
+
+                  <button className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
+                    Book Now
+                  </button>
                 </div>
-
-                <button className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
-                  Book Now
-                </button>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
+          <div className="mt-20 max-w-7xl mx-auto">
+            <FeedBackForm hotelId={hotelId} />
+          </div>
         </div>
-        <div className="mt-20 max-w-7xl mx-auto">
-
-                  <FeedBackForm hotelId={hotelId} />
-          
-        </div>
-       </div>
       )}
     </div>
   );

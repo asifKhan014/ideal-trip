@@ -15,7 +15,6 @@ export default function FeedbackSection({ tourGuideId }) {
 
   const fetchFeedbackData = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/get-feedback/${tourGuideId}`,
         {
@@ -44,7 +43,6 @@ export default function FeedbackSection({ tourGuideId }) {
 
   const submitFeedback = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/TourGuide/add-feedback`,
         {

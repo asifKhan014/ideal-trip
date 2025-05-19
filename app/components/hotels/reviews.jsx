@@ -15,7 +15,6 @@ export default function FeedbackSection({ hotelId }) {
 
   const fetchFeedbackData = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/hotel/get-feedback/${hotelId}`,
         {
@@ -44,7 +43,6 @@ export default function FeedbackSection({ hotelId }) {
 
   const submitFeedback = async () => {
     try {
-      const authToken = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/Hotel/add-feedback`,
         {

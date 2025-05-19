@@ -61,7 +61,7 @@ export default function Footer() {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-base font-semibold leading-6 text-gray-900">
+                <h3 className="text-lg font-semibold leading-6 text-gray-900">
                   Solutions
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
@@ -180,7 +180,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="mt-8 text-base leading-5 text-gray-500 md:order-1 md:mt-0">
-            &copy; 2020 Your Company, Inc. All rights reserved.
+            &copy; 2025 IdealTrip All rights reserved.
           </p>
         </div>
       </div>

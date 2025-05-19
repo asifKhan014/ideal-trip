@@ -23,7 +23,7 @@ export default function LocalHomeDetail({ params }) {
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/LocalHome/GetLocalHomeById/${id}`,
             {
               method: "GET",
-              credentials:'include',
+              credentials: "include",
               headers: {
                 "Content-Type": "application/json",
               },
@@ -63,8 +63,6 @@ export default function LocalHomeDetail({ params }) {
     );
   }
 
-
-
   if (!localHomeDetails) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -76,19 +74,20 @@ export default function LocalHomeDetail({ params }) {
   }
 
   const handleBookHome = () => {
-
-
     router.push(`/local-stays/booking?id=${id}`);
   };
-console.log("Local Home Details:", localHomeDetails);
+  console.log("Local Home Details:{mainImage}", localHomeDetails.mainImage);
 
   return (
     <section className="bg-gray-50">
       {/* Hero Section */}
       <div className="relative">
         <Image
-          src={`${localHomeDetails.mainImage!=null?`/${localHomeDetails.mainImage}`:'/local1.jpg'}`}  
-
+          src={`${
+            localHomeDetails.mainImage != null
+              ? `http://localhost:7216/${localHomeDetails.mainImage}`
+              : "/local1.jpg"
+          }`}
           alt={localHomeDetails.name}
           width={1920}
           height={600}
@@ -110,7 +109,9 @@ console.log("Local Home Details:", localHomeDetails);
             <h2 className="text-4xl font-bold text-gray-800">
               About {localHomeDetails.name}
             </h2>
-            <p className="text-gray-600 mt-4 text-lg">{localHomeDetails.description}</p>
+            <p className="text-gray-600 mt-4 text-lg">
+              {localHomeDetails.description}
+            </p>
             <div className="mt-6 space-y-4">
               <div className="flex items-center space-x-4">
                 <FaMapMarkerAlt className="text-red-600 text-xl" />
@@ -127,17 +128,24 @@ console.log("Local Home Details:", localHomeDetails);
               <div className="flex items-center space-x-4">
                 <FaStar className="text-yellow-500 text-xl" />
                 <p className="text-lg text-gray-600">
-                  <strong>Rating:</strong> {localHomeDetails.rating || "N/A"}
+                  <strong>Rating:</strong>{" "}
+                  {localHomeDetails.rating
+                    ? Math.round(Number(localHomeDetails.rating) * 10) / 10
+                    : "N/A"}
                 </p>
               </div>
               <div className="flex items-center space-x-4">
                 <FaDollarSign className="text-green-500 text-xl" />
                 <p className="text-lg text-gray-600">
-                  <strong>Price:</strong> ₹{localHomeDetails.pricePerNight} / night
+                  <strong>Price:</strong> PKR{localHomeDetails.pricePerNight} /
+                  night
                 </p>
               </div>
               <p className="text-3xl font-bold text-green-700 mt-6">
-                Available From: {new Date(localHomeDetails.availableFrom).toLocaleDateString()} - To: {new Date(localHomeDetails.availableTo).toLocaleDateString()}
+                Available From:{" "}
+                {new Date(localHomeDetails.availableFrom).toLocaleDateString()}{" "}
+                - To:{" "}
+                {new Date(localHomeDetails.availableTo).toLocaleDateString()}
               </p>
             </div>
           </div>
