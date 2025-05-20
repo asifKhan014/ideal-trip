@@ -101,7 +101,7 @@ function UserDashboard() {
       Loading
     </div>
   ) : (
-    <div className={`flex justify-center items-center min-h-screen`}>
+    <div className={`flex justify-center items-center min-h-screen bg-slate-50`}>
       <div className={`w-full max-w-4xl p-8 rounded-lg shadow-xl bg-slate-200`}>
         <div className="flex flex-col items-center">
           <div className="relative w-32 h-32">

@@ -28,7 +28,7 @@ export default function FeedbackSection({ transporterId }) {
       const data = await response.json();
       if (data.isSuccess) {
         setFeedbackList(data.data);
-        console.log("response ---------------------", data.data);
+        // console.log("response ---------------------", data.data);
 
         const stats = { total: data.data.length, average: 0, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0, 0: 0 };
         data.data.forEach(feedback => stats[feedback.rating]++);
@@ -56,7 +56,7 @@ export default function FeedbackSection({ transporterId }) {
         }
       );
       if (response.data.isSuccess) {
-        console.log("response ---------------------[transport] add", response.data);
+        // console.log("response ---------------------[transport] add", response.data);
         const newFeedback = {
           user: { fullName: "You" }, // Fallback name
           rating,

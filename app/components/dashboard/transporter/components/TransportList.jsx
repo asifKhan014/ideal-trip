@@ -99,6 +99,9 @@ export default function TransportList() {
       setLoading(false);
     }
   };
+
+  console.log("Transports:   ========== ", transports);
+  console.log("Edit Data:   ========== ", editData);
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
       <h2 className="text-2xl font-bold mb-4">My Transports</h2>
@@ -153,7 +156,7 @@ export default function TransportList() {
                       <p className="text-sm text-gray-600">{transport.startLocation} → {transport.destination}</p>
                       <p className="text-sm text-gray-600">Departure: {new Date(transport.departureTime).toLocaleString()}</p>
                       <p className="text-sm text-gray-600">Seats: {transport.seatsAvailable}</p>
-                      <p className="text-sm text-gray-600">₹{transport.pricePerSeat} per seat</p>
+                      <p className="text-sm text-gray-600">PKR {transport.ticketPrice} per seat</p>
                     </div>
                     <div className="flex gap-2">
                       <Button variant="outline" onClick={() => handleEdit(transport)}>
