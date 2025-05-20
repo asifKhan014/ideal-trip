@@ -13,49 +13,47 @@ function UserDashboard() {
   const [file, setFile] = useState(null);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User`,
-          {
-            method: "GET",
-            credentials: "include", // 🔐 Send cookies
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-  
-        if (response.status === 401) {
-          alert("Session expired. Please log in again.");
-          router.push("/login");
-          return;
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User`,
+        {
+          method: "GET",
+          credentials: "include", // 🔐 Send cookies
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-  
-        const data = await response.json();
-  
-        if (data.isSuccess) {
-          console.log(data.data);
-          setFullName(data.data.userName);
-          setDisplayName(data.data.userName);
-          setAddress(data.data.address);
-          setProfilePicture(data.data.profilePhotoPath);
-          setEmail(data.data.email);
-        } else {
-          alert(data.message || "Failed to fetch user data.");
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        alert("An error occurred while fetching user data.");
-      } finally {
-        setLoading(false);
+      );
+
+      if (response.status === 401) {
+        alert("Session expired. Please log in again.");
+        router.push("/login");
+        return;
       }
-    };
-  
+
+      const data = await response.json();
+
+      if (data.isSuccess) {
+        console.log(data.data);
+        setFullName(data.data.userName);
+        setDisplayName(data.data.userName);
+        setAddress(data.data.address);
+        setProfilePicture(data.data.profilePhotoPath);
+        setEmail(data.data.email);
+      } else {
+        alert(data.message || "Failed to fetch user data.");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      alert("An error occurred while fetching user data.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchUserData();
   }, []);
-  
 
   const handleSave = async () => {
     try {
@@ -65,7 +63,7 @@ function UserDashboard() {
       if (file) {
         formData.append("ProfilePhoto", file);
       }
-  
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/User/`,
         {
@@ -74,16 +72,17 @@ function UserDashboard() {
           credentials: "include", // 🔐 Send cookies
         }
       );
-  
+
       if (response.status === 401) {
         alert("Session expired. Please log in again.");
         router.push("/login");
         return;
       }
-  
+
       const data = await response.json();
       if (data.isSuccess) {
         alert("Profile updated successfully!");
+        fetchUserData();
         setEditMode(false);
         setDisplayName(fullName);
       } else {
@@ -94,12 +93,9 @@ function UserDashboard() {
       alert("An error occurred while updating your profile.");
     }
   };
-  
-  return (
-  loading ? (
-    <div className="flex justify-center items-center h-64">
-      Loading
-    </div>
+
+  return loading ? (
+    <div className="flex justify-center items-center h-64">Loading</div>
   ) : (
     <div className={`flex justify-center items-center min-h-screen bg-slate-50`}>
       <div className={`w-full max-w-4xl p-8 rounded-lg shadow-xl bg-slate-200`}>
@@ -108,7 +104,9 @@ function UserDashboard() {
             <img
               src={
                 profilePhoto
-                  ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${profilePhoto}`
+                  ? profilePhoto.startsWith("blob:")
+                    ? profilePhoto // preview from URL.createObjectURL
+                    : `${process.env.NEXT_PUBLIC_BACKEND_URL}/${profilePhoto}` // saved file path
                   : "/user.png"
               }
               alt="Profile"
@@ -153,7 +151,9 @@ function UserDashboard() {
                   className={`w-full p-3 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500bg-white border-gray-300`}
                 />
               ) : (
-                <p className={`transition-colors duration-300text-gray-800`}>{fullName}</p>
+                <p className={`transition-colors duration-300text-gray-800`}>
+                  {fullName}
+                </p>
               )}
             </div>
 
@@ -194,7 +194,6 @@ function UserDashboard() {
         </div>
       </div>
     </div>
-  )
   );
 }
 
