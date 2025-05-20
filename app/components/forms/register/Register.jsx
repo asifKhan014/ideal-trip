@@ -11,6 +11,7 @@ export default function Register() {
   const [error, setError] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  
   const initialValues = {
     tourist: {
       FullName: "",
@@ -190,22 +191,25 @@ export default function Register() {
     }),
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     setLoading(true);
     setError([]);
     const formData = new FormData();
+    
     Object.entries(values).forEach(([key, value]) => {
       if (value instanceof File) {
-        formData.append(key, value); // For single file
+        formData.append(key, value);
       } else if (Array.isArray(value)) {
-        value.forEach((file) => formData.append(key, file)); // For multiple files
+        value.forEach((file) => formData.append(key, file));
       } else {
-        formData.append(key, value); // For other fields
+        formData.append(key, value);
       }
     });
+    
     const formatErrors = (errorObj) => {
       return Object.values(errorObj).flat();
     };    
+    
     try {
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const response = await axios.post(
@@ -217,26 +221,19 @@ export default function Register() {
           },
         }
       );
-      // console.log("Success:", response); // Logs the success response
+      
       if (response.data.isSuccess) {
-        // console.log("Should redirect now");
         router.push(`/verify-email?email=${encodeURIComponent(values.Email)}`);
       }
     } catch (error) {
-      // Handle error and access backend response
       if (error.response) {
-        console.log(error.response.data.errors);
         let backendErrors = error.response.data.errors;
-        const errorMessages = formatErrors(backendErrors); // returns an array of strings
+        const errorMessages = formatErrors(backendErrors);
         setError(errorMessages);
-        // setError(error.response.data.errors);
-        // Extract backend response message
-        // const backendMessage = error.response.data.message;
-        // console.error("Backend Error:", backendMessage);
-        // setError(backendMessage);
       }
     } finally {
       setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -276,10 +273,10 @@ export default function Register() {
             onSubmit={handleSubmit}
             enableReinitialize
           >
-            {({ setFieldValue }) => (
+            {({ setFieldValue, isSubmitting }) => (
               <Form className="space-y-6">
                 {Object.keys(initialValues[role]).map((field, index) => (
-                  <div key={index}>
+                  <div key={index} className="space-y-1">
                     <label
                       htmlFor={field}
                       className="block text-sm font-medium text-gray-700"
@@ -296,69 +293,85 @@ export default function Register() {
                       "idCard",
                     ].includes(field) ? (
                       field === "imageGalleryDoc" ? (
-                        <input
-                          id={field}
-                          type="file"
-                          multiple
-                          onChange={(e) =>
-                            setFieldValue(field, Array.from(e.target.files))
-                          }
-                          className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
-                        />
+                        <>
+                          <input
+                            id={field}
+                            name={field}
+                            type="file"
+                            multiple
+                            onChange={(e) =>
+                              setFieldValue(field, Array.from(e.target.files))
+                            }
+                            className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                          />
+                          <ErrorMessage
+                            name={field}
+                            component="div"
+                            className="text-sm text-red-600"
+                          />
+                        </>
                       ) : (
-                        <input
-                          id={field}
-                          type="file"
-                          onChange={(e) =>
-                            setFieldValue(field, e.target.files[0])
-                          }
-                          className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
-                        />
+                        <>
+                          <input
+                            id={field}
+                            name={field}
+                            type="file"
+                            onChange={(e) =>
+                              setFieldValue(field, e.target.files[0])
+                            }
+                            className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                          />
+                          <ErrorMessage
+                            name={field}
+                            component="div"
+                            className="text-sm text-red-600"
+                          />
+                        </>
                       )
                     ) : (
-                      <Field
-                        id={field}
-                        name={field}
-                        type={
-                          field.toLowerCase().includes("password")
-                            ? "password"
-                            : "text"
-                        }
-                        className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
-                      />
+                      <>
+                        <Field
+                          id={field}
+                          name={field}
+                          type={
+                            field.toLowerCase().includes("password")
+                              ? "password"
+                              : "text"
+                          }
+                          className="mt-2 block w-full bg-gray-50 border rounded-md p-3"
+                        />
+                        <ErrorMessage
+                          name={field}
+                          component="div"
+                          className="text-sm text-red-600"
+                        />
+                      </>
                     )}
-                    {/* <ErrorMessage
-                      name={field}
-                      component="div"
-                      className="text-sm text-red-600"
-                    /> */}
                   </div>
                 ))}
+                
                 {error.length > 0 && (
-  <ol className="text-sm text-red-600 list-decimal pl-5">
-    {error.map((err, index) => (
-      <li key={index}>{err}</li>
-    ))}
-  </ol>
-)}
+                  <div className="bg-red-50 border-l-4 border-red-500 p-4">
+                    <div className="text-sm text-red-600">
+                      <ul className="list-disc pl-5 space-y-1">
+                        {error.map((err, index) => (
+                          <li key={index}>{err}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
 
-
-                {/* <button
-                  type="submit"
-                  className="w-full py-3 px-6 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                >
-                  Register
-                </button> */}
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || isSubmitting}
                   className={`w-full py-3 px-6 rounded-md text-white ${
-                    loading
+                    loading || isSubmitting
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-indigo-600 hover:bg-indigo-700"
                   }`}
                 >
-                  {loading ? "Registering..." : "Register"}
+                  {loading || isSubmitting ? "Registering..." : "Register"}
                 </button>
               </Form>
             )}
