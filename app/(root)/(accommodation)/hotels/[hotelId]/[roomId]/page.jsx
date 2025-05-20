@@ -80,7 +80,6 @@ export default function RoomDetail({ params }) {
   const handleBookRoom = () => {
     router.push(`/hotels/booking?id=${id}`);
   };
-  console.log("Room Details:", roomDetails);
   return (
     <section className="bg-gray-50">
       {/* Hero Section */}
@@ -135,9 +134,9 @@ export default function RoomDetail({ params }) {
                   <strong>Price:</strong> PKR{roomDetails.pricePerNight} / night
                 </p>
               </div>
-              <p className="text-3xl font-bold text-green-700 mt-6">
+              {/* <p className="text-3xl font-bold text-green-700 mt-6">
                 Available From: {new Date(roomDetails.availableFrom).toLocaleDateString()} - To: {new Date(roomDetails.availableTo).toLocaleDateString()}
-              </p>
+              </p> */}
             </div>
           </div>
 

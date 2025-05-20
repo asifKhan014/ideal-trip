@@ -1,14 +1,14 @@
 
 const navigation = {
   solutions: [
-    { name: "Destinations", href: "/destinations" },
-    { name: "Tours", href: "/tours" },
-    { name: "Travel Packages", href: "/packages" },
-    { name: "Travel Guide", href: "/guide" },
+    { name: "Hotels", href: "/hotels" },
+    { name: "Local Stays", href: "/local-stays" },
+    { name: "Travel Guide", href: "/tourguide" },
+    { name: "Transportation", href: "/transportation" },
   ],
   support: [
+    { name: "Contact Us", href: "/contact-us" },
     { name: "FAQ", href: "/faq" },
-    { name: "Contact Us", href: "/contact" },
     { name: "Help Center", href: "/help-center" },
     { name: "Live Chat", href: "/chat" },
   ],
