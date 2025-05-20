@@ -82,6 +82,7 @@ function UserDashboard() {
       const data = await response.json();
       if (data.isSuccess) {
         alert("Profile updated successfully!");
+        window.location.reload();
         fetchUserData();
         setEditMode(false);
         setDisplayName(fullName);
@@ -92,6 +93,7 @@ function UserDashboard() {
       console.error("Error updating profile:", error);
       alert("An error occurred while updating your profile.");
     }
+
   };
 
   return loading ? (

@@ -149,9 +149,9 @@ export default function Navbar() {
               <div className="hidden lg:flex lg:items-center lg:space-x-4">
                 {LoggedIn ? (
                   <>
-                    <button className="p-1 rounded-full text-gray-700 hover:text-gray-900 focus:outline-none">
+                    {/* <button className="p-1 rounded-full text-gray-700 hover:text-gray-900 focus:outline-none">
                       <BellAlertIcon className="h-6 w-6" />
-                    </button>
+                    </button> */}
 
                     <Menu as="div" className="relative">
                       <MenuButton className="flex items-center focus:outline-none">
